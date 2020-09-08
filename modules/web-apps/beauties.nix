@@ -42,7 +42,7 @@ in
     };
   };
 
-  config = {
+  config = mkIf cfg.enable {
     systemd.services.beauties = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];

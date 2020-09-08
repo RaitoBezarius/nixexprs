@@ -70,7 +70,7 @@ in
       description = "Beauties: files cleanup";
       serviceConfig = {
         Type = "oneshot";
-        ExecStart = "${pkgs.find} -P "${cfg.storageDir}" -maxdepth 1 -type f -ctime +${builtins.toString cfg.cleanupEvery} -execdir rm -f {} \\;";
+        ExecStart = ''${pkgs.find} -P "${cfg.storageDir}" -maxdepth 1 -type f -ctime +${builtins.toString cfg.cleanupEvery} -execdir rm -f {} \;'';
         StandardOutput = "syslog";
         StandardError = "syslog";
       };

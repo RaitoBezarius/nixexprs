@@ -16,10 +16,10 @@ buildGoModule rec {
   '';
 
   src = fetchFromGitHub {
-    owner = "dsx";
+    owner = "RaitoBezarius";
     repo = pname;
-    rev = "e27e7f5ce69afe7ce966edd568d9c2ec219f7864";
-    sha256 = "1rzi4x8ik4fiwmwfff2pqsb7nsvjncwbrikqnzzqi9dv4jwraymh";
+    rev = "fbfa29e9df856a2bc755babd8540d56a4253c5ac";
+    sha256 = "1nzj2vpbqpcpfs78b6s4il6lb6bslrdvjwmjgsqscb3m9vqdrxxy";
   };
 
   meta = with stdenv.lib; {

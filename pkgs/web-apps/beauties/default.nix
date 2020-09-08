@@ -18,8 +18,8 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "RaitoBezarius";
     repo = pname;
-    rev = "fbfa29e9df856a2bc755babd8540d56a4253c5ac";
-    sha256 = "1nzj2vpbqpcpfs78b6s4il6lb6bslrdvjwmjgsqscb3m9vqdrxxy";
+    rev = "0e676f7310ec57eca56191fe42ca625a239101e7";
+    sha256 = "0zkcmxlajcvhdpkllgz0cc6dq2y8ci9b6852wjr67q4wnbrgw38q";
   };
 
   meta = with stdenv.lib; {

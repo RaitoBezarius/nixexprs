@@ -95,6 +95,10 @@ in {
       "dispatch.sr.ht".oauth-client-id = mkDefault null;
       "dispatch.sr.ht".oauth-client-secret = mkDefault null;
 
+      # dispatch.sr.ht requires builds.sr.ht parameters.
+      "builds.sr.ht".oauth-client-id = mkDefault null;
+      "builds.sr.ht".oauth-client-secret = mkDefault null;
+
       # dispatch.sr.ht's OAuth client ID and secret for GitHub integration
       "dispatch.sr.ht::github".oauth-client-id = mkDefault null;
       "dispatch.sr.ht::github".oauth-client-secret = mkDefault null;

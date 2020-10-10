@@ -119,7 +119,7 @@ in {
           };
 
           environment = {
-            PYTHONUNBUFFERED = 1;
+            PYTHONUNBUFFERED = "1";
           };
         };
 

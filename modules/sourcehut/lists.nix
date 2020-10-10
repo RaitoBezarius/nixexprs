@@ -84,6 +84,7 @@ in {
           requires = [ "postgresql.service" ];
           wantedBy = [ "multi-user.target" ];
 
+
           serviceConfig = {
             Type = "simple";
             User = user;
@@ -107,10 +108,10 @@ in {
           after = [ "network.target" ];
           wantedBy = [ "multi-user.target" ];
 
+          restartTriggers = [ config.environment.etc."sr.ht/config.ini".source ];
           description = "lists.sr.ht incoming mail service";
 
           serviceConfig = {
-            Type = "simple";
             User = user;
             Restart = "always";
           };

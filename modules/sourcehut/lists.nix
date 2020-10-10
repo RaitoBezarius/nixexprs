@@ -9,7 +9,9 @@ let
   iniKey = "lists.sr.ht";
 
   rcfg = config.services.redis;
-  drv = pkgs.sourcehut.listssrht;
+  drv = pkgs.sourcehut.listssrht.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [ ./lmtp-ipv6-support.patch ];
+  });
 in {
   options.services.sourcehut.lists = {
     user = mkOption {
@@ -126,8 +128,8 @@ in {
 
       # lists.sr.ht's OAuth client ID and secret for lists.sr.ht
       # Register your client at lists.example.com/oauth
-      "git.sr.ht".oauth-client-id = mkDefault null;
-      "git.sr.ht".oauth-client-secret = mkDefault null;
+      "lists.sr.ht".oauth-client-id = mkDefault null;
+      "lists.sr.ht".oauth-client-secret = mkDefault null;
 
       # Posting domain
       "lists.sr.ht".posting-domain = mkDefault "lists.sr.ht.local";

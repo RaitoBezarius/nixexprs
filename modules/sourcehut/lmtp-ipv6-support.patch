@@ -1,0 +1,29 @@
+commit 66eaaba080ee93fdb145fcda589370904ebd0792
+Author: Raito Bezarius <masterancpp@gmail.com>
+Date:   Sun Oct 11 00:09:40 2020 +0200
+
+    lmtp: support IPv6 literal using [] syntax
+
+diff --git a/listssrht-lmtp b/listssrht-lmtp
+index c6454a6..a667f22 100755
+--- a/listssrht-lmtp
++++ b/listssrht-lmtp
+@@ -12,6 +12,7 @@ import email
+ import os
+ import signal
+ import sys
++import urllib.parse
+ 
+ from listssrht.process import dispatch_message, send_error_for
+ 
+@@ -339,8 +340,8 @@ async def create_server():
+         os.chown(sock, os.getuid(), sock_gid)
+         print("Accepting LMTP connections")
+     else:
+-        host, port = sock.split(":")
+-        await loop.create_server(serve, host=host, port=int(port))
++        result = urllib.parse.urlsplit('//' + sock)
++        await loop.create_server(serve, host=result.hostname, port=result.port)
+         print("Accepting SMTP connections")
+ 
+ def sigint_handler():

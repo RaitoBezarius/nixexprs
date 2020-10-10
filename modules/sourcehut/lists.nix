@@ -112,11 +112,15 @@ in {
           description = "lists.sr.ht incoming mail service";
 
           serviceConfig = {
+            Type = "simple";
             User = user;
             Restart = "always";
+            ExecStart = "${cfg.python}/bin/${drv.pname}-lmtp";
           };
 
-          serviceConfig.ExecStart = "${cfg.python}/bin/${drv.pname}-lmtp";
+          environment = {
+            PYTHONUNBUFFERED = 1;
+          };
         };
 
         listssrht-process = mkCeleryService "process" { description = "lists.sr.ht process service"; };

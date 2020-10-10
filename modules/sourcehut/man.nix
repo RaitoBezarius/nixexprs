@@ -51,15 +51,12 @@ in {
       ];
 
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
-          description = "man.sr.ht user"; }
-      ];
+          description = "man.sr.ht user";
+      };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services.postgresql = {

@@ -51,15 +51,12 @@ in {
       ];
 
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
-          description = "meta.sr.ht user"; }
-      ];
+          description = "meta.sr.ht user";
+      };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services.cron.systemCronJobs = [ "0 0 * * * ${cfg.python}/bin/metasrht-daily" ];

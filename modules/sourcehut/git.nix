@@ -60,18 +60,14 @@ in {
     environment.systemPackages = [ pkgs.git ];
 
     users = {
-      users = [
-        { name = user;
-          group = user;
+      users.${user} =
+        { group = user;
           # https://stackoverflow.com/questions/22314298/git-push-results-in-fatal-protocol-error-bad-line-length-character-this
           # Probably could use gitsrht-shell if output is restricted to just parameters...
           shell = "${pkgs.bash}/bin/bash";
-          description = "git.sr.ht user"; }
-      ];
+          description = "git.sr.ht user"; };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services = {

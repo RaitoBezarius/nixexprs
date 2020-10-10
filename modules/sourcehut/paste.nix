@@ -45,15 +45,12 @@ in {
 
   config = with scfg; lib.mkIf (cfg.enable && elem "paste" cfg.services) {
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
-          description = "paste.sr.ht user"; }
-      ];
+          description = "paste.sr.ht user";
+      };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services.postgresql = {

@@ -66,17 +66,14 @@ in {
     environment.systemPackages = [ pkgs.mercurial ];
 
     users = {
-      users = [
-        { name = user;
+      users.${user} = {
           group = user;
           # Assuming hg.sr.ht needs this too
           shell = "${pkgs.bash}/bin/bash";
-          description = "hg.sr.ht user"; }
-      ];
+          description = "hg.sr.ht user";
+        };
 
-      groups = [
-        { name = user; }
-      ];
+      groups.${user} = {};
     };
 
     services = {

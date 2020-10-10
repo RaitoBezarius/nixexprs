@@ -60,6 +60,18 @@ in {
       groups.${user} = {};
     };
 
+    services.postgresql = {
+      authentication = ''
+        local ${database} ${user} trust
+      '';
+      ensureDatabases = [ database ];
+      ensureUsers = [
+        { name = user;
+          ensurePermissions = { "DATABASE \"${database}\"" = "ALL PRIVILEGES"; }; }
+        ];
+    };
+
+
     systemd = {
       tmpfiles.rules = [
         "d ${statePath} 0750 ${user} ${user} -"

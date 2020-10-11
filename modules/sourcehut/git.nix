@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = config.services.sourcehut;
+  cfgIni = cfg.settings;
   scfg = cfg.git;
   iniKey = "git.sr.ht";
 

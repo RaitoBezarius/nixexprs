@@ -21,13 +21,13 @@ let
   buildKeys = src: buildGoModule {
     inherit src version;
     pname = "gitsrht-keys";
-    vendorSha256 = "0lks3js57bb41x1ry5xfadlzf0v2gm68g7h3j94gzlm6j4jfprk9";
+    vendorSha256 = "1d94cqy7x0q0agwg515xxsbl70b3qrzxbzsyjhn1pbyj532brn7f";
   };
 
   buildUpdateHook = src: buildGoModule {
     inherit src version;
     pname = "gitsrht-update-hook";
-    vendorSha256 = "06ykh9ncamd922xsd329jpn293wsq6vkqnlf3sckjlp2hm290pd8";
+    vendorSha256 = "0fwzqpjv8x5y3w3bfjd0x0cvqjjak23m0zj88hf32jpw49xmjkih";
   };
 
   buildAPI = src: buildGoModule {

@@ -9,7 +9,7 @@ let
   iniKey = "builds.sr.ht";
 
   rcfg = config.services.redis;
-  drv = pkgs.sourcehut.buildssrht;
+  drv = pkgs.sourcehut.buildsrht;
 in {
   options.services.sourcehut.builds = {
     user = mkOption {
@@ -91,12 +91,12 @@ in {
             Type = "simple";
             User = user;
             Restart = "always";
-            ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.${mod} worker -n buildssrht-${mod}@%%h --loglevel=info";
+            ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.${mod} worker -n buildsrht-${mod}@%%h --loglevel=info";
           };
         } // extra;
       in
       {
-        buildssrht = import ./service.nix { inherit config pkgs lib; } scfg drv iniKey {
+        buildsrht = import ./service.nix { inherit config pkgs lib; } scfg drv iniKey {
           after = [ "redis.service" "postgresql.service" "network.target" ];
           requires = [ "postgresql.service" ];
           wantedBy = [ "multi-user.target" ];
@@ -106,7 +106,7 @@ in {
           serviceConfig.ExecStart = "${cfg.python}/bin/gunicorn ${drv.pname}.app:app -b ${cfg.address}:${toString port}";
         };
 
-        buildssrht-webhooks = mkCeleryService "webhooks" { description = "builds.sr.ht webhooks service"; };
+        buildsrht-webhooks = mkCeleryService "webhooks" { description = "builds.sr.ht webhooks service"; };
       };
     };
 

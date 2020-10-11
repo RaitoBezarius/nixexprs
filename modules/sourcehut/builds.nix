@@ -98,7 +98,7 @@ in {
       {
         buildsrht = import ./service.nix { inherit config pkgs lib; } scfg drv iniKey {
           # Hack to support discrepancy in naming (lists → listssrht, but builds !→ buildssrht, but builds → buildsrht).
-          updateIniKey = "buildsrht";
+          updateIniKey = "build.sr.ht";
 
           after = [ "redis.service" "postgresql.service" "network.target" ];
           requires = [ "postgresql.service" ];
@@ -121,6 +121,7 @@ in {
       "builds.sr.ht".debug-port = mkDefault port;
       # Configures the SQLAlchemy connection string for the database.
       "builds.sr.ht".connection-string = mkDefault "postgresql:///${database}?user=${user}&host=/var/run/postgresql";
+      "build.sr.ht".connection-string = mkDefault "postgresql:///${database}?user=${user}&host=/var/run/postgresql";
       # Set to "yes" to automatically run migrations on package upgrade.
       "builds.sr.ht".migrate-on-upgrade = mkDefault "yes";
       # The redis connection used for the Celery worker

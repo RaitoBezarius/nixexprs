@@ -1,5 +1,5 @@
 self: super:
 
 {
-  sourcehut = import ./sourcehut;
+  sourcehut = super.mySourcehut;
 }

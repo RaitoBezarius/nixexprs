@@ -131,6 +131,8 @@ in {
       "meta.sr.ht".connection-string = mkDefault "postgresql:///${database}?user=${user}&host=/var/run/postgresql";
       # Set to "yes" to automatically run migrations on package upgrade.
       "meta.sr.ht".migrate-on-upgrade = mkDefault "yes";
+      # The redis connection used for the webhooks worker
+      "meta.sr.ht".webhooks = mkDefault "redis://${rcfg.bind}:${toString rcfg.port}/1";
       # If "yes", the user will be sent the stock sourcehut welcome emails after
       # signup (requires cron to be configured properly). These are specific to the
       # sr.ht instance so you probably want to patch these before enabling this.

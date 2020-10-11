@@ -47,6 +47,11 @@ in {
   };
 
   config = with scfg; lib.mkIf (cfg.enable && elem "git" cfg.services) {
+    assertions =
+      [
+        { assertion = with cfgIni."git.sr.ht"; outgoing-domain != null;
+        message = "If git.sr.ht is used, an outgoing domain must be specified for patchset preparation"; }
+      ];
     # sshd refuses to run with `Unsafe AuthorizedKeysCommand ... bad ownership or modes for directory /nix/store`
     environment.etc."ssh/gitsrht-dispatch" = {
       mode = "0755";
@@ -151,6 +156,10 @@ in {
       "git.sr.ht".oauth-client-secret = mkDefault null;
       # Path to git repositories on disk
       "git.sr.ht".repos = mkDefault "/var/lib/git";
+
+      # Patchset preparation
+      "git.sr.ht".outgoing-domain = mkDefault null;
+
 
       # The authorized keys hook uses this to dispatch to various handlers
       # The format is a program to exec into as the key, and the user to match as the

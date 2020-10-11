@@ -116,7 +116,7 @@ in {
             Restart = "always";
           };
 
-          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n metasrht --loglevel=info";
+          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n metasrht@%%h --loglevel=info";
         };
       };
     };

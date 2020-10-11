@@ -92,7 +92,7 @@ in {
             Restart = "always";
           };
 
-          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n pastesrht --loglevel=info";
+          serviceConfig.ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n pastesrht@%%h --loglevel=info";
         };
       };
     };

@@ -8,6 +8,7 @@ let
   scfg = cfg.meta;
   iniKey = "meta.sr.ht";
 
+  rcfg = config.services.redis;
   drv = pkgs.sourcehut.metasrht;
 in {
   options.services.sourcehut.meta = {

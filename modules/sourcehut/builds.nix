@@ -44,7 +44,7 @@ in {
     };
 
     worker = mkOption {
-      type = types.boolean;
+      type = types.bool;
       default = false;
       description = ''
         Enable workers on this machine.

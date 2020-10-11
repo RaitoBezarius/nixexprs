@@ -1,7 +1,7 @@
 { stdenv, fetchgit, buildPythonPackage
 , python
 , buildGoModule
-, srht, redis, celery, pyyaml, markdown }:
+, srht, redis, celery, pyyaml, markdown, ansi2html }:
 
 let
   version = "0.63.4";
@@ -30,6 +30,7 @@ in buildPythonPackage rec {
     celery
     pyyaml
     markdown
+    ansi2html
   ];
 
   preBuild = ''

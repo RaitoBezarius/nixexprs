@@ -93,7 +93,7 @@ in {
             Restart = "always";
           };
 
-          script = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker --loglevel=info";
+          script = "${cfg.python}/bin/celery -A ${drv.pname}.webhooks worker -n todosrht --loglevel=info";
         };
       };
     };

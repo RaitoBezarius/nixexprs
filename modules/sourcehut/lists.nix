@@ -89,7 +89,7 @@ in {
             Type = "simple";
             User = user;
             Restart = "always";
-            ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.${mod} worker --loglevel=info";
+            ExecStart = "${cfg.python}/bin/celery -A ${drv.pname}.${mod} worker -n listssrht-${mod} --loglevel=info";
           };
         } // extra;
       in

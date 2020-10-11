@@ -97,6 +97,9 @@ in {
       in
       {
         buildsrht = import ./service.nix { inherit config pkgs lib; } scfg drv iniKey {
+          # Hack to support discrepancy in naming (lists → listssrht, but builds !→ buildssrht, but builds → buildsrht).
+          updateIniKey = "buildsrht";
+
           after = [ "redis.service" "postgresql.service" "network.target" ];
           requires = [ "postgresql.service" ];
           wantedBy = [ "multi-user.target" ];

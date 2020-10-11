@@ -4,6 +4,7 @@ serviceCfg: serviceDrv: iniKey: attrs:
 let
   cfg = config.services.sourcehut;
   cfgIni = cfg.settings."${iniKey}";
+  updateIniKey = attrs.updateIniKey or iniKey;
   pgSuperUser = config.services.postgresql.superUser;
 
   setupDB = pkgs.writeScript "${serviceDrv.pname}-gen-db" ''
@@ -40,8 +41,8 @@ in with serviceCfg; with lib; recursiveUpdate {
     # Update copy of each users' profile to the latest
     # See https://lists.sr.ht/~sircmpwn/sr.ht-admins/<20190302181207.GA13778%40cirno.my.domain>
     if ! test -e ${statePath}/webhook; then
-      # Update ${iniKey}'s users' profile copy to the latest
-      ${cfg.python}/bin/srht-update-profiles ${iniKey}
+      # Update ${updateIniKey}'s users' profile copy to the latest
+      ${cfg.python}/bin/srht-update-profiles ${updateIniKey}
 
       touch ${statePath}/webhook
     fi
@@ -58,4 +59,4 @@ in with serviceCfg; with lib; recursiveUpdate {
 
     ${attrs.preStart or ""}
   '';
-} (builtins.removeAttrs attrs [ "path" "preStart" ])
+} (builtins.removeAttrs attrs [ "path" "preStart" "updateIniKey" ])

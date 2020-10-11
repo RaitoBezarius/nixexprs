@@ -106,7 +106,7 @@ in {
           serviceConfig.ExecStart = "${cfg.python}/bin/gunicorn ${drv.pname}.app:app -b ${cfg.address}:${toString port}";
         };
 
-        buildsrht-runner = mkIf cfg.worker (mkCeleryService "runner" { description = "builds.sr.ht runner service"; });
+        buildsrht-runner = mkIf scfg.worker (mkCeleryService "runner" { description = "builds.sr.ht runner service"; });
       };
     };
 

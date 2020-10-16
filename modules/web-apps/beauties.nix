@@ -49,8 +49,8 @@ in
         description = "Beauties daemon: personal essential internet service";
 
         preStart = ''
-          [ ! -d ${cfg.storageDir} ] && mkdir -p ${cfg.storageDir} || /bin/true
-          [ ! -d ${cfg.tmpDir} ] && mkdir -p ${cfg.tmpDir} || /bin/true
+          [ ! -d ${cfg.storageDir} ] && mkdir -p ${cfg.storageDir} || true
+          [ ! -d ${cfg.tmpDir} ] && mkdir -p ${cfg.tmpDir} || true
         '';
 
         serviceConfig = {

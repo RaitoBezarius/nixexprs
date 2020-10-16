@@ -1,7 +1,7 @@
 { stdenv
 , fetchFromGitLab
 , python3
-, wafHook3
+, wafHook
 
 # for binding generation
 , castxml ? null
@@ -47,7 +47,7 @@ stdenv.mkDerivation rec {
     sha256 = "158yjhsrmslj1q4zcq5p16hv9i82qnxx714l7idicncn0wzrfx7k";
   };
 
-  nativeBuildInputs = [ wafHook3 ];
+  nativeBuildInputs = [ wafHook ];
 
   outputs = [ "out" ] ++ lib.optional pythonSupport "py";
 
@@ -63,7 +63,7 @@ stdenv.mkDerivation rec {
   '';
 
   wafConfigureFlags = with stdenv.lib; [
-      "--enable-modules=${concatStringsSep "," modules}"
+      # "--enable-modules=${concatStringsSep "," modules}"
       "--with-python=${pythonEnv.interpreter}"
   ]
   ++ optional (build_profile != null) "--build-profile=${build_profile}"

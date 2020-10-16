@@ -14,6 +14,7 @@ let
     infcloud = callPackage ./web-apps/infcloud { }; # CalDAV/CardDAV web client.
     python3PackagesPlus = callPackage ./python-packages {
       python = pkgs.python3;
+      wafHook = callPackage ./development/wafHook {};
     };
   };
 in

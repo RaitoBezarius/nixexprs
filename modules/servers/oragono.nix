@@ -22,7 +22,7 @@ in
     };
 
     config = {
-      groups.${cfg.group} = {};
+      users.groups.${cfg.group} = {};
       users.users.${cfg.user} = {};
 
       systemd.services.oragono = {

@@ -2,13 +2,13 @@
 with lib;
 let
   cfg = config.services.oragono;
-  settingsFile = (pkgs.writeFile "ircd.yaml" (generators.toYAML cfg.settings));
+  settingsFile = (pkgs.writeText "ircd.yaml" (generators.toYAML cfg.settings));
 in
   {
     options.services.oragono = {
       enable = mkEnableOption "Enable the Oragono IRC server";
-      group = mkOption { };
-      user = mkOption { };
+      group = mkOption { default = "oragono"; };
+      user = mkOption { default = "oragono";};
       stateDirectory = mkOption { default = "/var/lib/oragono"; };
       package = mkOption {
         description = "Package used to run Oragono";

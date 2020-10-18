@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.services.oragono;
-  settingsFile = (pkgs.writeText "ircd.yaml" (generators.toYAML cfg.settings));
+  settingsFile = (pkgs.writeText "ircd.yaml" (builtins.toJSON cfg.settings));
 in
   {
     options.services.oragono = {

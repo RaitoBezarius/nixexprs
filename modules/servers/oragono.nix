@@ -31,6 +31,10 @@ in
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
 
+        preStart = ''
+          mkdir -p ${cfg.stateDirectory}
+        '';
+
         serviceConfig = {
           Type = "simple";
           User = cfg.user;
@@ -46,6 +50,9 @@ in
         description = "Oragono IRC server initialization (mkcerts)";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
+        preStart = ''
+          mkdir -p ${cfg.stateDirectory}
+        '';
         serviceConfig = {
           Type = "oneshot";
           User = cfg.user;

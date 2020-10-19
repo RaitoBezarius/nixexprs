@@ -19,7 +19,7 @@
 #  "path" = "/3.0";
 #  "buildDeps" = [];
 # }
-{ stdenv, perl, lib, modules ? [ ], ... }:
+{ fetchFromGitHub, stdenv, perl, lib, modules ? [ ], ... }:
 with builtins;
 let
   extra = filter (mod: !(mod ? "repo")) modules;
@@ -30,7 +30,7 @@ in stdenv.mkDerivation rec {
   pname = "inspircd";
   version = "3.7.0";
 
-  src = pkgs.fetchFromGitHub {
+  src = fetchFromGitHub {
     owner = "flopraden";
     repo = "inspircd";
     rev = "v${version}";
@@ -81,10 +81,10 @@ in stdenv.mkDerivation rec {
     cp -R $src/include/* $dev/include
   '';
 
-  meta = {
+  meta = with stdenv.lib; {
     homepage = "https://www.inspircd.org/";
     description = "A modular C++ IRC server";
-    platforms = pkgs.stdenv.lib.platforms.unix;
-    license = pkgs.stdenv.lib.licenses.gpl2Plus;
+    platforms = platforms.unix;
+    license = licenses.gpl2Plus;
   };
 }

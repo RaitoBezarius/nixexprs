@@ -17,6 +17,22 @@ in {
     services.inspircd = {
       enable = mkEnableOption "inspircd irc server";
 
+      user = mkOption {
+        type = types.str;
+        default = "inspircd";
+      };
+
+      group = mkOption {
+        type = types.str;
+        default = "inspircd";
+      };
+
+      certificateGroup = mkOption {
+        type = types.str;
+        default = "nginx";
+        description = "Group to access certificates";
+      };
+
       package = mkOption {
         type = types.package;
         default = pkgs.inspircd;
@@ -78,11 +94,10 @@ in {
 
     environment.etc."inspircd/inspircd.conf" = { source = configFile; };
 
-    users.users.inspircd = {
-      uid =
-        320; # config.ids.uids.inspircd; # TODO: this works if we upstream an id, but until then this is easier
-      description = "inspircd daemon user";
+    users.users.${cfg.user} = {
+      extraGroups = [ cfg.certificateGroup ];
     };
+    users.groups.${cfg.group} = {};
 
     systemd.services.inspircd = {
       description = "inspircd service";
@@ -98,7 +113,8 @@ in {
               "--logfile ${cfg.logFile}"
           } --config ${configPath}";
         ExecReload = "${pkgs.coreutils}/bin/kill -HUP $MAINPID";
-        User = "inspircd";
+        User = cfg.user;
+        Group = cfg.group;
         Restart = "always";
         RestartSec = "10s";
       };

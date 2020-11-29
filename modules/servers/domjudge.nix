@@ -62,7 +62,7 @@ in {
       };
 
       "domjudge-mariadb" = {
-        image = "mariadb/mariadb:latest";
+        image = "mariadb:10.5.8-focal";
         environment = {
           MYSQL_ROOT_PASSWORD = cfg.rootDBPassword;
           MYSQL_USER = "domjudge";

@@ -21,7 +21,7 @@ let
   };
 
 in {
-  options.services.isso = {
+  options.services.domjudge = {
     enable = mkEnableOption "Enable a Docker-based DOMjudge server";
     networkBridge = mkOption {
       type = types.str;
@@ -42,8 +42,8 @@ in {
       default = 12345;
     };
   };
-  config = {
-    virtualisation.docker.enable = true;
+  config = mkIf cfg.enable {
+    virtualisation.docker.enable = cfg.enable;
 
     virtualisation.oci-containers.containers = {
       "domjudge-server" = {

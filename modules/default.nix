@@ -3,4 +3,5 @@
   sourcehut = ./sourcehut;
   oragono = ./servers/oragono.nix;
   inspircd = ./servers/inspircd;
+  domjudge = ./servers/domjudge.nix;
 }

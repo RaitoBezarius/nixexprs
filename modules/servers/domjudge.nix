@@ -14,7 +14,7 @@ let
       DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
     volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
-    extraOptions = [ "--privileged --network=${cfg.networkBridge}" ];
+    extraOptions = [ "--privileged --network=${cfg.networkBridge} --hostname=domjudge-host-${k}" ];
   };
   dockercli = "${config.virtualisation.docker.package}/bin/docker";
   domserverContainerName = "domjudge-server";
@@ -139,7 +139,6 @@ in {
       "${domserverContainerName}" = {
         image = "domjudge/domserver:latest";
         dependsOn = [ "domjudge-mariadb" ];
-        cmd = [ "--max-connections ${toString cfg.maxDBConnections}"];
         environment = {
           CONTAINER_TIMEZONE = cfg.timezone;
           MYSQL_USER = "domjudge";
@@ -154,6 +153,7 @@ in {
 
       "domjudge-mariadb" = {
         image = "mariadb:10.5.8-focal";
+        cmd = [ "--max-connections ${toString cfg.maxDBConnections}"];
         environment = {
           MYSQL_ROOT_PASSWORD = cfg.rootDBPassword;
           MYSQL_USER = "domjudge";
@@ -163,7 +163,7 @@ in {
         volumes = [ "${cfg.stateDir}/db:/var/lib/mysql" ];
         extraOptions = [ "--network=${cfg.networkBridge}" ];
       };
-    } // listToAttrs (map (k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 0 cfg.judgeHostNumber)));
+    } // listToAttrs (map (k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 1 cfg.judgeHostNumber)));
 
     systemd.services.init-domjudge-network = {
       description =

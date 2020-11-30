@@ -14,7 +14,7 @@ let
       DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
     volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
-    extraOptions = [ "--privileged --network=${cfg.networkBridge} --hostname=domjudge-host-${k}" ];
+    extraOptions = [ "--privileged --network=${cfg.networkBridge}" ];
   };
   dockercli = "${config.virtualisation.docker.package}/bin/docker";
   domserverContainerName = "domjudge-server";

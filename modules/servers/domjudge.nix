@@ -13,7 +13,7 @@ let
       JUDGEDAEMON_PASSWORD = cfg.judgeDaemonPassword;
       DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
-    # volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ]; Let's try without mounting it.
+    volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
     extraOptions = [ "--privileged" "--network=${cfg.networkBridge}" "--hostname=judge" ];
   };
   dockercli = "${config.virtualisation.docker.package}/bin/docker";

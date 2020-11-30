@@ -19,6 +19,69 @@ let
       extraOptions = [ "--privileged --network=${cfg.networkBridge}" ];
     };
   };
+  dockercli = "${config.virtualisation.docker.package}/bin/docker";
+  domserverContainerName = "domjudge-server";
+  domserver-script = pkgs.writeScriptBin "domserver" ''
+    #!{pkgs.stdenv.shell}
+    DOMSERVER=${domserverContainerName}
+    ADMIN_PASSWORD_PATH="/opt/domjudge/domserver/etc/initial_admin_password.secret"
+    REST_API_PATH="/opt/domjudge/domserver/etc/restapi.secret"
+
+    function usage() {
+      cat <<HEREDOC
+      Usage: domserver command
+
+      commands:
+        print_admin_password    print the initial admin password
+        print_rest_api_secret   print the REST API secret
+        shell                   drop into bash shell in the container
+
+      optional arguments:
+        -h, --help      show this help message and exit
+HEREDOC
+    }
+
+    function print_admin_password () {
+      ${dockercli} exec -it $DOMSERVER cat $ADMIN_PASSWORD_PATH
+    }
+
+    function print_rest_api_secret () {
+      ${dockercli} exec -it $DOMSERVER cat $REST_API_PATH
+    }
+
+    function shell () {
+      ${dockercli} exec -it $DOMSERVER bash
+    }
+
+    while [ "$1" != "" ]; do
+      PARAM=`echo $1 | awk -F= '{print $1}'`
+      VALUE=`echo $1 | awk -F= '{print $2}'`
+      case $PARAM in
+          -h | --help)
+              usage
+              exit
+              ;;
+          print_admin_password)
+              print_admin_password
+              exit
+              ;;
+          print_rest_api_secret)
+              print_rest_api_secret
+              exit
+              ;;
+          shell)
+              shell
+              exit
+              ;;
+          *)
+              echo "ERROR: unknown parameter \"$PARAM\""
+              usage
+              exit 1
+              ;;
+      esac
+      shift
+    done
+  '';
 
 in {
   options.services.domjudge = {
@@ -43,10 +106,14 @@ in {
     };
   };
   config = mkIf cfg.enable {
+    environment.systemPackages = [
+      domserver-script
+    ];
+
     virtualisation.docker.enable = cfg.enable;
 
     virtualisation.oci-containers.containers = {
-      "domjudge-server" = {
+      "${domserverContainerName}" = {
         image = "domjudge/domserver:latest";
         dependsOn = [ "domjudge-mariadb" ];
         environment = {
@@ -81,9 +148,7 @@ in {
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig.Type = "oneshot";
-      script =
-        let dockercli = "${config.virtualisation.docker.package}/bin/docker";
-        in ''
+      script = ''
           # Put a true at the end to prevent getting non-zero return code, which will
           # crash the whole service.
           check=$(${dockercli} network ls | grep "${cfg.networkBridge}" || true)

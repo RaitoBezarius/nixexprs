@@ -165,6 +165,9 @@ in {
       };
     } // listToAttrs (map (k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 1 cfg.judgeHostNumber)));
 
+    # Debug.
+    systemd.services."docker-judgehost-1".serviceConfig.StandardOutput = "journal";
+
     systemd.services.init-domjudge-network = {
       description =
         "Create the network bridge ${cfg.networkBridge} for domjudge services.";

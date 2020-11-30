@@ -54,7 +54,7 @@ let
         }
 
         function console () {
-          ${dockercli} exec -it $DOMSERVER $SYMFONY_CONSOLE_PATH
+          ${dockercli} exec -it $DOMSERVER $SYMFONY_CONSOLE_PATH "$@"
         }
 
         function tail_logs () {
@@ -82,7 +82,7 @@ let
                   exit
                   ;;
               console)
-                  console
+                  console "$@"
                   exit
                   ;;
               tail)

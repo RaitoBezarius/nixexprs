@@ -127,7 +127,7 @@ in {
       default = 12345;
     };
     judgeHostNumber = mkOption {
-      type = types.integer;
+      type = types.int;
       default = 1;
     };
     judgeDaemonPassword = mkOption { type = types.str; };

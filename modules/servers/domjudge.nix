@@ -3,21 +3,18 @@ with lib;
 let
   cfg = config.services.domjudge;
   mkJudgeHost = k: {
-    name = "domjudge-host-${k}";
-    value = {
-      image = "domjudge/judgehost:latest";
-      dependsOn = [ "domjudge-server" ];
-      environment = {
-        CONTAINER_TIMEZONE = cfg.timezone;
-        DOMSERVER_BASEURL = "domjudge-server";
-        DAEMON_ID = k;
-        JUDGEDAEMON_USERNAME = "judgedaemon";
-        JUDGEDAEMON_PASSWORD = cfg.judgeDaemonPassword;
-        DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
-      };
-      volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
-      extraOptions = [ "--privileged --network=${cfg.networkBridge}" ];
+    image = "domjudge/judgehost:latest";
+    dependsOn = [ "domjudge-server" ];
+    environment = {
+      CONTAINER_TIMEZONE = cfg.timezone;
+      DOMSERVER_BASEURL = "domjudge-server";
+      DAEMON_ID = k;
+      JUDGEDAEMON_USERNAME = "judgedaemon";
+      JUDGEDAEMON_PASSWORD = cfg.judgeDaemonPassword;
+      DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
+    volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
+    extraOptions = [ "--privileged --network=${cfg.networkBridge}" ];
   };
   dockercli = "${config.virtualisation.docker.package}/bin/docker";
   domserverContainerName = "domjudge-server";
@@ -164,7 +161,7 @@ in {
         volumes = [ "${cfg.stateDir}/db:/var/lib/mysql" ];
         extraOptions = [ "--network=${cfg.networkBridge}" ];
       };
-    } // (genAttrs (map toString (range 0 cfg.judgeHostNumber)) mkJudgeHost);
+    } // listToAttrs (map (lambda k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 0 cfg.judgeHostNumber)));
 
     systemd.services.init-domjudge-network = {
       description =

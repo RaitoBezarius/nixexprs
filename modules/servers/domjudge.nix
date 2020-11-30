@@ -9,7 +9,7 @@ let
       CONTAINER_TIMEZONE = cfg.timezone;
       DOMSERVER_BASEURL = "http://domjudge-server/";
       DAEMON_ID = k;
-      JUDGEDAEMON_USERNAME = "judgedaemon";
+      JUDGEDAEMON_USERNAME = "judgehost";
       JUDGEDAEMON_PASSWORD = cfg.judgeDaemonPassword;
       DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
@@ -115,6 +115,7 @@ in {
     };
     dbPassword = mkOption { type = types.str; };
     rootDBPassword = mkOption { type = types.str; };
+    maxDBConnections = mkOption { type = types.int; default = 300; };
     timezone = mkOption {
       type = types.str;
       default = "Europe/Paris";
@@ -138,6 +139,7 @@ in {
       "${domserverContainerName}" = {
         image = "domjudge/domserver:latest";
         dependsOn = [ "domjudge-mariadb" ];
+        cmd = [ "--max-connections ${toString cfg.maxDBConnections}"];
         environment = {
           CONTAINER_TIMEZONE = cfg.timezone;
           MYSQL_USER = "domjudge";

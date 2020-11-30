@@ -47,7 +47,7 @@ in {
 
     virtualisation.oci-containers.containers = {
       "domjudge-server" = {
-        image = "domjudge/domjudge:latest";
+        image = "domjudge/domserver:latest";
         dependsOn = [ "domjudge-mariadb" ];
         environment = {
           CONTAINER_TIMEZONE = cfg.timezone;

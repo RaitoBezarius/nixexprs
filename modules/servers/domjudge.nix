@@ -11,8 +11,8 @@ let
         CONTAINER_TIMEZONE = cfg.timezone;
         DOMSERVER_BASEURL = "domjudge-server";
         DAEMON_ID = k;
-        JUDGEDAEMON_USERNAME = cfg.judgeDaemon.username;
-        JUDGEDAEMON_PASSWORD = cfg.judgeDaemon.password;
+        JUDGEDAEMON_USERNAME = "judgedaemon";
+        JUDGEDAEMON_PASSWORD = cfg.judgeDaemonPassword;
         DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
       };
       volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
@@ -22,88 +22,88 @@ let
   dockercli = "${config.virtualisation.docker.package}/bin/docker";
   domserverContainerName = "domjudge-server";
   domserver-script = pkgs.writeScriptBin "domserver" ''
-    #!{pkgs.stdenv.shell}
-    DOMSERVER=${domserverContainerName}
-    ADMIN_PASSWORD_PATH="/opt/domjudge/domserver/etc/initial_admin_password.secret"
-    REST_API_PATH="/opt/domjudge/domserver/etc/restapi.secret"
-    SYMFONY_CONSOLE_PATH="/opt/domjudge/domserver/webapp/bin/console"
+        #!{pkgs.stdenv.shell}
+        DOMSERVER=${domserverContainerName}
+        ADMIN_PASSWORD_PATH="/opt/domjudge/domserver/etc/initial_admin_password.secret"
+        REST_API_PATH="/opt/domjudge/domserver/etc/restapi.secret"
+        SYMFONY_CONSOLE_PATH="/opt/domjudge/domserver/webapp/bin/console"
 
-    function usage() {
-      cat <<HEREDOC
-      Usage: domserver command
+        function usage() {
+          cat <<HEREDOC
+          Usage: domserver command
 
-      commands:
-        print_admin_password    print the initial admin password
-        print_rest_api_secret   print the REST API secret
-        shell                   drop into bash shell in the container
-        console                 Symfony console passthrough
-        tail                    tail the latest logs
+          commands:
+            print_admin_password    print the initial admin password
+            print_rest_api_secret   print the REST API secret
+            shell                   drop into bash shell in the container
+            console                 Symfony console passthrough
+            tail                    tail the latest logs
 
-      optional arguments:
-        -h, --help      show this help message and exit
-HEREDOC
-    }
+          optional arguments:
+            -h, --help      show this help message and exit
+    HEREDOC
+        }
 
-    function print_admin_password () {
-      ${dockercli} exec -it $DOMSERVER cat $ADMIN_PASSWORD_PATH
-    }
+        function print_admin_password () {
+          ${dockercli} exec -it $DOMSERVER cat $ADMIN_PASSWORD_PATH
+        }
 
-    function print_rest_api_secret () {
-      ${dockercli} exec -it $DOMSERVER cat $REST_API_PATH
-    }
+        function print_rest_api_secret () {
+          ${dockercli} exec -it $DOMSERVER cat $REST_API_PATH
+        }
 
-    function shell () {
-      ${dockercli} exec -it $DOMSERVER bash
-    }
+        function shell () {
+          ${dockercli} exec -it $DOMSERVER bash
+        }
 
-    function console () {
-      ${dockercli} exec -it $DOMSERVER $SYMFONY_CONSOLE_PATH
-    }
+        function console () {
+          ${dockercli} exec -it $DOMSERVER $SYMFONY_CONSOLE_PATH
+        }
 
-    function tail_logs () {
-      ${dockercli} tail -f $DOMSERVER
-    }
+        function tail_logs () {
+          ${dockercli} tail -f $DOMSERVER
+        }
 
-    while [ "$1" != "" ]; do
-      PARAM=`echo $1 | awk -F= '{print $1}'`
-      VALUE=`echo $1 | awk -F= '{print $2}'`
-      case $PARAM in
-          -h | --help)
-              usage
-              exit
-              ;;
-          print_admin_password)
-              print_admin_password
-              exit
-              ;;
-          print_rest_api_secret)
-              print_rest_api_secret
-              exit
-              ;;
-          shell)
-              shell
-              exit
-              ;;
-          console)
-              console
-              exit
-              ;;
-          tail)
-              tail_logs
-              exit
-              ;;
-          *)
-              echo "ERROR: unknown parameter \"$PARAM\""
-              usage
-              exit 1
-              ;;
-      esac
-      shift
-    done
+        while [ "$1" != "" ]; do
+          PARAM=`echo $1 | awk -F= '{print $1}'`
+          VALUE=`echo $1 | awk -F= '{print $2}'`
+          case $PARAM in
+              -h | --help)
+                  usage
+                  exit
+                  ;;
+              print_admin_password)
+                  print_admin_password
+                  exit
+                  ;;
+              print_rest_api_secret)
+                  print_rest_api_secret
+                  exit
+                  ;;
+              shell)
+                  shell
+                  exit
+                  ;;
+              console)
+                  console
+                  exit
+                  ;;
+              tail)
+                  tail_logs
+                  exit
+                  ;;
+              *)
+                  echo "ERROR: unknown parameter \"$PARAM\""
+                  usage
+                  exit 1
+                  ;;
+          esac
+          shift
+        done
 
-    usage
-    exit
-  '';
+        usage
+        exit
+      '';
 
 in {
   options.services.domjudge = {
@@ -126,12 +126,14 @@ in {
       type = types.port;
       default = 12345;
     };
-    judgeHostNumber = mkOption { type = types.integer; default = 1; };
+    judgeHostNumber = mkOption {
+      type = types.integer;
+      default = 1;
+    };
+    judgeDaemonPassword = mkOption { type = types.str; };
   };
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      domserver-script
-    ];
+    environment.systemPackages = [ domserver-script ];
 
     virtualisation.docker.enable = cfg.enable;
 
@@ -162,7 +164,7 @@ in {
         volumes = [ "${cfg.stateDir}/db:/var/lib/mysql" ];
         extraOptions = [ "--network=${cfg.networkBridge}" ];
       };
-    } // (genAttrs mkJudgeHost (range 0 cfg.judgeHostNumber));
+    } // (genAttrs (map toString (range 0 cfg.judgeHostNumber)) mkJudgeHost);
 
     systemd.services.init-domjudge-network = {
       description =
@@ -172,15 +174,15 @@ in {
 
       serviceConfig.Type = "oneshot";
       script = ''
-          # Put a true at the end to prevent getting non-zero return code, which will
-          # crash the whole service.
-          check=$(${dockercli} network ls | grep "${cfg.networkBridge}" || true)
-          if [ -z "$check" ]; then
-            ${dockercli} network create ${cfg.networkBridge}
-          else
-            echo "${cfg.networkBridge} already exists in docker"
-          fi
-        '';
+        # Put a true at the end to prevent getting non-zero return code, which will
+        # crash the whole service.
+        check=$(${dockercli} network ls | grep "${cfg.networkBridge}" || true)
+        if [ -z "$check" ]; then
+          ${dockercli} network create ${cfg.networkBridge}
+        else
+          echo "${cfg.networkBridge} already exists in docker"
+        fi
+      '';
     };
   };
 }

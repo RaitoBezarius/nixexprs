@@ -26,6 +26,7 @@ let
     DOMSERVER=${domserverContainerName}
     ADMIN_PASSWORD_PATH="/opt/domjudge/domserver/etc/initial_admin_password.secret"
     REST_API_PATH="/opt/domjudge/domserver/etc/restapi.secret"
+    SYMFONY_CONSOLE_PATH="/opt/domjudge/domserver/webapp/bin/console"
 
     function usage() {
       cat <<HEREDOC
@@ -35,6 +36,8 @@ let
         print_admin_password    print the initial admin password
         print_rest_api_secret   print the REST API secret
         shell                   drop into bash shell in the container
+        console                 Symfony console passthrough
+        tail                    tail the latest logs
 
       optional arguments:
         -h, --help      show this help message and exit
@@ -51,6 +54,14 @@ HEREDOC
 
     function shell () {
       ${dockercli} exec -it $DOMSERVER bash
+    }
+
+    function console () {
+      ${dockercli} exec -it $DOMSERVER $SYMFONY_CONSOLE_PATH
+    }
+
+    function tail_logs () {
+      ${dockercli} tail -f $DOMSERVER
     }
 
     while [ "$1" != "" ]; do
@@ -73,6 +84,14 @@ HEREDOC
               shell
               exit
               ;;
+          console)
+              console
+              exit
+              ;;
+          tail)
+              tail_logs
+              exit
+              ;;
           *)
               echo "ERROR: unknown parameter \"$PARAM\""
               usage
@@ -81,6 +100,9 @@ HEREDOC
       esac
       shift
     done
+
+    usage
+    exit
   '';
 
 in {
@@ -104,6 +126,7 @@ in {
       type = types.port;
       default = 12345;
     };
+    judgeHostNumber = mkOption { type = types.integer; default = 1; };
   };
   config = mkIf cfg.enable {
     environment.systemPackages = [
@@ -139,7 +162,7 @@ in {
         volumes = [ "${cfg.stateDir}/db:/var/lib/mysql" ];
         extraOptions = [ "--network=${cfg.networkBridge}" ];
       };
-    };
+    } // (genAttrs mkJudgeHost (range 0 cfg.judgeHostNumber));
 
     systemd.services.init-domjudge-network = {
       description =

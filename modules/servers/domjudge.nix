@@ -14,7 +14,7 @@ let
       DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
     # volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ]; Let's try without mounting it.
-    extraOptions = [ "--privileged" "--network=${cfg.networkBridge}" "--hostname judge" ];
+    extraOptions = [ "--privileged" "--network=${cfg.networkBridge}" "--hostname=judge" ];
   };
   dockercli = "${config.virtualisation.docker.package}/bin/docker";
   domserverContainerName = "domjudge-server";

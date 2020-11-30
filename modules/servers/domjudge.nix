@@ -161,7 +161,7 @@ in {
         volumes = [ "${cfg.stateDir}/db:/var/lib/mysql" ];
         extraOptions = [ "--network=${cfg.networkBridge}" ];
       };
-    } // listToAttrs (map (lambda k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 0 cfg.judgeHostNumber)));
+    } // listToAttrs (map (k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 0 cfg.judgeHostNumber)));
 
     systemd.services.init-domjudge-network = {
       description =

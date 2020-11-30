@@ -153,7 +153,7 @@ in {
 
       "domjudge-mariadb" = {
         image = "mariadb:10.5.8-focal";
-        cmd = [ "--max-connections ${toString cfg.maxDBConnections}"];
+        # cmd = [ "--max-connections ${toString cfg.maxDBConnections}"];
         environment = {
           MYSQL_ROOT_PASSWORD = cfg.rootDBPassword;
           MYSQL_USER = "domjudge";

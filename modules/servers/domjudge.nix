@@ -166,7 +166,7 @@ in {
     } // listToAttrs (map (k: nameValuePair "judgehost-${k}" (mkJudgeHost k)) (map toString (range 1 cfg.judgeHostNumber)));
 
     # Debug.
-    systemd.services."docker-judgehost-1".serviceConfig.StandardOutput = "journal";
+    systemd.services."docker-judgehost-1".serviceConfig.StandardOutput = mkForce "journal";
 
     systemd.services.init-domjudge-network = {
       description =

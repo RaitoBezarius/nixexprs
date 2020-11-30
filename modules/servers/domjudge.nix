@@ -7,7 +7,7 @@ let
     dependsOn = [ "domjudge-server" ];
     environment = {
       CONTAINER_TIMEZONE = cfg.timezone;
-      DOMSERVER_BASEURL = "domjudge-server";
+      DOMSERVER_BASEURL = "http://domjudge-server/";
       DAEMON_ID = k;
       JUDGEDAEMON_USERNAME = "judgedaemon";
       JUDGEDAEMON_PASSWORD = cfg.judgeDaemonPassword;

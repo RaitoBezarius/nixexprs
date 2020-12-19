@@ -9,6 +9,9 @@ let
     callPackage f (subsetArgs // extraArgs);
   self = rec {
 
+
+    galene = callPackage ./servers/galene {}; # Videoconferencing server
+
     mySourcehut = callPackage ./sourcehut {}; # Sourcehut
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.
     infcloud = callPackage ./web-apps/infcloud { }; # CalDAV/CardDAV web client.

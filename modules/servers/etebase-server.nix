@@ -55,6 +55,12 @@ in
         description = "Directory to store the Etebase server data.";
       };
 
+      runtimeDir = mkOption {
+        type = types.str;
+        default = "etebase-server";
+        description = "Directory so that systemd creates a RuntimeDirectory";
+      };
+
       port = mkOption {
         type = with types; nullOr port;
         default = 8001;
@@ -83,7 +89,7 @@ in
 
       unixSocket = mkOption {
         type = with types; nullOr str;
-        default = null;
+        default = "/run/${cfg.runtimeDir}/server.sock";
         description = "The path to the socket to bind to.";
         example = "/run/etebase-server/etebase-server.sock";
       };
@@ -161,6 +167,8 @@ in
         User = cfg.user;
         Restart = "always";
         WorkingDirectory = cfg.dataDir;
+        RuntimeDirectory = cfg.runtimeDir;
+        RuntimeDirectoryMode = "0775";
       };
       environment = {
         PYTHONPATH="${pythonEnv}/${pkgs.python3.sitePackages}";

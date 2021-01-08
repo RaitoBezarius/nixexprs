@@ -170,7 +170,7 @@ in
         # Auto-migrate on first run or if the package has changed
         versionFile="${cfg.dataDir}/src-version"
         if [[ $(cat "$versionFile" 2>/dev/null) != ${cfg.package} ]]; then
-          ${pkgs.etebase-server}/bin/etebase-server migrate
+          ${cfg.package}/bin/etebase-server migrate
           echo ${cfg.package} > "$versionFile"
         fi
       '';
@@ -180,7 +180,7 @@ in
           then "-u ${cfg.unixSocket}"
           else "-b ${cfg.host} -p ${toString cfg.port}";
         in ''
-          cd "${pkgs.etebase-server}/lib/etebase-server";
+          cd "${cfg.package}/lib/etebase-server";
           ${pkgs.python3Packages.daphne}/bin/daphne ${networking} \
             etebase_server.asgi:application
         '';

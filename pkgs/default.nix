@@ -16,7 +16,7 @@ let
     };
 
     galene = callPackage ./servers/galene {}; # Videoconferencing server
-    etebase = callPackage ./servers/etebase { # Etebase server for calendar & etc.
+    etebase-server = callPackage ./servers/etebase { # Etebase server for calendar & etc.
       inherit python3;
     };
 

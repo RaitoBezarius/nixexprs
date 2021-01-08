@@ -1,6 +1,6 @@
-{ pkgs }:
+{ pkgs, lib ? pkgs.lib }:
 let
-  callPackage = pkgs.lib.callPackageWith (pkgs // self);
+  callPackage = lib.callPackageWith (pkgs // self);
   callPackageWithMerged = attrName: f: extraArgs:
     let
       mergedSubset = pkgs.${attrName} // self.${attrName};
@@ -9,8 +9,16 @@ let
     callPackage f (subsetArgs // extraArgs);
   self = rec {
 
+    parentOverrides = self: super: python3PackagesPlus;
+    mergeOverrides = lib.foldr lib.composeExtensions (self: super: { });
+    python3 = pkgs.python3.override {
+      packageOverrides = self: super: python3PackagesPlus;
+    };
 
     galene = callPackage ./servers/galene {}; # Videoconferencing server
+    etebase = callPackage ./servers/etebase { # Etebase server for calendar & etc.
+      inherit python3;
+    };
 
     mySourcehut = callPackage ./sourcehut {}; # Sourcehut
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.

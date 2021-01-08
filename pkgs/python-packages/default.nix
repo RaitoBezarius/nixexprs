@@ -9,4 +9,8 @@
     python3 = python;
     inherit wafHook;
   };
+
+  drf-nested-routers = callPackage ./drf-nested-routers {
+    inherit (python.pkgs) buildPythonPackage fetchPypi setuptools django djangorestframework;
+  };
 }

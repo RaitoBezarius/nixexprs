@@ -189,12 +189,10 @@ in
     users = optionalAttrs (cfg.user == defaultUser) {
       users.${defaultUser} = {
         group = defaultUser;
-        uid = config.ids.uids.etebase-server;
         home = cfg.dataDir;
       };
 
       groups.${defaultUser} = {
-        gid = config.ids.gids.etebase-server;
       };
     };
 

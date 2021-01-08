@@ -1,13 +1,28 @@
-{ lib, python3, fetchFromGitHub, mergeOverrides, parentOverrides }:
+{ lib, python3, fetchFromGitHub, mergeOverrides, parentOverrides, makeWrapper }:
 
 let
-  py = python3.override {
+  python = python3.override {
     packageOverrides = mergeOverrides [ parentOverrides (self: super: {
-        django = super.django_3;
-      }) ];
-    };
+      django = super.django_3;
+    }) ];
+  };
+  runtimePackages = with python.pkgs.pythonPackages; [
+    asgiref
+    cffi
+    django
+    django-cors-headers
+    djangorestframework
+    drf-nested-routers
+    msgpack
+    psycopg2
+    pycparser
+    pynacl
+    pytz
+    six
+    sqlparse
+  ];
 in
-  with py.pkgs;
+  with python.pkgs;
 
 pythonPackages.buildPythonApplication rec {
   pname = "etebase-server";
@@ -23,21 +38,16 @@ pythonPackages.buildPythonApplication rec {
 
   patches = [ ./secret.patch ];
 
-  propagatedBuildInputs = with pythonPackages; [
-    asgiref
-    cffi
-    django
-    django-cors-headers
-    djangorestframework
-    drf-nested-routers
-    msgpack
-    psycopg2
-    pycparser
-    pynacl
-    pytz
-    six
-    sqlparse
-  ];
+  nativeBuildInputs = [ makeWrapper ];
+  propagatedBuildInputs = runtimePackages;
+
+  pythonEnv = python.withPackages (_: runtimePackages);
+
+  passthru = {
+    inherit python runtimePackages;
+  };
+
+  # outputs = [ "share" "bin" "lib" ];
 
   installPhase = ''
     mkdir -p "$out/bin" "$out/lib"
@@ -51,9 +61,8 @@ pythonPackages.buildPythonApplication rec {
 
     cp -r "." "$out/lib/${pname}"
 
-    ln -s "$out/lib/${pname}/manage.py" "$out/bin/${pname}"
-    wrapProgram "$out/bin/${pname}" --prefix PYTHONPATH : "$PYTHONPATH"
-    chmod +x "$out/bin/etebase-server"
+    makeWrapper $pythonEnv/bin/python $out/bin/${pname} \
+      --add-flags $out/lib/${pname}/manage.py
   '';
 
   meta = with lib; {

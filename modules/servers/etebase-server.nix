@@ -12,7 +12,7 @@ let
   dbConfig = {
     sqlite3 = ''
       engine = django.db.backends.sqlite3
-      name = db.sqlite3
+      name = ${cfg.dataDir}/db.sqlite3
     '';
   };
 

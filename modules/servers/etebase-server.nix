@@ -19,6 +19,12 @@ let
   configIni = toString (pkgs.writeText "etebase-server.ini" ''
     [global]
     secret_file = ${if cfg.secretFile != null then cfg.secretFile else ""}
+    static_root = ${cfg.staticDir}
+    media_root = ${cfg.mediaDir}
+    static_url = ${cfg.staticUrl}
+    media_url = ${cfg.mediaUrl}
+    time_zone = ${cfg.timeZone}
+    language_code = ${cfg.languageCode}
     debug = false
 
     [allowed_hosts]
@@ -28,6 +34,12 @@ let
     [database]
     ${dbConfig."${cfg.database.type}"}
   '');
+
+  etebaseManageScript = pkgs.writeScriptBin "etebase-manage" ''
+    #!${pkgs.stdenv.shell}
+    export ETEBASE_EASY_CONFIG_PATH="${if cfg.customIni != null then cfg.customIni else configIni}";
+    exec ${cfg.package}/bin/etebase-server "$@"
+  '';
 
   defaultUser = "etebase-server";
 in
@@ -53,6 +65,42 @@ in
         type = types.str;
         default = "/var/lib/etebase-server";
         description = "Directory to store the Etebase server data.";
+      };
+
+      mediaDir = mkOption {
+        type = types.str;
+        default = "${cfg.dataDir}/media";
+        description = "Directory to store the Etebase media data.";
+      };
+
+      staticDir = mkOption {
+        type = types.str;
+        default = "${cfg.dataDir}/static";
+        description = "Directory to store the Etebase static data.";
+      };
+
+      mediaUrl = mkOption {
+        type = types.str;
+        default = "/user-media/";
+        description = "Path for reverse server to load media files.";
+      };
+
+      staticUrl = mkOption {
+        type = types.str;
+        default = "/static/";
+        description = "Path for reverse server to load static files.";
+      };
+
+      languageCode = mkOption {
+        type = types.str;
+        default = "en-us";
+        description = "Language code for the server";
+      };
+
+      timeZone = mkOption {
+        type = types.str;
+        default = "UTC";
+        description = "Timezone for the server";
       };
 
       runtimeDir = mkOption {
@@ -154,6 +202,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    environment.systemPackages = [ etebaseManageScript ]; # Make available etebase-server.
 
     systemd.tmpfiles.rules = [
       "d '${cfg.dataDir}' - ${cfg.user} ${config.users.users.${cfg.user}.group} - -"
@@ -179,6 +228,7 @@ in
         versionFile="${cfg.dataDir}/src-version"
         if [[ $(cat "$versionFile" 2>/dev/null) != ${cfg.package} ]]; then
           ${cfg.package}/bin/etebase-server migrate
+          ${cfg.package}/bin/etebase-server collectstatic
           echo ${cfg.package} > "$versionFile"
         fi
       '';

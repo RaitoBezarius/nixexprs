@@ -121,6 +121,9 @@ let
   };
 in
   {
+    # Disable nixpkgs module.
+    disabledModules = [ "services/networking/sniproxy.nix" ];
+
     options.services.sniproxy = {
       enable = mkEnableOption "Enable the SNI proxy (sniproxy) server";
       group = mkOption { default = "sniproxy"; };

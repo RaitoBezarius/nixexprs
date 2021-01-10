@@ -23,9 +23,18 @@ let
     }
 
   '';
+  mkResolver = resolver: ''
+    resolver {
+      ${optionalString (resolver.nameserver != null) "nameserver ${resolver.nameserver}"}
+      ${optionalString (resolver.mode != null) "mode ${resolver.mode}"}
+    }
+
+  '';
   settingsContents = ''
     user ${cfg.user}
     group ${cfg.group}
+
+    ${optionalString (cfg.resolver != null) (mkResolver cfg.resolver)}
 
     error_log {
       syslog daemon
@@ -93,6 +102,23 @@ let
     };
   };
 
+  resolverOpts = {
+    options = {
+      nameserver = mkOption {
+        description = "DNS server to use for downstream resolution";
+        type = types.nullOr types.str;
+        default = null;
+        example = "1.1.1.1";
+      };
+
+      mode = mkOption {
+        description = "Mode for resolution (e.g. ipv6_first, ipv6_only, ipv4_only)";
+        type = types.nullOr types.str;
+        default = null;
+        example = "ipv6_first";
+      };
+    };
+  };
 in
   {
     options.services.sniproxy = {
@@ -105,6 +131,15 @@ in
         default = pkgs.sniproxy;
         defaultText = "pkgs.sniproxy";
         type = types.package;
+      };
+
+      resolver = mkOption {
+        description = "Resolver to use in sniproxy downstream resolution";
+        default = null;
+        type = types.nullOr (types.submodule resolverOpts);
+        example = ''
+          { nameserver = "1.1.1.1"; mode = "ipv6_first"; }
+        '';
       };
 
       listeners = mkOption {

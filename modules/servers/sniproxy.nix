@@ -202,6 +202,7 @@ in
           WorkingDirectory = cfg.stateDirectory;
           ExecStart = "${cfg.package}/bin/sniproxy -c ${settingsFile} -f";
           Restart = "always";
+          AmbientCapabilities = "CAP_NET_BIND_SERVICE";
         };
       };
     };

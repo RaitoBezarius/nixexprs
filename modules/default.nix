@@ -5,4 +5,5 @@
   oragono = ./servers/oragono.nix;
   inspircd = ./servers/inspircd;
   domjudge = ./servers/domjudge.nix;
+  sniproxy = ./servers/sniproxy.nix;
 }

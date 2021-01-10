@@ -25,10 +25,14 @@ let
       sha256 = "0j07m6hy6mvjk68ysg9z83lksn8sm6dbv7l1blk39rp4ks6kybzp";
     };
 
+    passthru = {
+      withCustomAPI = mkEteSyncClient;
+    };
+
     REACT_APP_DEFAULT_API_PATH = customAPI;
     packageJSON = ./package.json;
     yarnLock = ./yarn.lock;
     yarnNix = ./yarn.nix;
   };
 in
-(mkEteSyncClient "etesync.com") // { passthru.withCustomAPI = mkEteSyncClient; }
+(mkEteSyncClient "etesync.com")

@@ -19,7 +19,7 @@ let
   '';
   mkTable = table: ''
     table ${table.name} {
-      ${concatMapStrings mkTableRule table.rules}
+      ${concatMapStrings mkTableRule table.value}
     }
 
   '';
@@ -46,6 +46,7 @@ let
     }
 
     ${concatMapStrings mkListener cfg.listeners}
+    ${concatMapStrings mkTable (mapAttrsToList nameValuePair cfg.tables)}
 
     ${cfg.extraConfig}
   '';

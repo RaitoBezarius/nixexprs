@@ -180,18 +180,19 @@ in
     };
 
     config = mkIf cfg.enable {
+
       users.groups.${cfg.group} = {};
       users.users.${cfg.user} = {};
+
+      systemd.tmpfiles.rules = [
+        "d '${cfg.stateDirectory}' - ${cfg.user} ${cfg.group} - -"
+      ];
 
       systemd.services.sniproxy = {
         description = "SNIProxy (sniproxy) server";
 
-        after = [ "network-online.target" "syslog.target" ];
+        after = [ "network.target" "systempd-tmpfiles-setup.service" ];
         wantedBy = [ "multi-user.target" ];
-
-        preStart = ''
-          mkdir -p ${cfg.stateDirectory}
-        '';
 
         serviceConfig = {
           Type = "forking";

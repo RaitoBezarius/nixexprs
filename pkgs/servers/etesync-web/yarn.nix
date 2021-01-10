@@ -1554,19 +1554,19 @@
       };
     }
     {
+      name = "_types_memoizee___memoizee_0.4.4.tgz";
+      path = fetchurl {
+        name = "_types_memoizee___memoizee_0.4.4.tgz";
+        url  = "https://registry.yarnpkg.com/@types/memoizee/-/memoizee-0.4.4.tgz";
+        sha1 = "a8a5e917ef70c79523b8b8d57f529e49616a760c";
+      };
+    }
+    {
       name = "_types_minimatch___minimatch_3.0.3.tgz";
       path = fetchurl {
         name = "_types_minimatch___minimatch_3.0.3.tgz";
         url  = "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz";
         sha1 = "3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d";
-      };
-    }
-    {
-      name = "_types_node_rsa___node_rsa_1.0.0.tgz";
-      path = fetchurl {
-        name = "_types_node_rsa___node_rsa_1.0.0.tgz";
-        url  = "https://registry.yarnpkg.com/@types/node-rsa/-/node-rsa-1.0.0.tgz";
-        sha1 = "4432df6227c5de734f5f0fbea2420ffb51c51e44";
       };
     }
     {
@@ -1687,14 +1687,6 @@
         name = "_types_redux_logger___redux_logger_3.0.8.tgz";
         url  = "https://registry.yarnpkg.com/@types/redux-logger/-/redux-logger-3.0.8.tgz";
         sha1 = "1fb6d26917bb198792bb1cf57feb31cae1532c5d";
-      };
-    }
-    {
-      name = "_types_sjcl___sjcl_1.0.29.tgz";
-      path = fetchurl {
-        name = "_types_sjcl___sjcl_1.0.29.tgz";
-        url  = "https://registry.yarnpkg.com/@types/sjcl/-/sjcl-1.0.29.tgz";
-        sha1 = "bd154ee15421fe24be2db4a20322f38069c1ca71";
       };
     }
     {
@@ -4434,6 +4426,14 @@
       };
     }
     {
+      name = "es6_weak_map___es6_weak_map_2.0.3.tgz";
+      path = fetchurl {
+        name = "es6_weak_map___es6_weak_map_2.0.3.tgz";
+        url  = "https://registry.yarnpkg.com/es6-weak-map/-/es6-weak-map-2.0.3.tgz";
+        sha1 = "b6da1f16cc2cc0d9be43e6bdbfc5e7dfcdf31d53";
+      };
+    }
+    {
       name = "escalade___escalade_3.0.2.tgz";
       path = fetchurl {
         name = "escalade___escalade_3.0.2.tgz";
@@ -4666,11 +4666,11 @@
       };
     }
     {
-      name = "etesync___etesync_0.3.1.tgz";
+      name = "event_emitter___event_emitter_0.3.5.tgz";
       path = fetchurl {
-        name = "etesync___etesync_0.3.1.tgz";
-        url  = "https://registry.yarnpkg.com/etesync/-/etesync-0.3.1.tgz";
-        sha1 = "2af257d5617679177d93fb8f6bdaf64462aa15e0";
+        name = "event_emitter___event_emitter_0.3.5.tgz";
+        url  = "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz";
+        sha1 = "df8c69eef1647923c7157b9ce83840610b02cc39";
       };
     }
     {
@@ -6298,6 +6298,14 @@
       };
     }
     {
+      name = "is_promise___is_promise_2.2.2.tgz";
+      path = fetchurl {
+        name = "is_promise___is_promise_2.2.2.tgz";
+        url  = "https://registry.yarnpkg.com/is-promise/-/is-promise-2.2.2.tgz";
+        sha1 = "39ab959ccbf9a774cf079f7b40c7a26f763135f1";
+      };
+    }
+    {
       name = "is_regex___is_regex_1.1.1.tgz";
       path = fetchurl {
         name = "is_regex___is_regex_1.1.1.tgz";
@@ -7298,6 +7306,14 @@
       };
     }
     {
+      name = "lru_queue___lru_queue_0.1.0.tgz";
+      path = fetchurl {
+        name = "lru_queue___lru_queue_0.1.0.tgz";
+        url  = "https://registry.yarnpkg.com/lru-queue/-/lru-queue-0.1.0.tgz";
+        sha1 = "2738bd9f0d3cf4f84490c5736c48699ac632cda3";
+      };
+    }
+    {
       name = "make_dir___make_dir_2.1.0.tgz";
       path = fetchurl {
         name = "make_dir___make_dir_2.1.0.tgz";
@@ -7399,6 +7415,14 @@
         name = "memoize_one___memoize_one_5.1.1.tgz";
         url  = "https://registry.yarnpkg.com/memoize-one/-/memoize-one-5.1.1.tgz";
         sha1 = "047b6e3199b508eaec03504de71229b8eb1d75c0";
+      };
+    }
+    {
+      name = "memoizee___memoizee_0.4.14.tgz";
+      path = fetchurl {
+        name = "memoizee___memoizee_0.4.14.tgz";
+        url  = "https://registry.yarnpkg.com/memoizee/-/memoizee-0.4.14.tgz";
+        sha1 = "07a00f204699f9a95c2d9e77218271c7cd610d57";
       };
     }
     {
@@ -7746,6 +7770,14 @@
       };
     }
     {
+      name = "next_tick___next_tick_1.1.0.tgz";
+      path = fetchurl {
+        name = "next_tick___next_tick_1.1.0.tgz";
+        url  = "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz";
+        sha1 = "1836ee30ad56d67ef281b22bd199f709449b35eb";
+      };
+    }
+    {
       name = "next_tick___next_tick_1.0.0.tgz";
       path = fetchurl {
         name = "next_tick___next_tick_1.0.0.tgz";
@@ -7823,14 +7855,6 @@
         name = "node_releases___node_releases_1.1.60.tgz";
         url  = "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.60.tgz";
         sha1 = "6948bdfce8286f0b5d0e5a88e8384e954dfe7084";
-      };
-    }
-    {
-      name = "node_rsa___node_rsa_1.1.1.tgz";
-      path = fetchurl {
-        name = "node_rsa___node_rsa_1.1.1.tgz";
-        url  = "https://registry.yarnpkg.com/node-rsa/-/node-rsa-1.1.1.tgz";
-        sha1 = "efd9ad382097782f506153398496f79e4464434d";
       };
     }
     {
@@ -10522,22 +10546,6 @@
       };
     }
     {
-    name = "sjcl";
-    path =
-      let
-        repo = fetchgit {
-          url = "https://github.com/etesync/sjcl";
-          rev = "f259515e3c5cf8f437cdfa99c1cf0a8ad7321556";
-          sha256 = "1fvq1lw76vdv62ayvi2h51gaqs5i52sxyakx2hpl086aipqx5pjq";
-        };
-      in
-        runCommandNoCC "sjcl" { buildInputs = [gnutar]; } ''
-          # Set u+w because tar-fs can't unpack archives with read-only dirs
-          # https://github.com/mafintosh/tar-fs/issues/79
-          tar cf $out --mode u+w -C ${repo} .
-        '';
-  }
-    {
       name = "slash___slash_1.0.0.tgz";
       path = fetchurl {
         name = "slash___slash_1.0.0.tgz";
@@ -11175,6 +11183,14 @@
         name = "timers_browserify___timers_browserify_2.0.11.tgz";
         url  = "https://registry.yarnpkg.com/timers-browserify/-/timers-browserify-2.0.11.tgz";
         sha1 = "800b1f3eee272e5bc53ee465a04d0e804c31211f";
+      };
+    }
+    {
+      name = "timers_ext___timers_ext_0.1.7.tgz";
+      path = fetchurl {
+        name = "timers_ext___timers_ext_0.1.7.tgz";
+        url  = "https://registry.yarnpkg.com/timers-ext/-/timers-ext-0.1.7.tgz";
+        sha1 = "6f57ad8578e07a3fb9f91d9387d65647555e25c6";
       };
     }
     {

@@ -198,7 +198,7 @@ in
           User = cfg.user;
           Group = cfg.group;
           WorkingDirectory = cfg.stateDirectory;
-          ExecStart = "${cfg.package}/bin/sniproxy -c ${cfg.settingsFile} -f";
+          ExecStart = "${cfg.package}/bin/sniproxy -c ${settingsFile} -f";
           Restart = "always";
         };
       };

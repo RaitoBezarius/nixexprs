@@ -4,7 +4,7 @@ let
   cfg = config.services.sniproxy;
   settingsFile = (pkgs.writeText "sniproxy-cfg" cfg.settings);
   mkListener = listener: ''
-    listener ${listener.address}:${listener.port} {
+    listener ${listener.address}:${toString listener.port} {
       protocol ${listener.protocol}
 
       table ${listener.table}

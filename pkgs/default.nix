@@ -19,6 +19,8 @@ let
     etebase-server = callPackage ./servers/etebase { # Etebase server for calendar & etc.
       inherit python3;
     };
+    etesync-web = callPackage ./servers/etesync-web {}; # Etesync web client.
+    etesync-web-personal = (etesync-web.withCustomAPI "etebase.v6.lahfa.xyz"); # Personal instance.
 
     mySourcehut = callPackage ./sourcehut {}; # Sourcehut
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.

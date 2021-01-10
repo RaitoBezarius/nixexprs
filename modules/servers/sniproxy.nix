@@ -109,7 +109,7 @@ in
 
       listeners = mkOption {
         description = "Listeners section";
-        type = with types; nullOr (listOf (submodule listenersOpts);
+        type = with types; nullOr (listOf (submodule listenersOpts));
         example = ''
           [ { address = "127.0.0.1"; port = 443; protocol = "tls"; table = "vhosts"; fallback = "192.0.2.5:443"; } ]
         '';

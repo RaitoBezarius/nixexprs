@@ -4,7 +4,7 @@ let
   mkEteSyncClient = customAPI:
   mkYarnPackage rec {
     pname = "etesync-web";
-    version = "v0.5.1";
+    version = "v0.6.1";
 
     # yarnFlags = defaultYarnFlags ++ [ "--production=yes"];
 
@@ -22,7 +22,7 @@ let
 
     src = fetchurl {
       url = "https://github.com/etesync/etesync-web/archive/${version}.tar.gz";
-      sha256 = "0j07m6hy6mvjk68ysg9z83lksn8sm6dbv7l1blk39rp4ks6kybzp";
+      sha256 = "0ggvsr7d576mfnimwnssp8q7caqgyyj700j6wfmaa0xd3d9jhvmm";
     };
 
     passthru = {

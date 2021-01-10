@@ -56,14 +56,14 @@ let
         description = "IP Address to listen on";
         example = "127.0.0.1";
         default = "127.0.0.1";
-        types = types.str;
+        type = types.str;
       };
 
       port = mkOption {
         description = "Port to listen on";
         example = 443;
         default = 443;
-        types = types.port;
+        type = types.port;
       };
 
       protocol = mkOption {

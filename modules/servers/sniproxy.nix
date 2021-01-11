@@ -196,7 +196,7 @@ in
         wantedBy = [ "multi-user.target" ];
 
         serviceConfig = {
-          Type = "forking";
+          Type = "simple";
           User = cfg.user;
           Group = cfg.group;
           WorkingDirectory = cfg.stateDirectory;

@@ -32,7 +32,6 @@ let
           version = "1.3.3";
           intro = "src/game/intro.lean";
         };
-        noLibrary = true;
       };
     };
 

@@ -4,6 +4,11 @@ let
   cfg = config.services.lean-games;
   virtualHostOpts = {
     options = {
+      enableACME = mkOption {
+        description = "Use Let's Encrypt and force SSL.";
+        default = true;
+        type = types.bool;
+      };
       package = mkOption {
         description = "Lean game package source";
         example = "pkgs.lean-games.nng";
@@ -23,6 +28,11 @@ in
 
     config = mkIf cfg.enable {
       services.nginx.virtualHosts = mapAttrs' (name: value: {
+        {
+          root = value.package;
+          enableACME = value.enableACME;
+          forceSSL = value.enableACME;
+        }
       }) cfg.virtualHosts;
     }
   }

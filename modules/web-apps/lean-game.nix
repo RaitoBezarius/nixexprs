@@ -28,11 +28,9 @@ in
 
     config = mkIf cfg.enable {
       services.nginx.virtualHosts = mapAttrs' (name: value: {
-        {
-          root = value.package;
-          enableACME = value.enableACME;
-          forceSSL = value.enableACME;
-        }
+        root = value.package;
+        enableACME = value.enableACME;
+        forceSSL = value.enableACME;
       }) cfg.virtualHosts;
-    }
+    };
   }

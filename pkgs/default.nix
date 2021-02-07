@@ -15,10 +15,21 @@ let
       packageOverrides = self: super: python3PackagesPlus;
     };
 
+    lean342 = pkgs.lean.override {
+      src = fetchFromGitHub {
+        owner = "leanprover-community";
+        repo = "lean";
+        rev = "cbd2b6686ddb566028f5830490fe55c0b3a9a4cb";
+        sha256 = "0zpnfg6kyg120rrdr336i1lymmzz4xgcqpn96iavhzhlaanmx55l";
+      };
+    };
+
     lean-game-maker = callPackage ./tools/lean-game-maker {
       python = pkgs.python3;
     }; # Lean game maker runtime
-    make-lean-game = callPackage ./tools/make-lean-game.nix {}; # Lean game maker function
+    make-lean-game = callPackage ./tools/make-lean-game.nix {
+      lean = lean342; # FIXME: find a way to magically handle multiple versions of Lean at the same time and generate the proper JS/WASM versions.
+    }; # Lean game maker function
     lean-games = {
       nng = callPackage ./lean-games/nng.nix {};
     };

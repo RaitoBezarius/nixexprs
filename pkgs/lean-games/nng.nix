@@ -9,7 +9,6 @@ make-lean-game {
   gameConfig = {
     name = "Natural Number Game";
     version = "1.3.3";
-    intro = "src/game/intro.lean";
   };
   leanpkgTOML = ./leanpkg-nng.toml;
 }

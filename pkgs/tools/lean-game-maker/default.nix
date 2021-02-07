@@ -47,8 +47,8 @@ let
   src = fetchFromGitHub {
     owner = "RaitoBezarius";
     repo = "Lean-game-maker";
-    rev = "2664758f6d4782c08ae8fc22bdda9f9a9b1f9f69";
-    sha256 = "1p268i95izjll594l3bjv5xm5ls2lspkvwizscp30dq3z7z7g72a";
+    rev = "304b3091863baabffff52dacd332e2177baa61a3";
+    sha256 = "0l2whwfgfrv6x7ri09dppa73qd7yig1lf9r20q3rji843jk2mqnn";
   };
 in
   with python.pkgs;
@@ -58,8 +58,13 @@ pythonPackages.buildPythonApplication rec {
 
   inherit src;
 
-  preBuild = ''
-    ln -s ${mkLeanClientInteractiveInterface src} src/interactive_interface/dist
+  preBuild =
+  let
+    interactiveInterfaceFiles = mkLeanClientInteractiveInterface src;
+  in
+  ''
+    ln -s ${interactiveInterfaceFiles} src/interactive_interface/dist
+    echo "src/interactive_interface/dist → ${interactiveInterfaceFiles}"
   '';
 
   propagatedBuildInputs = pythonPkgs ++ [ gettext ];

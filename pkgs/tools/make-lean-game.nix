@@ -15,7 +15,7 @@ let
       url = dep.git;
       ref = "master";
       inherit (dep) rev;
-      leaveDotGit = true;
+      # leaveDotGit = true;
     };
   in
     "ln -s ${src} _target/deps/${name}";

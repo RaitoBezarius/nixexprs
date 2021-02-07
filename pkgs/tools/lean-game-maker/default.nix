@@ -54,7 +54,7 @@ in
   with python.pkgs;
 pythonPackages.buildPythonApplication rec {
   pname = "lean-game-maker";
-  version = "2020-02-05"; # lack of versioning :/
+  version = "2020-02-07"; # lack of versioning :/
 
   inherit src;
 

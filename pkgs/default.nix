@@ -44,8 +44,6 @@ let
           substituteInPlace src/CMakeLists.txt \
           --replace "include(GetGitRevisionDescription)" "" \
           --replace "get_git_head_revision(GIT_REFSPEC GIT_SHA1)" "set(GIT_SHA1 \"${githashSha1}\")"
-
-          cat src/CMakeLists.txt
         '';
     });
 

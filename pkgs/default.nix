@@ -15,13 +15,24 @@ let
       packageOverrides = self: super: python3PackagesPlus;
     };
 
-    lean342 = pkgs.lean.overrideAttrs (old: {
-      src = pkgs.fetchFromGitHub {
-        owner = "leanprover-community";
-        repo = "lean";
-        rev = "cbd2b6686ddb566028f5830490fe55c0b3a9a4cb";
-        sha256 = "0zpnfg6kyg120rrdr336i1lymmzz4xgcqpn96iavhzhlaanmx55l";
-      };
+    lean-emscripten = (pkgs.lean.override {
+      stdenv = pkgs.emscriptenStdenv;
+    }).overrideDerivation (old: {
+      pname = "lean-emscripten";
+      inherit (old) buildInputs;
+      dontStrip = true;
+
+      NODE_OPTIONS = "--max-old-space-size=4096";
+      configurePhase = ''
+        runHook preConfigure
+
+        emcmake cmake src/ -DCMAKE_BUILD_TYPE=Emscripten
+
+        runHook postConfigure
+      '';
+      buildPhase = ''
+        emcmake make
+      '';
     });
 
     lean-game-maker = callPackage ./tools/lean-game-maker {

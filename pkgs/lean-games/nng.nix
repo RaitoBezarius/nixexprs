@@ -11,4 +11,5 @@ make-lean-game {
     version = "1.3.3";
   };
   leanpkgTOML = ./leanpkg-nng.toml;
+  replaceLocalTOML = true; # override Lean version.
 }

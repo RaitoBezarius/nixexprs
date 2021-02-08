@@ -35,14 +35,29 @@ let
       '';
     });
 
+    lean-with-githash =
+    let
+      githashSha1 = "13007ebb4de63859d9866c19f6e753bbf1852f41";
+    in
+      pkgs.lean.overrideAttrs (old: {
+        preConfigure = ''
+          substituteInPlace src/CMakeLists.txt \
+          --replace "include(GetGitRevisionDescription)" "" \
+          --replace "get_git_head_revision(GIT_REFSPEC GIT_SHA1)" "set(GIT_SHA1 \"${githashSha1}\")"
+
+          cat src/CMakeLists.txt
+        '';
+    });
+
     lean-game-maker = callPackage ./tools/lean-game-maker {
       python = pkgs.python3;
     }; # Lean game maker runtime
     make-lean-game = callPackage ./tools/make-lean-game.nix {
-      # lean = lean342; # FIXME: find a way to magically handle multiple versions of Lean at the same time and generate the proper JS/WASM versions.
+      lean = lean-with-githash; # FIXME: find a way to magically handle multiple versions of Lean at the same time and generate the proper JS/WASM versions.
     }; # Lean game maker function
     lean-games = {
       nng = callPackage ./lean-games/nng.nix {};
+      game-skeleton = callPackage ./lean-games/game-skeleton.nix {};
     };
 
     galene = callPackage ./servers/galene {}; # Videoconferencing server

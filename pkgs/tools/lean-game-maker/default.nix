@@ -47,8 +47,8 @@ let
   src = fetchFromGitHub {
     owner = "RaitoBezarius";
     repo = "Lean-game-maker";
-    rev = "1926c72ef00560a3e8389430b2829e5d8c7c859f";
-    sha256 = "1vcrnk3xgsac0xrz37vkzj2s7p87a7lldqsi0azxjsp5n012iqqw";
+    rev = "b27bb2f7bd92d4ed3b78e39e38fc76578c27b1a9";
+    sha256 = "034053fmp5zmwi5b4h41drfsq6aab6ya1y9b9lmfwm1ni55cvpjn";
   };
 in
   with python.pkgs;

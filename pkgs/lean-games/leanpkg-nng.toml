@@ -1,7 +1,7 @@
 [package]
 name = "natural_number_game"
 version = "0.1"
-lean_version = "3.24.0" # override Lean version.
+lean_version = "leanprover-community/lean:3.24.0" # override Lean version.
 path = "src"
 
 [dependencies]

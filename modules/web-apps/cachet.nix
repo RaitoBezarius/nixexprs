@@ -118,8 +118,8 @@ in
 
         if ! test -e "${cfg.dataDir}/db_created"; then
           if [ "${cfg.database.host}" = "localhost" ]; then
-            ${config.services.postgresql.package}/bin/psql postgres -c "CREATE ROLE ${cfg.database.user} WITH LOGIN NOCREATEDB NOCREATEROLE ENCRYPTED PASSWORD '${cfg.database.password}'"
-            ${config.services.postgresql.package}/bin/createdb --owner ${cfg.database.user} ${cfg.database.dbname}
+            sudo -u postgres ${config.services.postgresql.package}/bin/psql postgres -c "CREATE ROLE ${cfg.database.user} WITH LOGIN NOCREATEDB NOCREATEROLE ENCRYPTED PASSWORD '${cfg.database.password}'"
+            sudo -u postgres ${config.services.postgresql.package}/bin/createdb --owner ${cfg.database.user} ${cfg.database.dbname}
 
             touch ${cfg.dataDir}/db_created
           fi

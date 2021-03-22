@@ -7,4 +7,5 @@
   domjudge = ./servers/domjudge.nix;
   sniproxy = ./servers/sniproxy.nix;
   lean-games = ./web-apps/lean-game.nix;
+  cachet = ./web-apps/cachet.nix;
 }

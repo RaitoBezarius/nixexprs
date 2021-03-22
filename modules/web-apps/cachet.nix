@@ -53,6 +53,12 @@ in
 
     debug = mkEnableOption "debug mode";
 
+    package = mkOption {
+      type = types.package;
+      default = pkgs.cachet;
+      defaultText = "pkgs.cachet";
+    };
+
     hostName = mkOption {
       type = types.str;
       description = "";
@@ -119,7 +125,7 @@ in
           fi
         fi
 
-        ${pkgs.rsync}/bin/rsync -aI ${pkgs.cachet}/ ${cfg.dataDir}/cachet-home
+        ${pkgs.rsync}/bin/rsync -aI ${cfg.package}/ ${cfg.dataDir}/cachet-home
         ${pkgs.rsync}/bin/rsync -aI ${envfile} ${cfg.dataDir}/cachet-home/.env
         chown -R nginx:nginx ${cfg.dataDir}/cachet-home
         chmod -R u+w ${cfg.dataDir}/cachet-home

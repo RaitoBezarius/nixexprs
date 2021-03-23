@@ -8,9 +8,9 @@ let
     plugins = map (p: availablePlugins.${p}) cfg.plugins;
     init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
       /set sec.crypt.passphrase_command "cat ${cfg.secretsPassphraseFile}"
-      ${optional (cfg.relayBindAddress != null) "/set relay.network.bind_address ${cfg.relayBindAddress}"}
-      ${optional (cfg.relayPortSSL != null) "/set relay.port.ssl.weechat ${toString cfg.relayPortSSL}"}
-      ${optional (cfg.relayPort != null) "/set relay.port.weechat ${toString cfg.relayPort}"}
+      ${optionalString (cfg.relayBindAddress != null) "/set relay.network.bind_address ${cfg.relayBindAddress}"}
+      ${optionalString (cfg.relayPortSSL != null) "/set relay.port.ssl.weechat ${toString cfg.relayPortSSL}"}
+      ${optionalString (cfg.relayPort != null) "/set relay.port.weechat ${toString cfg.relayPort}"}
       /set logger.file.path ${cfg.ircLogsPath}
       /script install ${builtins.concatStringsSep " " cfg.scripts}
     ''}";
@@ -87,7 +87,7 @@ in
     };
     
     # Use mkMerge or something smarter.
-    networking.firewall.allowedTCPPorts = [] ++ optional (cfg.relayPort != null) [ cfg.relayPort ] ++ optional (cfg.relayPortSSL != null) [ cfg.relayPortSSL ];
+    networking.firewall.allowedTCPPorts = [] ++ (optional (cfg.relayPort != null) cfg.relayPort) ++ (optional (cfg.relayPortSSL != null) cfg.relayPortSSL);
 
     nixpkgs.overlays = [
       (self: super: {

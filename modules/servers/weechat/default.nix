@@ -85,8 +85,9 @@ in
       };
       wantedBy = [ "multi-user.target" ];
     };
-
-    networking.firewall.allowedTCPPorts = [ cfg.relayPort ];
+    
+    # Use mkMerge or something smarter.
+    networking.firewall.allowedTCPPorts = [] ++ optional (cfg.relayPort != null) [ cfg.relayPort ] ++ optional (cfg.relayPortSSL != null) [ cfg.relayPortSSL ];
 
     nixpkgs.overlays = [
       (self: super: {

@@ -79,7 +79,7 @@ in
       serviceConfig = {
         Type = "forking";
         User = cfg.user;
-        ReadWritePaths = [ ${cfg.ircLogsPath} ]; # Can read/write IRC logs.
+        ReadWritePaths = [ cfg.ircLogsPath ]; # Can read/write IRC logs.
         ExecStart     = "${pkgs.tmux}/bin/tmux -L weechat new-session -s weechat -d ${pkgs.zsh}/bin/zsh -lc 'exec ${weechat}/bin/weechat'";
         ExecStartPost = "${pkgs.tmux}/bin/tmux -L weechat set-option status off \\; set-option mouse off";
       };

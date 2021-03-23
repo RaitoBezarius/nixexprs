@@ -59,7 +59,7 @@ in
         type = types.nullOr types.str;
       };
       ircLogsPath = mkOption {
-        default = "${cfg.user}/.weechat/logs";
+        default = "${users.users.${cfg.user}.home}/.weechat/logs";
         type = types.str;
       };
       user = mkOption {

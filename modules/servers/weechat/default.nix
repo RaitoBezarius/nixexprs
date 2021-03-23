@@ -8,8 +8,9 @@ let
     plugins = map (p: availablePlugins.${p}) cfg.plugins;
     init = "/exec -oc cat ${builtins.toFile "weechat-init" ''
       /set sec.crypt.passphrase_command "cat ${cfg.secretsPassphraseFile}"
-      /set relay.network.bind_address ${cfg.relayBindAddress}
-      /set relay.port.weechat ${toString relayPort}
+      ${optional (cfg.relayBindAddress != null) "/set relay.network.bind_address ${cfg.relayBindAddress}"}
+      ${optional (cfg.relayPortSSL != null) "/set relay.port.ssl.weechat ${toString cfg.relayPortSSL}"}
+      ${optional (cfg.relayPort != null) "/set relay.port.weechat ${toString cfg.relayPort}"}
       /set logger.file.path ${cfg.ircLogsPath}
       /script install ${builtins.concatStringsSep " " cfg.scripts}
     ''}";
@@ -46,12 +47,16 @@ in
         ];
       };
       relayPort = mkOption {
-        default = 50340;
-        type = types.port;
+        default = null;
+        type = types.nullOr types.port;
+      };
+      relayPortSSL = mkOption {
+        default = null;
+        type = types.nullOr types.port;
       };
       relayBindAddress = mkOption {
-        default = "::/0";
-        type = types.str;
+        default = null;
+        type = types.nullOr types.str;
       };
       ircLogsPath = mkOption {
         default = "${cfg.user}/.weechat/logs";

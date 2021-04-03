@@ -75,6 +75,8 @@ let
       python = pkgs.python3;
       wafHook = callPackage ./development/wafHook {};
     };
+
+    wireguard-vanity-address = callPackage ./tools/wireguard-vanity-address.nix {};
   };
 in
 self

@@ -10,6 +10,10 @@
     inherit wafHook;
   };
 
+  netbox = callPackage ./netbox {
+    inherit python;
+  };
+
   drf-nested-routers = callPackage ./drf-nested-routers {
     inherit (python.pkgs) buildPythonPackage fetchPypi setuptools django djangorestframework;
   };

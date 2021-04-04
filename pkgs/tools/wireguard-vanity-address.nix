@@ -2,16 +2,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "wireguard-vanity-address";
-  version = "0.4.0";
+  version = "0.5.0";
 
   src = fetchFromGitHub {
     owner = "warner";
     repo = "wireguard-vanity-address";
-    rev = "v0.4.0";
-    sha256 = "1ni8isfg4c0szh2djhqlhynn1mj9qq2hpvlgx57hh7rxhiadqg2a";
+    rev = "12-count-scalars";
+    sha256 = "175vnjjf8z49k9p3x8qrnwpi23mhnccx6jh0nh5qmwbdsa98pn4z";
   };
 
-  cargoSha256 = "0wrilg7c0km9avpf86cjvw1590kvx8qgann0pj8wa56nlrbsnfdq";
+  cargoSha256 = "094yb8a8994cglcwhj15bhn32rc66qi0w0q71qpyq2b492gd3lng";
 
   meta = with lib; {
     description = "A WireGuard public key vanity generator.";

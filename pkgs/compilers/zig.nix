@@ -1,14 +1,14 @@
 { lib, stdenv, fetchFromGitHub, cmake, llvmPackages_11, libxml2, zlib, substituteAll }:
 
 llvmPackages_11.stdenv.mkDerivation rec {
-  version = "0.7.1";
+  version = "0.8.0";
   pname = "zig";
 
   src = fetchFromGitHub {
     owner = "RaitoBezarius";
     repo = pname;
     rev = "use-dwarf-everywhere"; # version;
-    sha256 = "10d1x2f81kyamcsq113i8i21bkxvz2x8rfh42aizn1inddjz924k";
+    sha256 = "sha256-LuPX+Cs2WnJl5f8zoZMd9/CHGhomnlpLga89PMZv1gc=";
   };
 
   nativeBuildInputs = [ cmake ];

@@ -77,6 +77,7 @@ let
     };
 
     wireguard-vanity-address = callPackage ./tools/wireguard-vanity-address.nix {};
+    zig = callPackage ./compilers/zig.nix {};
   };
 in
 self

@@ -1,6 +1,6 @@
-{ lib, stdenv, fetchFromGitHub, cmake, llvmPackages_11, libxml2, zlib, substituteAll }:
+{ lib, stdenv, fetchFromGitHub, cmake, llvmPackages_12, libxml2, zlib, substituteAll }:
 
-llvmPackages_11.stdenv.mkDerivation rec {
+llvmPackages_12.stdenv.mkDerivation rec {
   version = "0.8.0";
   pname = "zig";
 
@@ -13,9 +13,9 @@ llvmPackages_11.stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ cmake ];
   buildInputs = [
-    llvmPackages_11.clang-unwrapped
-    llvmPackages_11.llvm
-    llvmPackages_11.lld
+    llvmPackages_12.clang-unwrapped
+    llvmPackages_12.llvm
+    llvmPackages_12.lld
     libxml2
     zlib
   ];

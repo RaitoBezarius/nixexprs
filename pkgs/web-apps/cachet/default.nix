@@ -4,7 +4,9 @@
 
 let
   composerEnv = import ./composer-env.nix {
-    inherit (pkgs) stdenv lib writeTextFile fetchurl php74 unzip php74Packages;
+    inherit (pkgs) stdenv lib writeTextFile fetchurl unzip;
+    php = pkgs.php74;
+    phpPackages = pkgs.php74Packages;
   };
 in
 import ./php-packages.nix {

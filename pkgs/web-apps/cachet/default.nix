@@ -13,8 +13,8 @@ import ./php-packages.nix {
   src = pkgs.fetchFromGitHub {
     owner = "cachethq";
     repo = "cachet";
-    rev = "cfd173cf122d925b70d5133a37528db6120bea67";
-    sha256 = "0bvs4ag0z2iwgmga2n7v465pazdi19m103hbpm1j3a73kylh01lw";
+    rev = "cf86f65f1dabf283d001d0f5d380f26dd5cfb64c";
+    sha256 = "sha256-Hh5lStMBrIo6EYHJ7sXnbyRO783Z1Z/jxxie839Js8g=";
     fetchSubmodules = true;
   };
 }

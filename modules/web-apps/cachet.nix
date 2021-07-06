@@ -186,6 +186,7 @@ in
         "pm.max_spare_servers"= "2";
         "pm.max_requests" = "0";
       };
+      phpPackage = php;
     };
   };
 }

@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.services.cachet;
-
+  php = cfg.phpPackage;
   pgSuperUser = config.services.postgresql.superUser;
 
   envfile = pkgs.writeText "cachet-env" ''
@@ -57,6 +57,12 @@ in
       type = types.package;
       default = pkgs.cachet;
       defaultText = "pkgs.cachet";
+    };
+
+    phpPackage = mkOption {
+      type = types.package;
+      default = pkgs.php73;
+      defaultText = "pkgs.php73";
     };
 
     hostName = mkOption {
@@ -132,10 +138,10 @@ in
 
         # upgrade steps
         cd ${cfg.dataDir}/cachet-home/
-        ${pkgs.php}/bin/php artisan down
-        ${pkgs.php}/bin/php artisan app:update
-        ${pkgs.php}/bin/php artisan up
-        ${pkgs.php}/bin/php artisan config:cache
+        ${php}/bin/php artisan down
+        ${php}/bin/php artisan app:update
+        ${php}/bin/php artisan up
+        ${php}/bin/php artisan config:cache
       '';
     };
 

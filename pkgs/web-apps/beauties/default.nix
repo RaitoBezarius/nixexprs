@@ -1,4 +1,4 @@
-{ stdenv, buildGoModule, go-bindata, fetchFromGitHub }:
+{ lib, buildGoModule, go-bindata, fetchFromGitHub }:
 
 buildGoModule rec {
   pname = "beauties";
@@ -22,7 +22,7 @@ buildGoModule rec {
     sha256 = "0zkcmxlajcvhdpkllgz0cc6dq2y8ci9b6852wjr67q4wnbrgw38q";
   };
 
-  meta = with stdenv.lib; {
+  meta = with lib; {
     description = "Essential personal Internet services (pastebin, file upload, etc.)";
     homepage = "https://github.com/dsx/beauties";
     license = licenses.mit;

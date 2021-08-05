@@ -9,4 +9,5 @@
   lean-games = ./web-apps/lean-game.nix;
   weechat = ./servers/weechat;
   cachet = ./web-apps/cachet.nix;
+  isso = ./servers/isso.nix;
 }

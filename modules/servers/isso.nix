@@ -47,7 +47,9 @@ in
     };
 
     users.groups.${cfg.group} = {};
-    users.users.${cfg.user} = {};
+    users.users.${cfg.user} = {
+      isSystemUser = true;
+    };
 
     # TODO: use uwsgi.
     systemd.services.isso = {

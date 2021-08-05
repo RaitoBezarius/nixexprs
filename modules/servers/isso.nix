@@ -56,7 +56,7 @@ in
         Type = "simple";
         User = cfg.user;
         Group = cfg.group;
-        WorkingDirectory = "isso";
+        StateDirectory = "isso";
         Restart = "always";
         ExecStart = "${cfg.package}/bin/isso -c ${cfgFile} run";
       };

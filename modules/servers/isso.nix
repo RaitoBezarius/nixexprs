@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.services.isso;
-  settingsFormat = pkgs.format.ini {};
+  settingsFormat = pkgs.formats.ini {};
   cfgFile = settingsFormat.generate "isso.cfg" cfg.settings;
 in
 {

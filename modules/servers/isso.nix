@@ -8,10 +8,6 @@ in
 {
   options.services.isso = {
     enable = mkEnableOption "Enable the commenting server isso";
-    stateDirectory = mkOption {
-      type = types.str;
-      default = "/var/lib/isso";
-    };
     package = mkOption {
       type = types.package;
       default = pkgs.isso;
@@ -35,7 +31,7 @@ in
   config = mkIf cfg.enable {
     services.isso.settings = {
       general = {
-        dbpath = mkDefault "${cfg.stateDirectory}/comments.db";
+        dbpath = mkDefault "/var/lib/isso/comments.db";
         gravatar = mkDefault false;
       };
       moderation = {
@@ -60,7 +56,7 @@ in
         Type = "simple";
         User = cfg.user;
         Group = cfg.group;
-        WorkingDirectory = cfg.stateDirectory;
+        WorkingDirectory = "isso";
         Restart = "always";
         ExecStart = "${cfg.package}/bin/isso -c ${cfgFile} run";
       };

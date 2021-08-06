@@ -78,6 +78,9 @@ let
 
     wireguard-vanity-address = callPackage ./tools/wireguard-vanity-address.nix {};
     zig = callPackage ./compilers/zig.nix {};
+
+    isso = callPackage ./servers/isso {};
+    nodePackages = pkgs.nodePackages // (callPackage ./node-packages {});
   };
 in
 self

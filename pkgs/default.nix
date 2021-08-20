@@ -80,6 +80,27 @@ let
 
     wireguard-vanity-address = callPackage ./tools/wireguard-vanity-address.nix {};
     zig = callPackage ./compilers/zig.nix {};
+    emscripten = callPackage ./compilers/emscripten {
+      binaryen = pkgs.binaryen.overrideAttrs (old: {
+        version = "101";
+        src = pkgs.fetchFromGitHub {
+          owner = "WebAssembly";
+          repo = "binaryen";
+          rev = "version_101";
+          sha256 = "sha256-rNiZQIQqNbc1P2A6UTn0dRHeT3BS+nv1o81aPaJy+5U=";
+        };
+      });
+    };
+
+
+    emscriptenfastcompPackages = lib.dontRecurseIntoAttrs (callPackage ./compilers/emscripten/fastcomp {
+      emscriptenVersion = "1.39.1";
+    });
+    inherit (emscriptenfastcompPackages) emscriptenfastcomp;
+    emscripten1 = callPackage ./compilers/emscripten/emscripten1.nix {
+      emscriptenVersion = "1.39.1";
+    };
+    binaryen1 = callPackage ./compilers/binaryen1 {};
 
     isso = callPackage ./servers/isso {};
     nodePackages = pkgs.nodePackages // (callPackage ./node-packages {});

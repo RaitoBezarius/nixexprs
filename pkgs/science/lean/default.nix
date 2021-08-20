@@ -11,6 +11,6 @@ let
       };
     };
   };
-  brokenReleases = ["v9.9.9" "we-love-bors"];
+  brokenReleases = ["v9.9.9" "we-love-bors" "v3.12.0"];
 in
   mergeMap mkLeanRelease (lib.filterAttrs (name: _: !builtins.any (broken: name == broken) brokenReleases) leanReleases)

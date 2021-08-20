@@ -1,0 +1,16 @@
+name: Build and cache derivations
+on: [push]
+jobs:
+  build-all-lean-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.3.4
+      - uses: actions/install-nix-action@v13
+        with:
+          nix_path: nixpkgs=channel:nixos-unstable
+      - run: nix-build -E 'with import ./default.nix {}; builtins.attrValues lean'
+      - uses: cachix/cachix-action@vXX
+        with:
+          name: raitobezarius-nur
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          extraPullNames: nix-community

@@ -15,7 +15,10 @@ let
       packageOverrides = self: super: python3PackagesPlus;
     };
 
-    lean = callPackage ./science/lean {};
+    lean = import ./science/lean {
+      inherit lib callPackage;
+      inherit (pkgs) fetchFromGitHub;
+    };
 
     lean-emscripten = (pkgs.lean.override {
       stdenv = pkgs.emscriptenStdenv;

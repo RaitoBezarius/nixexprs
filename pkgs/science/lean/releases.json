@@ -1,0 +1,284 @@
+{
+  "v3.32.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-DvJYomohDUOy+IiAOfbKcvwgMdvDibma38xvbWfVyWg=",
+    "rev": "v3.32.1"
+  },
+  "v3.32.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-momffo8y9zAQEnUo2qlerpGBHf63kmuS5br7pqerbIM=",
+    "rev": "v3.32.0"
+  },
+  "v3.31.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-N8Ju7pSGssvt84/0e1o6G/p7fWM1c0Mzw+ftL1/++J4=",
+    "rev": "v3.31.0"
+  },
+  "v3.30.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-gJhbkl19iilNyfCt2TfPmghYA3yCjg6kS+yk/x/k14Y=",
+    "rev": "v3.30.0"
+  },
+  "v3.29.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-f2Gp76c+4R+ww52f1AyVZqixpei1WZPwr7pfgxMMb9Q=",
+    "rev": "v3.29.0"
+  },
+  "v3.28.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-IzoFE92F559WeSUCiYZ/fx2hrsyRzgOACr3/pzJ4OOY=",
+    "rev": "v3.28.0"
+  },
+  "v3.27.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-DSIWuMlweu9dsah5EdVCNQ9ADjYoEZongfw/Yh7/N/A=",
+    "rev": "v3.27.0"
+  },
+  "v3.26.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-xCULu6ljfyrA/Idr/BJ+3rLVmQqJZPoo+a7s++u50zU=",
+    "rev": "v3.26.0"
+  },
+  "v3.25.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-/TlVoqgTGhRfC8d70kXc+VsEkURUksKNGRjYcww+F8g=",
+    "rev": "v3.25.0"
+  },
+  "v3.24.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-npzBuZ37KrUYwC0TglryVTqui/3/t1ma1Zjpnty0d7c=",
+    "rev": "v3.24.0"
+  },
+  "v3.23.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-vWsAWrDXo0HNSJFSQk6BQzFYHYYJOfG8kkFXcwOjsyY=",
+    "rev": "v3.23.0"
+  },
+  "v3.22.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-1+4wLzgdXT9fJ7z3gCXZ2gHEzqGingveNVzNoS/1G8M=",
+    "rev": "v3.22.0"
+  },
+  "v3.21.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-/9H+gtc/zWA3Cq6GWQ6jEKJXy2IvmANKnrKqBk0X7rA=",
+    "rev": "v3.21.0"
+  },
+  "v3.20.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-fj21kRDIiXCMz4ky/SJAkzYcpKCVGrG4C20/mfZIXgA=",
+    "rev": "v3.20.0"
+  },
+  "v3.19.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-21Sr0MAUnToPoBXxqKwnDDfUHF3vRyBMF4ZtAoLBy7c=",
+    "rev": "v3.19.0"
+  },
+  "v3.18.4": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-Vq+849kdp3aJ5KHXL56vZpvZ05Y5e5UQN2SoGyIXrN4=",
+    "rev": "v3.18.4"
+  },
+  "v3.18.3": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-eKqULrC/XhlmVJvXHvcnFmQPbMLPRTr7JemUUfArDr0=",
+    "rev": "v3.18.3"
+  },
+  "v3.18.2": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-lhmlv6kqh0C87zd0v761LJvR4VHpl6o2xm1pQUEaaNo=",
+    "rev": "v3.18.2"
+  },
+  "v3.18.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-q6PdrAKck0tHYJKdrV0tv5C3aeQ+A3KeIeAEqq/yBw8=",
+    "rev": "v3.18.1"
+  },
+  "v3.18.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-azJidMuxQ6O1INub0uWPEWElpsVtII1GZbW4ysfqMBE=",
+    "rev": "v3.18.0"
+  },
+  "v3.17.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-RM4XrtE0TATqYDH0TvetQaQLyZuFhw2A3zR1lJ7Pzpc=",
+    "rev": "v3.17.1"
+  },
+  "v3.17.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-guQvFDC96RTBNjhfXWvB809Wl3qgLvP5KzXjeIgKAnM=",
+    "rev": "v3.17.0"
+  },
+  "v3.16.5": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-RWOLJsfNAqE+/Dkc3gR/d6F2BWeBZrfc87DP+7DxKmg=",
+    "rev": "v3.16.5"
+  },
+  "v3.16.4": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-HwAxHH4Gbu41NXYkFJ+yyuBSBY4GTubiLvkn5UBHjUc=",
+    "rev": "v3.16.4"
+  },
+  "v3.16.3": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-geUQlLhOSDzSSvgq6g2lxNznKNaG8E3ShNH1LMe7vFY=",
+    "rev": "v3.16.3"
+  },
+  "v3.16.2": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-kJJPL0D/FRi3McCG3sKOBP2/21HdXqxREXaWvPY7dTs=",
+    "rev": "v3.16.2"
+  },
+  "v3.16.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-whUF0GocDEOnMVdULZIOzBRN1hrALVYaUhVqh/LLwl0=",
+    "rev": "v3.16.1"
+  },
+  "v3.16.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-KQSrhqkGxNA8iJeBFyz6SIK2SkSeVbhh+bjrI5cxJuk=",
+    "rev": "v3.16.0"
+  },
+  "v3.15.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-ZhdjMDIakUrw8OCkrvXMst4/ZA2RxaVswyW7USzaiDo=",
+    "rev": "v3.15.0"
+  },
+  "v3.14.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-q3hUhDBbiL6Yw4/QN0a7Ek853lmYhsniSDAbIcdVn7Y=",
+    "rev": "v3.14.0"
+  },
+  "v3.13.2": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-7AmqmllIfpAaORbnNT4nGEXPKGCTGER47m2MVx49//g=",
+    "rev": "v3.13.2"
+  },
+  "v3.13.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-WemvERXE8qVHmD5M81ggA5e6DCXiUJH+X1T6AgGhZao=",
+    "rev": "v3.13.1"
+  },
+  "v3.13.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-7UpSbZvuA3X4ZSXGIqV1Nb0XmhnLOwiN0NRBJQRrO2U=",
+    "rev": "v3.13.0"
+  },
+  "v3.12.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-Olqr826Fywgwbg7wEmboPS1aTzDg5D+6IAa2ho6D7zY=",
+    "rev": "v3.12.0"
+  },
+  "v3.11.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-BCIfat8P2aFz/g8KiaeOfG4kI/3XJoZ5DC372doYiVM=",
+    "rev": "v3.11.0"
+  },
+  "we-love-bors": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-K19F96GBkX8ILC5RV5bTM5V3YtWNi/4ZSC8675P7nAA=",
+    "rev": "we-love-bors"
+  },
+  "v9.9.9": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-K19F96GBkX8ILC5RV5bTM5V3YtWNi/4ZSC8675P7nAA=",
+    "rev": "v9.9.9"
+  },
+  "v3.10.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-GL0qrHck8R+mgSHP09yCIehj/lnI4fAWeNgxPXoCsFo=",
+    "rev": "v3.10.0"
+  },
+  "v3.9.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-MsCCnH+qNEwbX5qohCF3t/V2t3LMW8OAJxdXFoLgdGo=",
+    "rev": "v3.9.0"
+  },
+  "v3.8.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-LyHYntkiZv17g+f6035BxTaDUGDCkNW8j7R92uEWOjs=",
+    "rev": "v3.8.0"
+  },
+  "v3.7.2": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-gT1dzV8nENchPvDBqCfoLLnIoODoirnn9Er5vir4NDU=",
+    "rev": "v3.7.2"
+  },
+  "v3.7.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-z75gmmAC+XqNtbb1hhigHEK56I5eobRFDPpQgj1qMqg=",
+    "rev": "v3.7.1"
+  },
+  "v3.7.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-cVtD/GldIioqpDimYwgfhSpM2vFHJpKGv0susn8gHs4=",
+    "rev": "v3.7.0"
+  },
+  "v3.6.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-QMTHM7+0uxdYnA4V5/Y4nRJZB3++krhD9K2W89e/LDM=",
+    "rev": "v3.6.1"
+  },
+  "v3.6.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-TEMd5RKr+RkPyod6PlJCHB4/pgUqy7m2WvRJhj2cNLo=",
+    "rev": "v3.6.0"
+  },
+  "v3.5.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-1wcpCGNMScq74OWkhva35QLCUKcd12mu2cIuB4Oz81Q=",
+    "rev": "v3.5.1"
+  },
+  "v3.5.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-mQZAMgmr+nIkkcUlZhLwB7vlh2bLE+o65mbnyRCmq7k=",
+    "rev": "v3.5.0"
+  }
+}

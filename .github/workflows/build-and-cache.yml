@@ -9,7 +9,7 @@ jobs:
         with:
           nix_path: nixpkgs=channel:nixos-unstable
       - run: nix-build -E 'with import ./default.nix {}; builtins.attrValues lean'
-      - uses: cachix/cachix-action@vXX
+      - uses: cachix/cachix-action@v10
         with:
           name: raitobezarius-nur
           authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'

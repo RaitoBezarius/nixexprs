@@ -26,6 +26,7 @@ let
     "v3.16.1"
     "v3.5.1"
     "v3.11.0"
+    "v3.6.0"
   ];
 in
   mergeMap mkLeanRelease (lib.filterAttrs (name: _: !builtins.any (broken: name == broken) brokenReleases) leanReleases)

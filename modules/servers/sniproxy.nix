@@ -183,7 +183,10 @@ in
     config = mkIf cfg.enable {
 
       users.groups.${cfg.group} = {};
-      users.users.${cfg.user} = {};
+      users.users.${cfg.user} = {
+        isSystemUser = true;
+        inherit (cfg) group;
+      };
 
       systemd.tmpfiles.rules = [
         "d '${cfg.stateDirectory}' - ${cfg.user} ${cfg.group} - -"

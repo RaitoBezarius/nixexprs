@@ -44,6 +44,7 @@ in
 
     users.groups.${cfg.group} = {};
     users.users.${cfg.user} = {
+      inherit (cfg) group;
       isSystemUser = true;
     };
 

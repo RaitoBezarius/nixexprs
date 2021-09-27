@@ -1,5 +1,4 @@
 { config, lib, pkgs, ... }:
-# TODO: settings.
 with lib;
 let
   cfg = config.services.netbox;
@@ -62,6 +61,11 @@ let
     };
   };
   nbRedisDatabases = if cfg.redis.queueDatabase <= cfg.redis.cachingDatabase then cfg.redis.cachingDatabase else cfg.redis.queueDatabase;
+  netboxManageScript = with pkgs; (writeScriptBin "netbox-manage" ''
+          #!${stdenv.shell}
+          export DJANGO_SETTINGS_MODULE="netbox.settings"
+          ${cfg.package}/bin/django-admin "$@"
+        '');
 in
   {
     options.services.netbox = {
@@ -93,14 +97,9 @@ in
 
     config = mkIf cfg.enable {
       # TODO: If actual config has less than required Redis database, fail?
-      #
 
       # 0. Manage script.
-      environment.systemPackages = with pkgs; [
-        (writeScriptBin "netbox-manage" ''
-          #!${stdenv.shell}
-        '')
-      ];
+      environment.systemPackages = [ netboxManageScript ];
 
       # 1. PostgreSQL.
       services.postgresql = {
@@ -130,7 +129,7 @@ in
         serviceConfig = {
           User = cfg.user;
           Group = cfg.group;
-          ExecStart = "netbox-manage rqworker";
+          ExecStart = "${netboxManageScript}/bin/netbox-manage rqworker";
 
           Restart = "on-failure";
           RestartSec = "30s";
@@ -141,7 +140,7 @@ in
 
       systemd.services.netbox-server = {
         description = "Netbox WSGI service";
-        after = [ "network-online.target" "systemd-tmpfiles-setup.service" ];
+        after = [ "network-online.target" ];
         wantedBy = [ "multi-user.target" ];
 
         serviceConfig = {
@@ -151,28 +150,34 @@ in
           PrivateTmp = true;
           RestartSec = "30s";
           StartLimitIntervalSec = "30s";
-          ExecStart = ''${python.pkgs.gunicorn}/bin/gunicorn \
+          ExecStart = ''${cfg.package}/bin/gunicorn \
             -w ${toString cfg.gunicorn.workers} \
             -t ${toString cfg.gunicorn.threads} \
             --timeout ${toString cfg.gunicorn.timeout} \
             --max-requests ${toString cfg.gunicorn.maxRequests} \
             --max-requests-jitter ${toString cfg.gunicorn.maxRequestsJitter} \
             --bind ${toString cfg.gunicorn.bind} \
-            entrypoint_wsgi
+            netbox.wsgi:application
           '';
         };
 
         environment = {
-          PYTHONPATH = "${cfg.pythonEnv}/${python.sitePackages}";
-          DJANGO_CONFIGURATION = "blablabla";
+          DJANGO_SETTINGS_MODULE = "netbox.settings";
         };
 
         preStart = ''
           # Auto-migrate
+          ${netboxManageScript}/bin/netbox-manage migrate
           # Trace paths
+          ${netboxManageScript}/bin/netbox-manage trace_paths --no-input
+          # Collect static contents
+          ${netboxManageScript}/bin/netbox-manage collectstatic --no-input
           # Remove stale content
+          ${netboxManageScript}/bin/netbox-manage remove_stale_contenttypes --no-input
           # Clear sessions
+          ${netboxManageScript}/bin/netbox-manage clearsessions
           # Invalidate cache
+          ${netboxManageScript}/bin/netbox-manage invalidate all
         '';
       };
     };

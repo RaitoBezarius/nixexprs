@@ -27,23 +27,23 @@ let
       };
 
       workers = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 5; # 2n + 1 cores.
       };
       threads = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 3;
       };
       timeout = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 120;
       };
       maxRequests = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 5000;
       };
       maxRequestsJitter = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 500;
       };
     };
@@ -51,11 +51,11 @@ let
   redisOpts = {
     options = {
       queueDatabase = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 0;
       };
       cachingDatabase = mkOption {
-        type = types.integer;
+        type = types.int;
         default = 1;
       };
     };

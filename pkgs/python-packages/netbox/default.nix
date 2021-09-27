@@ -8,12 +8,16 @@ let
     src = fetchFromGitHub {
       owner = "RaitoBezarius";
       repo = "netbox";
-      rev = "3c053f8e4beb5da4d02f2e7816ca1c304eb14281";
-      sha256 = "sha256-y19fjj1+4FLWlBgSKkwMFhWrUT4dJJ/ytTtqpIajwg4=";
+      rev = "6bf20e43bf5052a56fa446986dd020e3c2486fc0";
+      sha256 = "sha256-/ccHQ9eIJwyp383FDlxmGu3UQzaM1r657yDGTUSONUg=";
     };
     overrides = poetry2nix.overrides.withDefaults (self: super: {
       "ruamel-yaml" = python.pkgs.ruamel_yaml;
       "ruamel-yaml-clib" = python.pkgs.ruamel_yaml_clib;
+      "pygments" = python.pkgs.pygments;
+      "zipp" = python.pkgs.zipp;
+      "six" = python.pkgs.six;
+      "more-itertools" = python.pkgs.more-itertools;
     });
     preBuild = ''
       cp ${configuration} netbox/netbox/configuration.py

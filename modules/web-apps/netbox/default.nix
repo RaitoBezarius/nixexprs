@@ -93,6 +93,9 @@ in
       redis = mkOption {
         type = types.submodule redisOpts;
       };
+      environment = mkOption {
+        type = types.attrs;
+      };
     };
 
     config = mkIf cfg.enable {
@@ -136,6 +139,8 @@ in
 
           PrivateTmp = true;
         };
+
+        inherit (cfg) environment;
       };
 
       systemd.services.netbox-server = {
@@ -163,7 +168,7 @@ in
 
         environment = {
           DJANGO_SETTINGS_MODULE = "netbox.settings";
-        };
+        } // cfg.environment;
 
         preStart = ''
           # Auto-migrate

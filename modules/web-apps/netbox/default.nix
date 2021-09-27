@@ -86,15 +86,19 @@ in
       };
       database = mkOption {
         type = types.submodule dbOpts;
+        default = {};
       };
       gunicorn = mkOption {
         type = types.submodule gunicornOpts;
+        default = {};
       };
       redis = mkOption {
         type = types.submodule redisOpts;
+        default = {};
       };
       environment = mkOption {
         type = types.attrs;
+        default = {};
       };
     };
 

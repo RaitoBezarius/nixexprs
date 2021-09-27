@@ -1,7 +1,9 @@
 import environ
 import os
 
-env = environ.Env()
+env = environ.Env(
+  ALLOWED_HOSTS=(list, [])
+)
 
 env.read_env(env.str('ENV_PATH', '.env'))
 ALLOWED_HOSTS = env('ALLOWED_HOSTS')
@@ -18,3 +20,4 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # for external collection.
 STATIC_ROOT = env('STATIC_ROOT')
+MEDIA_ROOT = env('MEDIA_ROOT')

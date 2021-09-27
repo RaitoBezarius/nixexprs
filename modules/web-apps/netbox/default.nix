@@ -198,8 +198,6 @@ in
           ${netboxManageScript}/bin/netbox-manage remove_stale_contenttypes --no-input
           # Clear sessions
           ${netboxManageScript}/bin/netbox-manage clearsessions
-          # Invalidate cache
-          ${netboxManageScript}/bin/netbox-manage invalidate all
         '';
       };
     };

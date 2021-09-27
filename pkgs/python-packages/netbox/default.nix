@@ -8,8 +8,8 @@ let
     src = fetchFromGitHub {
       owner = "RaitoBezarius";
       repo = "netbox";
-      rev = "7cbbe479404ffbacc8e4b0776e129c7a096dba04";
-      sha256 = "sha256-yvLZK2S90LpTfE/oHr395CU89QUlmLOaJuOBaQuJX7Y=";
+      rev = "3f97d1436fda6dc8a3e2f6e19f07265801e38987";
+      sha256 = "sha256-c2z5VOi/BDQlHGTVmpnLuHG0WnDvVECsDx7c+pzvTjg=";
     };
     overrides = poetry2nix.overrides.withDefaults (self: super: {
       "ruamel-yaml" = python.pkgs.ruamel_yaml;

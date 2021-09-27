@@ -105,8 +105,8 @@ in
       # TODO: If actual config has less than required Redis database, fail?
 
       services.netbox.environment = {
-        CACHE_URL = "redis:///${cfg.redis.cachingDatabase}";
-        REDIS_TASKS_URL = "redis:///${cfg.redis.queueDatabase}";
+        CACHE_URL = "redis:///${toString cfg.redis.cachingDatabase}";
+        REDIS_TASKS_URL = "redis:///${toString cfg.redis.queueDatabase}";
         DATABASE_URL = "postgres:///${cfg.database.name}";
         ALLOWED_HOSTS = mkDefault "127.0.0.1";
       };

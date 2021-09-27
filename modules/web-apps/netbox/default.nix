@@ -105,6 +105,10 @@ in
     config = mkIf cfg.enable {
       # TODO: If actual config has less than required Redis database, fail?
 
+      # Ensure users/groups exist.
+      users.users.${cfg.user}.group = cfg.group;
+      users.groups.${cfg.group} = {};
+
       # 0. Manage script.
       environment.systemPackages = [ netboxManageScript ];
 

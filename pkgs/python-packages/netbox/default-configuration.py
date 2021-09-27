@@ -12,3 +12,9 @@ REDIS = {
 }
 
 SECRET_KEY = env('SECRET_KEY')
+
+# templates/ and project-static/ will be under netbox package.
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# for external collection.
+STATIC_ROOT = env('STATIC_ROOT')

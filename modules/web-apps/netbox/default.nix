@@ -108,7 +108,7 @@ in
         CACHE_URL = "redis:///${toString cfg.redis.cachingDatabase}";
         REDIS_TASKS_URL = "redis:///${toString cfg.redis.queueDatabase}";
         DATABASE_URL = "postgres:///${cfg.database.name}";
-        ALLOWED_HOSTS = mkDefault "127.0.0.1";
+        ALLOWED_HOSTS = mkDefault "127.0.0.1,localhost";
       };
 
       # Ensure users/groups exist.

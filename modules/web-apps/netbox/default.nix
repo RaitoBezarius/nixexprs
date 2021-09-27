@@ -98,7 +98,12 @@ in
       };
       environment = mkOption {
         type = types.attrs;
-        default = {};
+        default = {
+          CACHE_URL = "redis:///${cfg.redis.cachingDatabase}";
+          REDIS_TASKS_URL = "redis:///${cfg.redis.queueDatabase}";
+          DATABASE_URL = "postgres:///${cfg.database.name}";
+          ALLOWED_HOSTS = "127.0.0.1";
+        };
       };
     };
 

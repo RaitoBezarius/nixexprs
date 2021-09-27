@@ -10,4 +10,5 @@
   weechat = ./servers/weechat;
   cachet = ./web-apps/cachet.nix;
   isso = ./servers/isso.nix;
+  netbox = ./web-apps/netbox;
 }

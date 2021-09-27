@@ -7,7 +7,7 @@ license = "Apache"
 packages = [
   { include = "**/*.py", from = "netbox" }
 ]
-include = [ "netbox/project-static/**/*", "netbox/templates/**/*" ]
+include = [ "netbox/project-static/**/*", "netbox/templates/**/*", "netbox/utilities/templates/**/*" ]
 
 [tool.poetry.dependencies]
 python = "^3.8"

@@ -97,7 +97,7 @@ in
         default = {};
       };
       environment = mkOption {
-        type = types.attrs;
+        type = types.attrsOf types.inferred;
         default = {
           CACHE_URL = "redis:///${cfg.redis.cachingDatabase}";
           REDIS_TASKS_URL = "redis:///${cfg.redis.queueDatabase}";

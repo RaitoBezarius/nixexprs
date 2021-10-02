@@ -60,10 +60,12 @@ let
       };
     };
   };
+  exportEnv = env: concatStringsSep "\n" (map (k: "export ${k} = \"${env.${v}}\"") (attrsNames env);
   nbRedisDatabases = if cfg.redis.queueDatabase <= cfg.redis.cachingDatabase then cfg.redis.cachingDatabase else cfg.redis.queueDatabase;
   netboxManageScript = with pkgs; (writeScriptBin "netbox-manage" ''
           #!${stdenv.shell}
           export DJANGO_SETTINGS_MODULE="netbox.settings"
+          ${exportEnv cfg.environment}
           ${cfg.package}/bin/django-admin "$@"
         '');
 in

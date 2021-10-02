@@ -60,7 +60,7 @@ let
       };
     };
   };
-  exportEnv = env: concatStringsSep "\n" (map (k: "export ${k} = \"${env.${v}}\"") (attrNames env));
+  exportEnv = env: concatStringsSep "\n" (map (k: "export ${k} = \"${env.${k}}\"") (attrNames env));
   nbRedisDatabases = if cfg.redis.queueDatabase <= cfg.redis.cachingDatabase then cfg.redis.cachingDatabase else cfg.redis.queueDatabase;
   netboxManageScript = with pkgs; (writeScriptBin "netbox-manage" ''
           #!${stdenv.shell}

@@ -8,7 +8,7 @@ let
     src = fetchFromGitHub {
       owner = "RaitoBezarius";
       repo = "netbox";
-      rev = "3f97d1436fda6dc8a3e2f6e19f07265801e38987";
+      rev = "85b69b89e3688309f57cb6bc87d34dc4ab90b8d3";
       sha256 = "sha256-c2z5VOi/BDQlHGTVmpnLuHG0WnDvVECsDx7c+pzvTjg=";
     };
     overrides = poetry2nix.overrides.withDefaults (self: super: {
@@ -25,6 +25,10 @@ let
       #substituteInPlace ./netbox/netbox/settings.py \
       #  --replace "from netbox import configuration" "from netbox.netbox import configuration"
       #echo netbox/netbox/settings.py patched.
+    '';
+    postInstall = ''
+      ln -s $out/lib/python3.9/site-packages/netbox/utilities/templates $out/lib/python3.9/site-packages/utilities/templates
+      echo netbox utilities templates fixed up.
     '';
     preferWheels = true;
   });

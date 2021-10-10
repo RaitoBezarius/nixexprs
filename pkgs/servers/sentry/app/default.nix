@@ -1,0 +1,73 @@
+{ callPackage, python3 }:
+let
+  packageOverrides = callPackage ./python-packages.nix {};
+  pythonOverride = python3.override { inherit packageOverrides; };
+in
+  (pythonOverride.withPackages (ps: with ps; [
+    beautifulsoup4
+    boto3
+    botocore
+    celery
+    click
+    confluent-kafka
+    croniter
+    dataclasses # python ≤ 3.6
+    datadog
+    django-crispy-forms
+    django-picklefield
+    Django
+    djangorestframework
+    email-reply-parser
+    google-api-core
+    google-auth
+    google-cloud-bigtable
+    google-cloud-core
+    googleapis-common-protos
+    google-cloud-pubsub
+    google-cloud-storage
+    google-crc32c # python == 3.8
+    jsonschema
+    lxml
+    maxminddb
+    mistune
+    mmh3
+    parsimonious
+    petname
+    phonenumberslite
+    Pillow
+    progressbar2
+    python-rapidjson
+    psycopg2
+    PyJWT
+    python-dateutil
+    python-memcached
+    python-u2flib-server
+    python3-saml
+    PyYAML
+    rb
+    redis-py-cluster
+    redis
+    requests-oauthlib
+    requests
+    rfc3339-validator
+    rfc3986-validator
+    sentry-relay
+    sentry-sdk
+    snuba-sdk
+    simplejson
+    statsd
+    structlog
+    symbolic
+    toronado
+    ua-parser
+    unidiff
+    urllib3
+    uWSGI
+    zstandard
+    msgpack
+    cryptography
+    billiard
+    kombu
+    grpcio
+    hiredis
+  ])).env

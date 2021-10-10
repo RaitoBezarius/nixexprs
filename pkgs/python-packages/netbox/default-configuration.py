@@ -2,7 +2,8 @@ import environ
 import os
 
 env = environ.Env(
-  ALLOWED_HOSTS=(list, [])
+  ALLOWED_HOSTS=(list, []),
+  PLUGINS=(list, [])
 )
 
 env.read_env(env.str('ENV_PATH', '.env'))
@@ -21,3 +22,7 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # for external collection.
 STATIC_ROOT = env('STATIC_ROOT')
 MEDIA_ROOT = env('MEDIA_ROOT')
+
+PLUGINS = @nixPlugins@
+
+# for each plugin, configure each plugin configuration using some mechanism.

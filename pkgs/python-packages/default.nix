@@ -14,6 +14,8 @@
     inherit python;
   };
 
+  netboxPlugins = callPackage ./netbox/plugins {};
+
   drf-nested-routers = callPackage ./drf-nested-routers {
     inherit (python.pkgs) buildPythonPackage fetchPypi setuptools django djangorestframework;
   };

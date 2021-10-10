@@ -1,7 +1,7 @@
 { python, poetry2nix, fetchFromGitHub }:
 let
   defaultConfiguration = ./default-configuration.py;
-  mkNetboxApp = configuration:
+  mkNetboxApp = { configuration, plugins ? [] }:
   let app = (poetry2nix.mkPoetryApplication {
     inherit python;
     projectDir = ./.;
@@ -22,9 +22,6 @@ let
     preBuild = ''
       cp ${configuration} netbox/netbox/configuration.py
       echo netbox/netbox/configuration.py copied.
-      #substituteInPlace ./netbox/netbox/settings.py \
-      #  --replace "from netbox import configuration" "from netbox.netbox import configuration"
-      #echo netbox/netbox/settings.py patched.
     '';
     postInstall = ''
       ln -s $out/lib/python3.9/site-packages/netbox/utilities/templates $out/lib/python3.9/site-packages/utilities/templates
@@ -37,4 +34,4 @@ let
     extraLibs = [ app app.python.pkgs.django_environ ];
   };
 in
-  (mkNetboxApp defaultConfiguration) // { inherit mkNetboxApp; }
+  (mkNetboxApp { configuration = defaultConfiguration; }) // { inherit mkNetboxApp; }

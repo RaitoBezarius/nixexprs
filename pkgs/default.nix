@@ -70,6 +70,7 @@ let
     etesync-web = callPackage ./servers/etesync-web {}; # Etesync web client.
     etesync-web-personal = (etesync-web.withCustomAPI "etebase.v6.lahfa.xyz"); # Personal instance.
 
+    myNixops = callPackage ./nixops {}; # My NixOps
     mySourcehut = callPackage ./sourcehut {}; # Sourcehut
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.
     cachet = callPackage ./web-apps/cachet { }; # Status page system.

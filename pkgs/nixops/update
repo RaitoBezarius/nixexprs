@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eux
+
+rm -f ./poetry.lock ./poetry-git-overlay.nix
+
+poetry lock
+
+# builtins.fetchGit is disabled in restricted eval
+# Pin fixed-output derivations from lock file
+poetry2nix lock

@@ -2,14 +2,8 @@
 with lib;
 let
   cfg = config.services.errbot;
-  env = pkgs.buildEnv {
-    name = "errbot-with-plugins";
-    paths = [
-      cfg.package
-      (cfg.pythonPackage.buildEnv {
-        extraLibs = cfg.extraPythonPackages;
-      })
-    ];
+  env = cfg.pythonPackage.buildEnv.override {
+    extraLibs = [ cfg.package ] ++ cfg.extraPythonPackages;
   };
 in
   {

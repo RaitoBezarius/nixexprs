@@ -2,8 +2,14 @@
 with lib;
 let
   cfg = config.services.errbot;
-  env = cfg.package.python.buildEnv.override {
-    extraLibs = [ cfg.package ] ++ cfg.extraPythonPackages;
+  env = pkgs.buildEnv {
+    name = "errbot-with-plugins";
+    paths = [
+      cfg.package
+      (cfg.pythonPackage.buildEnv {
+        extraLibs = cfg.extraPythonPackages;
+      })
+    ];
   };
 in
   {
@@ -20,6 +26,11 @@ in
         type = types.package;
         default = pkgs.errbot;
         defaultText = "pkgs.errbot";
+      };
+      pythonPackage = mkOption {
+        type = types.package;
+        default = pkgs.python3;
+        defaultText = "pkgs.python3";
       };
       user = mkOption {
         type = types.str;

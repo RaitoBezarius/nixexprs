@@ -2,7 +2,7 @@
 with lib;
 let
   cfg = config.services.errbot;
-  env = cfg.pythonPackage.buildEnv.override {
+  env = cfg.package.python.buildEnv.override {
     extraLibs = [ cfg.package ] ++ cfg.extraPythonPackages;
   };
 in
@@ -15,11 +15,6 @@ in
       extraPythonPackages = mkOption {
         type = types.listOf types.package;
         default = [];
-      };
-      pythonPackage = mkOption {
-        type = types.package;
-        default = pkgs.python3;
-        defaultText = "pkgs.python3";
       };
       package = mkOption {
         type = types.package;

@@ -25,7 +25,7 @@ fi
 
 # ask for the keyring if the pass path already exist.
 # if so, returns it immediately.
-KEYRING_PASSWORD=$(keyctl pipe "$KEYRING_FULL_PATH")
+KEYRING_PASSWORD=$(keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
 
 # if not, ask for password store to provide us.
 if [ $? -ne 0 ]; then
@@ -35,7 +35,7 @@ if [ $? -ne 0 ]; then
 	[ $? -ne 0 ] && echo "Fatal error: cannot fetch data from password store." && exit 1
 fi
 
-KEYRING_PASSWORD=$(keyctl pipe "$KEYRING_FULL_PATH")
+KEYRING_PASSWORD=$(keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
 
 # if not, there is a problem, crash.
 if [ $? -ne 0 ]; then

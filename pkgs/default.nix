@@ -108,6 +108,9 @@ let
 
     isso = callPackage ./servers/isso {};
     nodePackages = pkgs.nodePackages // (callPackage ./node-packages {});
+
+    # My scripts
+    kachpass = callPackage ./tools/kachpass {};
   };
 in
 self

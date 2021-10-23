@@ -77,8 +77,8 @@ in
         user = "nginx";
         group = "nginx";
         settings = {
-          "listener.owner" = "nginx";
-          "listener.group" = "nginx";
+          "listen.owner" = "nginx";
+          "listen.group" = "nginx";
           "listen.mode" = "0600";
           "pm" = "dynamic";
           "pm.max_children" = "4";

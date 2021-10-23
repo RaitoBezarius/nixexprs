@@ -51,7 +51,6 @@ in
           User = cfg.user;
           Group = cfg.group;
           StateDirectory = "errbot";
-          WorkingDirectory = "$STATE_DIRECTORY";
           LogsDirectory = "errbot";
           Restart = "always";
           ExecStart = "${env}/bin/errbot -c ${cfg.configFile}";

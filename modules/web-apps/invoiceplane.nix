@@ -50,7 +50,12 @@ in
       services.mysql = {
         enable = true;
         package = pkgs.mariadb;
-        # TODO: create database.
+        ensureUsers = {
+          name = "invoiceplane";
+          ensurePermissions = {
+            "invoiceplane.*" = "ALL PRIVILEGES";
+          };
+        };
       };
 
       services.nginx = {
@@ -59,7 +64,7 @@ in
           root = "${cfg.dataDir}/invoiceplane-home";
           locations = {
             "/".extraConfig = ''
-              try_files $uri /index.php$is_args$args;
+              try_files $uri $uri/ /index.php?q=$uri&$args;
             '';
 
             "~ \.php$".extraConfig = ''

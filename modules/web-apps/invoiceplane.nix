@@ -17,8 +17,8 @@ in
       };
       phpPackage = mkOption {
         type = types.package;
-        default = pkgs.php73;
-        defaultText = "pkgs.php73";
+        default = pkgs.php74;
+        defaultText = "pkgs.php74";
       };
       dataDir = mkOption {
         type = types.path;

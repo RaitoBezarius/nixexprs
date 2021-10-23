@@ -12,7 +12,7 @@ in
         default = pkgs.fetchurl {
           name = "invoiceplane-v1.5.11";
           url = "https://github.com/InvoicePlane/InvoicePlane/releases/download/v1.5.11/v1.5.11.zip";
-          sha256 = "1vljj3d2v6vlw034fp8fn4a0524839234n9rspjd622fz3sz6kc5";
+          sha256 = "sha256-TeGJ7loMi1fAddm21Izy672IAsUE/VfckWNNom8H74w=";
         };
       };
       phpPackage = mkOption {

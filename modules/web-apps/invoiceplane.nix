@@ -50,12 +50,12 @@ in
       services.mysql = {
         enable = true;
         package = pkgs.mariadb;
-        ensureUsers = {
+        ensureUsers = [{
           name = "invoiceplane";
           ensurePermissions = {
             "invoiceplane.*" = "ALL PRIVILEGES";
           };
-        };
+        }];
       };
 
       services.nginx = {

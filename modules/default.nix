@@ -12,4 +12,5 @@
   isso = ./servers/isso.nix;
   netbox = ./web-apps/netbox;
   invoiceplane = ./web-apps/invoiceplane.nix;
+  errbot = ./servers/errbot.nix;
 }

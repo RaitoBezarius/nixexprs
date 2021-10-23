@@ -25,20 +25,18 @@ fi
 
 # ask for the keyring if the pass path already exist.
 # if so, returns it immediately.
-KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
 
 # if not, ask for password store to provide us.
-if [ $? -ne 0 ]; then
+if KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null); then
 	# then, cache it in the keyring @us.
-	@pass@/bin/pass show "$PASS_PATH" | @keyutils@/bin/keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE"
-	# if failed, crash.
-	[ $? -ne 0 ] && echo "Fatal error: cannot fetch data from password store." && exit 1
+	if ! @pass@/bin/pass show "$PASS_PATH" 2>/dev/null | @keyutils@/bin/keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE" 2>/dev/null; then
+		# if failed, crash.
+		echo "Fatal error: cannot fetch data from password store." && exit 1
+	fi
 fi
 
-KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
-
 # if not, there is a problem, crash.
-if [ $? -ne 0 ]; then
+if KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null); then
 	echo "Fatal error: cannot read written key, check default permissions or target keyring."
 	exit 1
 fi
@@ -46,6 +44,6 @@ fi
 echo "$KEYRING_PASSWORD"
 
 # if necessary, put a timeout on it.
-if [ ! -z "$TIMEOUT" ] ; then
+if [ -n "$TIMEOUT" ] ; then
 	@keyutils@/bin/keyctl timeout "$KEYRING_FULL_PATH"
 fi

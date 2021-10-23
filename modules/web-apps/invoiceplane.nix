@@ -48,6 +48,7 @@ in
 
       services.mysql = {
         enable = true;
+        package = pkgs.mariadb;
         # TODO: create database.
       };
 

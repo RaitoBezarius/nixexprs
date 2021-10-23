@@ -41,7 +41,7 @@ in
           ${pkgs.rsync}/bin/rsync -aI ${cfg.package}/ ${cfg.dataDir}/invoiceplane-home
           [ ! -f ${cfg.dataDir}/ipconfig_created ] && ${pkgs.rsync}/bin/rsync -aI ${cfg.package}/ipconfig.php.example ${cfg.dataDir}/invoiceplane-home/ipconfig.php && touch ${cfg.dataDir}/ipconfig_created
 
-          sed -i "s/IP_URL=/IP_URL=http:\/\/${cfg.hostName}/g" ${cfg.dataDir}/invoiceplane-home/ipconfig.php
+          sed -i "s/IP_URL=.*/IP_URL=http:\/\/${cfg.hostName}/g" ${cfg.dataDir}/invoiceplane-home/ipconfig.php
           chown -R nginx:nginx ${cfg.dataDir}/invoiceplane-home
           chmod -R u+w ${cfg.dataDir}/invoiceplane-home
         '';

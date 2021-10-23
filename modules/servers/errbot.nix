@@ -11,6 +11,10 @@ let
       })
     ];
   };
+  pluginsEnv = pkgs.buildEnv {
+    name = "errbot-plugins";
+    paths = cfg.plugins;
+  };
 in
   {
     options.services.errbot = {
@@ -19,6 +23,10 @@ in
         type = types.path;
       };
       extraPythonPackages = mkOption {
+        type = types.listOf types.package;
+        default = [];
+      };
+      plugins = mkOption {
         type = types.listOf types.package;
         default = [];
       };
@@ -51,6 +59,10 @@ in
         description = "Errbot: a chat bot";
         after = [ "network.target" ];
         wantedBy = [ "multi-user.target" ];
+
+        environment = {
+          BOT_EXTRA_PLUGIN_DIR = pluginsEnv;
+        };
 
         serviceConfig = {
           Type = "simple";

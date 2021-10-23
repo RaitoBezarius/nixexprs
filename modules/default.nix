@@ -11,4 +11,5 @@
   cachet = ./web-apps/cachet.nix;
   isso = ./servers/isso.nix;
   netbox = ./web-apps/netbox;
+  invoiceplane = ./web-apps/invoiceplane.nix;
 }

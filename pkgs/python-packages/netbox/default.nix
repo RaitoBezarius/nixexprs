@@ -3,7 +3,8 @@ let
   defaultConfiguration = ./default-configuration.py;
   mkNetboxApp = { configuration, plugins ? [] }:
   let
-    pluginsList = "[${lib.concatStringsSep ", " (map (p: p.pname) plugins)}]";
+    prettyPluginList = lib.concatStringsSep "," (map (p: p.pname) plugins);
+    pluginList = "[${lib.concatStringsSep ", " (map (p: "'${p.pname}'") plugins)}]";
     app = (poetry2nix.mkPoetryApplication {
       inherit python;
       projectDir = ./.;
@@ -23,10 +24,14 @@ let
       });
       preBuild = ''
         cp ${configuration} netbox/netbox/configuration.py
-        substituteInPlace
-          --replace "@nixPlugins@" "${pluginsList}"
-          netbox/netbox/configuration.py
-        echo netbox/netbox/configuration.py copied.
+        echo netbox/netbox/configuration.py copied, installing plugins...
+        ${if builtins.length plugins > 0 then ''
+          substituteInPlace netbox/netbox/configuration.py \
+          --replace "@nixPlugins@" "${pluginList}"
+          echo plugins (${prettyPluginList}) installed.
+        '' else ''
+          echo no plugin to install.
+        ''}
       '';
       postInstall = ''
         ln -s $out/lib/python3.9/site-packages/netbox/utilities/templates $out/lib/python3.9/site-packages/utilities/templates

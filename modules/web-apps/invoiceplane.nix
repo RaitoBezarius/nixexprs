@@ -10,6 +10,7 @@ in
       package = mkOption {
         type = types.package;
         default = pkgs.fetchzip {
+          stripRoot = false;
           name = "invoiceplane-v1.5.11";
           url = "https://github.com/InvoicePlane/InvoicePlane/releases/download/v1.5.11/v1.5.11.zip";
           sha256 = "sha256-TeGJ7loMi1fAddm21Izy672IAsUE/VfckWNNom8H74w=";

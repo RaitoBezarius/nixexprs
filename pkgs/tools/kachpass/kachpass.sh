@@ -25,17 +25,17 @@ fi
 
 # ask for the keyring if the pass path already exist.
 # if so, returns it immediately.
-KEYRING_PASSWORD=$(keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
+KEYRING_PASSWORD=$(@keyctl@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
 
 # if not, ask for password store to provide us.
 if [ $? -ne 0 ]; then
 	# then, cache it in the keyring @us.
-	@pass@/bin/pass show "$PASS_PATH" | keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE"
+	@pass@/bin/pass show "$PASS_PATH" | @keyctl@/bin/keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE"
 	# if failed, crash.
 	[ $? -ne 0 ] && echo "Fatal error: cannot fetch data from password store." && exit 1
 fi
 
-KEYRING_PASSWORD=$(keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
+KEYRING_PASSWORD=$(@keyctl@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
 
 # if not, there is a problem, crash.
 if [ $? -ne 0 ]; then
@@ -47,5 +47,5 @@ echo "$KEYRING_PASSWORD"
 
 # if necessary, put a timeout on it.
 if [ ! -z "$TIMEOUT" ] ; then
-	keyctl timeout "$KEYRING_FULL_PATH"
+	@keyctl@/bin/keyctl timeout "$KEYRING_FULL_PATH"
 fi

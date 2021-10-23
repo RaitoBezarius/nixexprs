@@ -1,4 +1,4 @@
-{ pass, substituteAll, lib }:
+{ pass, keyctl, substituteAll, lib }:
 let
   mkKachPass = { targetKeyring ? "@us", keyringType ? "user", keyringPrefix ? "pass" }:
   substituteAll {
@@ -8,7 +8,7 @@ let
     dir = "bin";
     isExecutable = true;
 
-    inherit pass targetKeyring keyringType keyringPrefix;
+    inherit pass keyctl targetKeyring keyringType keyringPrefix;
     passthru.mkKachPass = mkKachPass;
 
     meta = with lib; {

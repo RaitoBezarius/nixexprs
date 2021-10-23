@@ -11,7 +11,7 @@ in
         type = types.package;
         default = pkgs.fetchurl {
           name = "invoiceplane-v1.5.11";
-          src = "https://github.com/InvoicePlane/InvoicePlane/releases/download/v1.5.11/v1.5.11.zip";
+          url = "https://github.com/InvoicePlane/InvoicePlane/releases/download/v1.5.11/v1.5.11.zip";
           sha256 = "1vljj3d2v6vlw034fp8fn4a0524839234n9rspjd622fz3sz6kc5";
         };
       };

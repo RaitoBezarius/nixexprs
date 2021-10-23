@@ -87,6 +87,5 @@ in
         };
         inherit (cfg) phpPackage;
       };
-    }
-
-
+    };
+  }

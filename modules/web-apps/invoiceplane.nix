@@ -63,7 +63,7 @@ in
             '';
 
             "~ \.php$".extraConfig = ''
-              include ${config.services.nginx.package}/conf/fscgi_params;
+              include ${config.services.nginx.package}/conf/fastcgi_params;
               fastcgi_pass unix:${config.services.phpfpm.pools.invoiceplane.socket};
               fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
               fastcgi_index index.php;

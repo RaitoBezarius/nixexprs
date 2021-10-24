@@ -29,10 +29,14 @@ fi
 # if not, ask for password store to provide us.
 if KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null); then
 	# then, cache it in the keyring @us.
-	if ! @pass@/bin/pass show "$PASS_PATH" 2>/dev/null | @keyutils@/bin/keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE" 2>/dev/null; then
+	if ! KEYRING_ID=$(@pass@/bin/pass show "$PASS_PATH" 2>/dev/null | @keyutils@/bin/keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE" 2>/dev/null); then
 		# if failed, crash.
 		echo "Fatal error: cannot fetch data from password store." && exit 1
 	fi
+fi
+
+if [ "$KACHPASS_DEBUG" -ne 0 ]; then
+	echo "[debug] keyring id: $KEYRING_ID"
 fi
 
 # if not, there is a problem, crash.

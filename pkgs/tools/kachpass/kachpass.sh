@@ -40,7 +40,10 @@ if [ "$KACHPASS_DEBUG" -ne 0 ]; then
 fi
 
 # if not, there is a problem, crash.
-if KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null); then
+if ! KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH"); then
+	if [ "$KACHPASS_DEBUG" -ne 0 ]; then
+		echo "[debug] keyctl output: $KEYRING_PASSWORD"
+	fi
 	echo "Fatal error: cannot read written key, check default permissions or target keyring."
 	exit 1
 fi

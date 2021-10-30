@@ -2,6 +2,7 @@ name: Build and cache some derivations
 on:
   push:
     paths:
+      - '.github/**'
       - 'pkgs/science/lean/**'
 jobs:
   build-all-lean-versions:

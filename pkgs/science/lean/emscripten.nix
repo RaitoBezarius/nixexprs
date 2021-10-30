@@ -37,6 +37,7 @@ in
     '';
 
     installPhase = ''
+      mkdir -p $out/
       cp $TMPDIR/build/shell/lean_js_* $out/
     '';
 

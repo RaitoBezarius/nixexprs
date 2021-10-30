@@ -6,6 +6,7 @@ let
   mkLeanRelease = version: releaseInfo: {
     ${processVersionName version} = callPackage ./generic.nix {
       inherit version emscripten;
+      leanUtils = callPackage ./utils.nix {};
       src = fetchFromGitHub {
         inherit (releaseInfo) owner repo rev sha256;
       };

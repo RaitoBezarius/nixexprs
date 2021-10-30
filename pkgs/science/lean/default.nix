@@ -19,4 +19,4 @@ let
   isBrokenRelease = v: !builtins.any (broken: v == broken) brokenReleases;
   isAcceptableVersion = v: lib.versionAtLeast v minimalVersion;
 in
-  mergeMap mkLeanRelease (lib.filterAttrs (name: _: !isBrokenRelease name && isAcceptableVersion v) leanReleases)
+  mergeMap mkLeanRelease (lib.filterAttrs (name: _: !isBrokenRelease name && isAcceptableVersion name) leanReleases)

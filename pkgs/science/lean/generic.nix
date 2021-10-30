@@ -1,4 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src }:
+{ lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src,
+  buildEmscriptenPackage, emscripten }:
 stdenv.mkDerivation rec {
   pname = "lean";
   inherit version src;
@@ -20,6 +21,9 @@ stdenv.mkDerivation rec {
 
   passthru = {
     emscripten = callPackage ./emscripten.nix {
+      buildEmscriptenPackage = buildEmscriptenPackage.override {
+        inherit emscripten;
+      };
       leanSrc = src;
       inherit version;
     };

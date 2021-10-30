@@ -18,6 +18,7 @@ let
     lean = import ./science/lean {
       inherit lib callPackage;
       inherit (pkgs) fetchFromGitHub;
+      emscripten = workingEmscripten;
     };
 
     lean-emscripten = (pkgs.lean.override {
@@ -84,27 +85,16 @@ let
 
     wireguard-vanity-address = callPackage ./tools/wireguard-vanity-address.nix {};
     zig = callPackage ./compilers/zig.nix {};
-    emscripten = callPackage ./compilers/emscripten {
-      binaryen = pkgs.binaryen.overrideAttrs (old: {
-        version = "101";
-        src = pkgs.fetchFromGitHub {
-          owner = "WebAssembly";
-          repo = "binaryen";
-          rev = "version_101";
-          sha256 = "sha256-rNiZQIQqNbc1P2A6UTn0dRHeT3BS+nv1o81aPaJy+5U=";
-        };
-      });
-    };
-
-
-    emscriptenfastcompPackages = lib.dontRecurseIntoAttrs (callPackage ./compilers/emscripten/fastcomp {
-      emscriptenVersion = "1.39.1";
+    # contains the patch for EM_CACHE feature.
+    workingEmscripten = pkgs.emscripten.overrideAttrs (old: {
+      version = "0fb2eee8065a9a9e9852dc5fb6ab9a20d9f45772";
+      src = pkgs.fetchFromGitHub {
+        owner = "emscripten-core";
+        repo = "emscripten";
+        sha256 = "sha256-a1T5n2SZckNZBGEG+N3E2RuoNOkE3PEC/TB9Zb5K+ng=";
+        rev = "0fb2eee8065a9a9e9852dc5fb6ab9a20d9f45772";
+      };
     });
-    inherit (emscriptenfastcompPackages) emscriptenfastcomp;
-    emscripten1 = callPackage ./compilers/emscripten/emscripten1.nix {
-      emscriptenVersion = "1.39.1";
-    };
-    binaryen1 = callPackage ./compilers/binaryen1 {};
 
     isso = callPackage ./servers/isso {};
     nodePackages = pkgs.nodePackages // (callPackage ./node-packages {});

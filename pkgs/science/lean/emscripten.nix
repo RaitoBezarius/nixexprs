@@ -14,25 +14,30 @@ in
     src = leanSrc;
 
     configurePhase = ''
-      HOME=$TMPDIR
+      export HOME=$TMPDIR
+
+      export EM_CACHE=$TMPDIR/emscripten-cache
+      mkdir -p $EM_CACHE
+      chmod -R u+w $EM_CACHE
+
       # Because it is going to write into it…
       cp -r ${gmpSrc} $TMPDIR/gmp
       chmod -R u+w $TMPDIR/gmp
       sed -i "s|.*URL .*|            SOURCE_DIR \"$TMPDIR/gmp\"|" src/CMakeLists.txt
       sed -i "/URL_HASH/d" src/CMakeLists.txt
 
-      emcmake cmake -S src -B $TMPDIR
+      emcmake cmake -S src -B $TMPDIR/build
     '';
 
     buildPhase = ''
-      cd $TMPDIR
-      ls
+      export EM_CACHE=$TMPDIR/emscripten-cache
+      cd $TMPDIR/build
       emmake make lean_js_js
       emmake make lean_js_wasm
     '';
 
     installPhase = ''
-      mv /tmp/shell/lean_js_* $out/
+      cp $TMPDIR/build/shell/lean_js_* $out/
     '';
 
     checkPhase = "";

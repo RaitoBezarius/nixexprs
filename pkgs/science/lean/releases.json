@@ -280,5 +280,23 @@
     "repo": "lean",
     "sha256": "sha256-mQZAMgmr+nIkkcUlZhLwB7vlh2bLE+o65mbnyRCmq7k=",
     "rev": "v3.5.0"
+  },
+  "v3.35.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-pKHywTm9k6YH9ObbdXSTnLjad/CmdPeUlzqfT9qeITk=",
+    "rev": "v3.35.0"
+  },
+  "v3.34.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-AHpTm/TBSwbwRPSzyiWF394uyGOiyDShaHARQAtU6XU=",
+    "rev": "v3.34.0"
+  },
+  "v3.33.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-xwMe0oipiFW3mv7qKtV1iH/8/2MhIKTulxvK3wYbvw8=",
+    "rev": "v3.33.0"
   }
 }

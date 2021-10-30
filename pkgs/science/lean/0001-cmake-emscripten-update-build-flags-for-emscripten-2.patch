@@ -1,4 +1,4 @@
-From 43d29cc9ef51046ad38eaed32be92257cfb4d951 Mon Sep 17 00:00:00 2001
+From 9dfb0e1944e22c1b509307a08a7dfbab7ce912eb Mon Sep 17 00:00:00 2001
 From: Raito Bezarius <masterancpp@gmail.com>
 Date: Sat, 30 Oct 2021 20:50:10 +0200
 Subject: [PATCH] =?UTF-8?q?cmake(emscripten):=20update=20build=20flags=20f?=
@@ -45,7 +45,7 @@ index f0efdf425..27b4e4fbf 100644
      message(FATAL_ERROR "Unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
  endif ()
 diff --git a/src/shell/CMakeLists.txt b/src/shell/CMakeLists.txt
-index 98c76e006..3640efe66 100644
+index 98c76e006..dbfae2b25 100644
 --- a/src/shell/CMakeLists.txt
 +++ b/src/shell/CMakeLists.txt
 @@ -40,7 +40,7 @@ if(${EMSCRIPTEN})
@@ -53,7 +53,7 @@ index 98c76e006..3640efe66 100644
      set_target_properties(lean_js PROPERTIES COMPILE_FLAGS --bind -s NO_EXIT_RUNTIME=1)
  
 -    set(LEAN_JS_OPTS "-s 'EXTRA_EXPORTED_RUNTIME_METHODS=[\"FS\"]'")
-+    set(LEAN_JS_OPTS "-s 'EXPORTED_RUNTIME_METHODS=[\"FS\", \"PATH\"]'")
++    set(LEAN_JS_OPTS "-s 'EXPORTED_RUNTIME_METHODS=[\"FS\", \"PATH\", \"ERRNO_CODES\"]'")
  
      add_executable(lean_js_wasm lean_js.cpp lean_js_new.cpp server.cpp)
      target_link_libraries(lean_js_wasm leanstatic)

@@ -16,7 +16,7 @@ let
     "we-love-bors"
   ];
   minimalVersion = "v3.24.0";
-  isBrokenRelease = v: !builtins.any (broken: v == broken) brokenReleases;
+  isBrokenRelease = v: builtins.any (broken: v == broken) brokenReleases;
   isAcceptableVersion = v: lib.versionAtLeast v minimalVersion;
 in
   mergeMap mkLeanRelease (lib.filterAttrs (name: _: !isBrokenRelease name && isAcceptableVersion name) leanReleases)

@@ -21,6 +21,10 @@ let
       emscripten = workingEmscripten;
     };
 
+    emscriptenPackages = {
+      lean = lib.mapAttrs (_: p: p.emscripten) lean;
+    };
+
     lean-emscripten = (pkgs.lean.override {
       stdenv = pkgs.emscriptenStdenv;
     }).overrideDerivation (old: {

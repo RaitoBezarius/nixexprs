@@ -13,6 +13,11 @@ in
 
     src = leanSrc;
 
+    patches = [
+      # Enable building with emscripten v2 and exceptions handling.
+      ./0001-cmake-emscripten-update-build-flags-for-emscripten-2.patch
+    ];
+
     configurePhase = ''
       export HOME=$TMPDIR
 

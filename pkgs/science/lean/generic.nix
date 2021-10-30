@@ -20,17 +20,16 @@ let
         --replace "greadlink" "${coreutils}/bin/readlink"
     '';
 
-    passthru = rec {
+    passthru = {
       emscripten = callPackage ./emscripten.nix {
         buildEmscriptenPackage =
           buildEmscriptenPackage.override { inherit emscripten; };
         leanSrc = src;
         inherit version;
       };
-      # TODO: make it scoped to this lean.
       mkLibraryScript = leanUtils.mkLibraryScript { lean = drv; };
       withLibrary = leanUtils.mkLibrary { lean = drv; };
-      coreLibrary = withLibrary {};
+      coreLibrary = leanUtils.mkLibrary { lean = drv; } {};
     };
 
     meta = with lib; {

@@ -1,0 +1,62 @@
+From 43d29cc9ef51046ad38eaed32be92257cfb4d951 Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Sat, 30 Oct 2021 20:50:10 +0200
+Subject: [PATCH] =?UTF-8?q?cmake(emscripten):=20update=20build=20flags=20f?=
+ =?UTF-8?q?or=20emscripten=20=E2=89=A5=202.x=20and=20exceptions=20handling?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ src/CMakeLists.txt       | 12 ++++++++----
+ src/shell/CMakeLists.txt |  2 +-
+ 2 files changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index f0efdf425..27b4e4fbf 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -120,11 +120,15 @@ if("${CMAKE_C_COMPILER}" MATCHES "emcc")
+     set(EMSCRIPTEN ON)
+     set(MULTI_THREAD OFF)
+     set(TCMALLOC OFF)
+-    set(CFLAGS_EMSCRIPTEN "-Oz -O3")
+-    set(LEAN_EXTRA_CXX_FLAGS "${LEAN_EXTRA_CXX_FLAGS} ${CFLAGS_EMSCRIPTEN} -D LEAN_EMSCRIPTEN")
+-    set(LEAN_EXTRA_LINKER_FLAGS "${LEAN_EXTRA_LINKER_FLAGS} --memory-init-file 0 --llvm-lto 1 -s ALLOW_MEMORY_GROWTH=1 -s DISABLE_EXCEPTION_CATCHING=0 ${CFLAGS_EMSCRIPTEN}")
++    set(CFLAGS_EMSCRIPTEN "-fexceptions -flto -Oz -O3")
++    set(LEAN_EXTRA_CXX_FLAGS "${LEAN_EXTRA_CXX_FLAGS} ${CFLAGS_EMSCRIPTEN} -flto -D LEAN_EMSCRIPTEN")
++    set(LEAN_EXTRA_LINKER_FLAGS "${LEAN_EXTRA_LINKER_FLAGS} --memory-init-file 0 -s DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$ERRNO_CODES\"] -s ALLOW_MEMORY_GROWTH=1 -s IMPORTED_MEMORY -s DISABLE_EXCEPTION_CATCHING=0 ${CFLAGS_EMSCRIPTEN}")
+     set(LEAN_JS_LIBRARY "${CMAKE_CURRENT_SOURCE_DIR}/../library" CACHE STRING
+             "location of olean files for lean.js")
++
++    if (CMAKE_BUILD_TYPE MATCHES DEBUG)
++	set(LEAN_EXTRA_LINKER_FLAGS "${LEAN_EXTRA_LINKER_FLAGS} -s ASSERTIONS=1")
++    endif()
+ endif()
+ if (CMAKE_CROSSCOMPILING_EMULATOR)
+   # emscripten likes to quote "node"
+@@ -255,7 +259,7 @@ elseif (MSVC)
+     set(LEAN_EXTRA_LINKER_FLAGS        "/LTCG:INCREMENTAL ${LEAN_EXTRA_LINKER_FLAGS}")
+     set(CMAKE_STATIC_LINKER_FLAGS      "${CMAKE_STATIC_LINKER_FLAGS} ${LEAN_EXTRA_LINKER_FLAGS}")
+ elseif (EMSCRIPTEN)
+-    message(STATUS "Emscripten is detected: Make sure the wraped compiler supports C++11")
++    message(STATUS "Emscripten is detected: Make sure the wrapped compiler supports C++11")
+ else()
+     message(FATAL_ERROR "Unsupported compiler: ${CMAKE_CXX_COMPILER_ID}")
+ endif ()
+diff --git a/src/shell/CMakeLists.txt b/src/shell/CMakeLists.txt
+index 98c76e006..3640efe66 100644
+--- a/src/shell/CMakeLists.txt
++++ b/src/shell/CMakeLists.txt
+@@ -40,7 +40,7 @@ if(${EMSCRIPTEN})
+     add_dependencies(lean_js lean_js_library)
+     set_target_properties(lean_js PROPERTIES COMPILE_FLAGS --bind -s NO_EXIT_RUNTIME=1)
+ 
+-    set(LEAN_JS_OPTS "-s 'EXTRA_EXPORTED_RUNTIME_METHODS=[\"FS\"]'")
++    set(LEAN_JS_OPTS "-s 'EXPORTED_RUNTIME_METHODS=[\"FS\", \"PATH\"]'")
+ 
+     add_executable(lean_js_wasm lean_js.cpp lean_js_new.cpp server.cpp)
+     target_link_libraries(lean_js_wasm leanstatic)
+-- 
+2.33.0
+

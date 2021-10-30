@@ -50,16 +50,16 @@ if not args.c:
     os.chdir(combined_lib)
     subprocess.call(["leanpkg", "build"])
 
-print("Using lean version:")
 lean_version = subprocess.run(
     ["lean", "-v"], capture_output=True, encoding="utf-8"
 ).stdout
-print(lean_version)
-lean_githash = re.search("commit ([a-z0-9]{12}),", lean_version).group(1)
+print("Using lean version:", lean_version)
+# do not use githash, it is unnecessary.
+# lean_githash = re.search("commit ([a-z0-9]{12}),", lean_version).group(1)
 # assume leanprover-community repo
 core_url = (
     "https://raw.githubusercontent.com/leanprover-community/lean/{0}/library/"
-    .format(lean_githash)
+    .format(lean_version)
 )
 core_name = "lean/library"
 
@@ -77,6 +77,7 @@ with zipfile.ZipFile(
     compression=zipfile.ZIP_DEFLATED,
     allowZip64=False,
     compresslevel=9,
+    strict_timestamps=False
 ) as zf:
     for p in lean_path:
         parts = p.parts
@@ -152,7 +153,7 @@ print(
     )
 )
 
-library_prefix = library_zip_fn.split(".")[0]
+library_prefix = '.'.join(library_zip_fn.split(".")[:-1])
 info_fn = library_prefix + ".info.json"
 with open(info_fn, "w") as f:
     json.dump(lib_info, f, separators=(",", ":"))

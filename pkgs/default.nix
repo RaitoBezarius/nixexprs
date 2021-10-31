@@ -15,35 +15,28 @@ let
       packageOverrides = self: super: python3PackagesPlus;
     };
 
+    npmlock2nix = callPackage (pkgs.fetchFromGitHub {
+      owner = "nix-community";
+      repo = "npmlock2nix";
+      rev = "33eb3300561d724da64a46ab8e9a05a9cfa9264b";
+      sha256 = "sha256-xguvgtrIQHPxpc4J6EhfBnYtQDGJpt6hK1dN7KEi8R4=";
+    }) {};
+
     lean = import ./science/lean {
-      inherit lib callPackage;
+      inherit lib callPackage npmlock2nix;
       inherit (pkgs) fetchFromGitHub;
       emscripten = workingEmscripten;
+    };
+    leanGames = callPackage ./science/lean/lean-games {
+      inherit lean;
+    };
+    lean-game-maker = callPackage ./science/lean/lean-game-maker {
+      python = pkgs.python3;
     };
 
     emscriptenPackages = {
       lean = lib.mapAttrs (_: p: p.emscripten) lean;
     };
-
-    lean-emscripten = (pkgs.lean.override {
-      stdenv = pkgs.emscriptenStdenv;
-    }).overrideDerivation (old: {
-      pname = "lean-emscripten";
-      inherit (old) buildInputs;
-      dontStrip = true;
-
-      NODE_OPTIONS = "--max-old-space-size=4096";
-      configurePhase = ''
-        runHook preConfigure
-
-        emcmake cmake src/ -DCMAKE_BUILD_TYPE=Emscripten
-
-        runHook postConfigure
-      '';
-      buildPhase = ''
-        emcmake make
-      '';
-    });
 
     lean-with-githash =
     let
@@ -56,17 +49,6 @@ let
           --replace "get_git_head_revision(GIT_REFSPEC GIT_SHA1)" "set(GIT_SHA1 \"${githashSha1}\")"
         '';
     });
-
-    lean-game-maker = callPackage ./tools/lean-game-maker {
-      python = pkgs.python3;
-    }; # Lean game maker runtime
-    make-lean-game = callPackage ./tools/make-lean-game.nix {
-      lean = lean-with-githash; # FIXME: find a way to magically handle multiple versions of Lean at the same time and generate the proper JS/WASM versions.
-    }; # Lean game maker function
-    lean-games = {
-      nng = callPackage ./lean-games/nng.nix {};
-      game-skeleton = callPackage ./lean-games/game-skeleton.nix {};
-    };
 
     galene = callPackage ./servers/galene {}; # Videoconferencing server
     etebase-server = callPackage ./servers/etebase { # Etebase server for calendar & etc.

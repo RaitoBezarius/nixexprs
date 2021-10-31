@@ -26,13 +26,14 @@ let
     path ./src
   '';
   gameName = gameConfig.name or leanpkgConfig.name;
-  # assert that gameConfig.name must be not null!
 in
+# assert that gameConfig.name must be not null!
+assert gameName != null;
 stdenvNoCC.mkDerivation {
   pname = "lean-game-${lib.strings.sanitizeDerivationName gameConfig.name}";
   inherit (gameConfig) version;
 
-  buildInputs = [ lean-game-maker lean git ];
+  buildInputs = [ lean-game-maker (lean.${leanVersion}) git ];
 
   buildPhase = ''
     mkdir -p _target/deps

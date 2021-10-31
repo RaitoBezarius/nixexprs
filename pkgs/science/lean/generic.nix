@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src
-, buildEmscriptenPackage, emscripten, leanUtils }:
+, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix }:
 let
   drv = stdenv.mkDerivation rec {
     pname = "lean";
@@ -30,6 +30,10 @@ let
       mkLibraryScript = leanUtils.mkLibraryScript { lean = drv; };
       withLibrary = leanUtils.mkLibrary { lean = drv; };
       coreLibrary = leanUtils.mkLibrary { lean = drv; } {};
+      webEditor = callPackage ./web-editor.nix {
+        inherit npmlock2nix;
+        lean = drv;
+      };
     };
 
     meta = with lib; {

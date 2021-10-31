@@ -45,8 +45,8 @@ self: super: {
     _: {
       src = pkgs.fetchgit {
         url = "https://github.com/RaitoBezarius/nixops-proxmox.git";
-        rev = "bea457ffa898522c699569b8575251586957335a";
-        sha256 = "1219nvrv8qmz7qzlc4j2wcny5fsa2b4p4wgcvvjh6wb17bf05r70";
+        rev = "de97d17322c379ff10749d50d2b26741c05105b7";
+        sha256 = "1iv47si00haavpnii8jhsjv21hrj6j2v8y2k4dazvw2pn7wrvmhb";
       };
     }
   );

@@ -11,7 +11,7 @@ rustPlatform.buildRustPackage rec {
     sha256 = "175vnjjf8z49k9p3x8qrnwpi23mhnccx6jh0nh5qmwbdsa98pn4z";
   };
 
-  cargoSha256 = "094yb8a8994cglcwhj15bhn32rc66qi0w0q71qpyq2b492gd3lng";
+  cargoSha256 = "1lx93q5nd88b39pbpw7czhf9d6pcn9j4gmg8dwmbqag0q7gkk6c0";
 
   meta = with lib; {
     description = "A WireGuard public key vanity generator.";

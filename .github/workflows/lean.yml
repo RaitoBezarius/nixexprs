@@ -1,4 +1,4 @@
-name: Build and cache some derivations
+name: Build Lean and its emscripten bundles
 on:
   push:
     paths:

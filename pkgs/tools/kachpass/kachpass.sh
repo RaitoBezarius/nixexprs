@@ -27,7 +27,8 @@ fi
 # if so, returns it immediately.
 
 # if not, ask for password store to provide us.
-if KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null); then
+KEYRING_PASSWORD=$(@keyutils@/bin/keyctl pipe "$KEYRING_FULL_PATH" 2>/dev/null)
+if [ -z "$KEYRING_PASSWORD" ]; then
 	# then, cache it in the keyring @us.
 	if ! KEYRING_ID=$(@pass@/bin/pass show "$PASS_PATH" 2>/dev/null | @keyutils@/bin/keyctl padd "$KEYRING" "$KEYRING_PASS_PATH" "$SPECIAL_KEYRING_STORAGE" 2>/dev/null); then
 		# if failed, crash.

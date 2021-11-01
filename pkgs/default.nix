@@ -7,7 +7,9 @@ let
       subsetArgs = builtins.listToAttrs [{ name = attrName; value = mergedSubset; }];
     in
     callPackage f (subsetArgs // extraArgs);
-  self = rec {
+self = rec {
+
+    inherit callPackage;
 
     parentOverrides = self: super: python3PackagesPlus;
     mergeOverrides = lib.foldr lib.composeExtensions (self: super: { });
@@ -27,9 +29,8 @@ let
       inherit (pkgs) fetchFromGitHub;
       emscripten = workingEmscripten;
     };
-    leanGames = callPackage ./science/lean/lean-games {
-      inherit lean;
-    };
+    makeLeanGame = callPackage ./science/lean/make-lean-game.nix {};
+    leanGames = callPackage ./science/lean/lean-games {};
     lean-game-maker = callPackage ./science/lean/lean-game-maker {
       python = pkgs.python3;
     };

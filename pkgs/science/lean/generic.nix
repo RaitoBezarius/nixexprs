@@ -1,8 +1,8 @@
 { lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src, githash
-, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix, disableTests ? false, checkOleanVersion ? false }:
+, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix, disableTests ? false }:
 let
-  drv = stdenv.mkDerivation rec {
-    pname = "lean";
+  drv = { checkOleanVersion ? true, enableAdvancedLogging ? false }: stdenv.mkDerivation rec {
+    pname = "lean${lib.optionalString (!checkOleanVersion) "no-olean-version-check"}${lib.optionalString enableAdvancedLogging "-extra-olean-verbosity"}";
     inherit version src;
     nativeBuildInputs = [ cmake ];
     buildInputs = [ gmp ];
@@ -11,11 +11,21 @@ let
 
     # Running the tests is required to build the *.olean files for the core
     # library.
-    doCheck = !disableTests;
+    doCheck = !enableAdvancedLogging -> !disableTests; # advanced logging breaks the tests. TODO: fix it.
 
     cmakeFlags = [
       (lib.optionalString (!checkOleanVersion) "-DCHECK_OLEAN_VERSION=OFF")
     ];
+
+    # TODO: merge/renumber patches.
+    patches = [
+      ./patches/0002-shell-progress-add-a-flag-to-force-progress.patch
+    ] ++ lib.optional enableAdvancedLogging [
+      ./patches/0003-emscripten-add-some-logging.patch
+      ./patches/0001-module_mgr-log-attempt-to-load-oleans.patch
+    ];
+
+
     preConfigure = assert builtins.stringLength githash == 40; ''
      substituteInPlace src/githash.h.in \
        --subst-var-by GIT_SHA1 "${githash}"
@@ -35,7 +45,7 @@ let
         buildEmscriptenPackage =
           buildEmscriptenPackage.override { inherit emscripten; };
         leanSrc = src;
-        inherit version githash;
+        inherit version githash enableAdvancedLogging checkOleanVersion;
       };
       mkLibraryScript = leanUtils.mkLibraryScript { lean = drv; };
       withLibrary = leanUtils.mkLibrary { lean = drv; };
@@ -44,6 +54,8 @@ let
         inherit npmlock2nix;
         lean = drv;
       };
+      debugOleans = drv { enableAdvancedLogging = true; inherit checkOleanVersion; };
+      noOleanVersionCheck = drv { checkOleanVersion = false; inherit enableAdvancedLogging; };
     };
 
     meta = with lib; {
@@ -56,4 +68,4 @@ let
       maintainers = with maintainers; [ thoughtpolice gebner ];
     };
   };
-in drv
+in drv {}

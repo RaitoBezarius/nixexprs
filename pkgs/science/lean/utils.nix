@@ -14,7 +14,7 @@ rec {
     writers.writePython3Bin "lean-mklibrary" { flakeIgnore = [ "E501" ]; } customizedSrc;
 
 
-    mkLibrary = { lean ? null }: { bundlePath ? null, coreOnly ? bundlePath == null, bundleSha256 ? null, useFOD ? true }:
+    mkLibrary = { lean ? null }: { bundlePath ? null, coreOnly ? bundlePath == null, bundleSha256 ? null, useFOD ? true, useOldOleans ? false }:
     let
       name = "${lean.name}-library${if coreOnly then "-core-only" else ""}";
       phases = [ "buildPhase" ];
@@ -26,7 +26,7 @@ rec {
           chmod -R u+rw $TMPDIR/bundle
         '' else ""}
         cd $TMPDIR
-        ${mkLibraryScript { inherit lean; }}/bin/lean-mklibrary ${if bundlePath != null then "-i $TMPDIR/bundle " else ""}-o $out/library.zip${if coreOnly then " -c" else ""}
+        ${mkLibraryScript { inherit lean; }}/bin/lean-mklibrary ${lib.optionalString useOldOleans "-t "}${lib.optionalString (bundlePath != null) "-i $TMPDIR/bundle "}-o $out/library.zip${lib.optionalString coreOnly " -c"}
       '';
     in
     if bundlePath != null then

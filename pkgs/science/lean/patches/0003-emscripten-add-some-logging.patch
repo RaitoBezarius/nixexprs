@@ -1,0 +1,138 @@
+From b1f2e7ffc6ded2e90743480e4a3caf6ac84a28d2 Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Sun, 31 Oct 2021 01:27:53 +0200
+Subject: [PATCH 3/3] emscripten: add some logging
+
+---
+ src/library/module.cpp     | 13 +++++++++-
+ src/library/module_mgr.cpp | 49 +++++++++++++++++++++++++++++++++++---
+ 2 files changed, 58 insertions(+), 4 deletions(-)
+
+diff --git a/src/library/module.cpp b/src/library/module.cpp
+index 8d8615495..b90d4e426 100644
+--- a/src/library/module.cpp
++++ b/src/library/module.cpp
+@@ -33,6 +33,10 @@ Author: Leonardo de Moura
+ #include "library/module_mgr.h"
+ #include "library/library_task_builder.h"
+ 
++#if LEAN_EMSCRIPTEN
++#include <emscripten.h>
++#endif
++
+ /*
+ Missing features: non monotonic modifications in .olean files
+ 
+@@ -617,8 +621,14 @@ optional<unsigned> src_hash_if_is_candidate_olean(std::string const & file_name)
+         return {};
+     d1 >> version;
+ #ifndef LEAN_IGNORE_OLEAN_VERSION
+-    if (version != get_version_string())
++    if (version != get_version_string()) {
++	#ifdef LEAN_EMSCRIPTEN
++	    emscripten_log(EM_LOG_NO_PATHS,
++			    "%s olean is not compatible with current Lean version (olean ver: %s, current ver: %s)",
++			    file_name.c_str(), version.c_str(), get_version_string().c_str());
++	#endif
+         return {};
++    }
+ #endif
+     unsigned olean_src_hash;
+     d1 >> olean_src_hash;
+@@ -626,6 +636,7 @@ optional<unsigned> src_hash_if_is_candidate_olean(std::string const & file_name)
+ }
+ 
+ olean_data parse_olean(std::istream & in, std::string const & file_name, bool check_hash) {
++
+     std::vector<module_name> imports;
+     bool uses_sorry;
+ 
+diff --git a/src/library/module_mgr.cpp b/src/library/module_mgr.cpp
+index 19526e32e..0d7d17894 100644
+--- a/src/library/module_mgr.cpp
++++ b/src/library/module_mgr.cpp
+@@ -20,6 +20,10 @@ Author: Gabriel Ebner
+ #include "library/tlean_exporter.h"
+ #include "library/ast_exporter.h"
+ 
++#ifdef LEAN_EMSCRIPTEN
++#include <emscripten.h>
++#endif
++
+ namespace lean {
+ 
+ environment module_info::get_latest_env() const {
+@@ -473,6 +477,14 @@ void module_mgr::cancel_all() {
+ 
+ std::shared_ptr<module_info> fs_module_vfs::load_module(module_id const & id, bool can_use_olean) {
+     auto lean_fname = id;
++#ifdef LEAN_EMSCRIPTEN
++	emscripten_log(EM_LOG_NO_PATHS,
++			"{ \"info\": true, \"message\": \"fs_module_vfs::load_module: loading %s, can use olean: %s, %s exists? %s\" }",
++			id.c_str(),
++			can_use_olean ? "yes" : "no",
++			lean_fname.c_str(),
++			file_exists(lean_fname) ? "yes" : "no");
++#endif
+ 
+     std::string lean_src;
+     optional<unsigned> src_hash = {};
+@@ -481,21 +493,52 @@ std::shared_ptr<module_info> fs_module_vfs::load_module(module_id const & id, bo
+ 	src_hash = some<unsigned>(hash_data(remove_cr(lean_src)));
+     } catch (file_not_found_exception&) {}
+ 
++
+     try {
+         auto olean_fname = olean_of_lean(lean_fname);
++#ifdef LEAN_EMSCRIPTEN
++	emscripten_log(EM_LOG_NO_PATHS,
++			"{ \"info\": true, \"message\": \"fs_module_vfs::load_module: trying to load olean %s, does it exist? %s ; should it be loaded from source? %s\" }",
++			olean_fname.c_str(),
++			file_exists(olean_fname) ? "yes" : "no",
++			m_modules_to_load_from_source.count(id) ? "yes" : "no");
++#endif
++
+         if (file_exists(olean_fname) &&
+             can_use_olean &&
+             !m_modules_to_load_from_source.count(id)) {
+             shared_file_lock olean_lock(olean_fname);
+             optional<unsigned> olean_src_hash = src_hash_if_is_candidate_olean(olean_fname);
++
+             // If there is a valid .olean AND
+             // (there is no source file OR there is one and it matches the hash stored in the .olean), load the .olean.
+             if (olean_src_hash.has_value() &&
+                 (!src_hash.has_value() || *src_hash == *olean_src_hash)) {
+                 return std::make_shared<module_info>(id, read_file(olean_fname, std::ios_base::binary), *olean_src_hash, *olean_src_hash, module_src::OLEAN);
+-            }
+-        }
+-    } catch (exception &) {}
++            } else {
++#ifdef LEAN_EMSCRIPTEN
++	emscripten_log(EM_LOG_NO_PATHS,
++			"{ \"info\": true, \"message\": \"during module loading of %s, either olean is not valid, either it do not match the .lean hash or Lean version.\" }",
++			lean_fname.c_str());
++#endif
++	    }
++        } else {
++#ifdef LEAN_EMSCRIPTEN
++	emscripten_log(EM_LOG_NO_PATHS,
++			"{ \"info\": true, \"message\": \"olean for %s do not exist or cannot be used (modules must be loaded from source or another constraint)\" }",
++			lean_fname.c_str());
++#endif
++	}
++
++    } catch (exception &e) {
++#ifdef LEAN_EMSCRIPTEN
++	emscripten_log(EM_LOG_NO_PATHS,
++			"{ \"info\": true, \"message\": \"during olean module loading of %s, exception thrown during olean load attempt: %s\" }",
++			lean_fname.c_str(),
++			e.what());
++#endif
++
++    }
+ 
+     if (src_hash.has_value())
+         return std::make_shared<module_info>(id, lean_src, *src_hash, *src_hash, module_src::LEAN);
+-- 
+2.33.0
+

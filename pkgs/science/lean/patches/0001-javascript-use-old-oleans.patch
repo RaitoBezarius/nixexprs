@@ -1,0 +1,25 @@
+From 1e23d6448ef17740697136cc67967f0ebedd955f Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Mon, 1 Nov 2021 18:17:23 +0100
+Subject: [PATCH] javascript: use old oleans
+
+---
+ src/shell/lean_js.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/shell/lean_js.cpp b/src/shell/lean_js.cpp
+index cfbac5070..3064129b4 100644
+--- a/src/shell/lean_js.cpp
++++ b/src/shell/lean_js.cpp
+@@ -38,7 +38,7 @@ public:
+     emscripten_shell(): m_env(mk_environment(LEAN_BELIEVER_TRUST_LEVEL + 1)),
+                         m_ios(options({"trace", "as_messages"}, true),
+                               mk_pretty_formatter_factory()),
+-                        m_server(0, get_lean_js_path(), m_env, m_ios) {}
++                        m_server(0, get_lean_js_path(), m_env, m_ios, true) {}
+ 
+     int process_request(std::string msg) {
+         scope_global_ios scoped_ios(m_ios);
+-- 
+2.33.0
+

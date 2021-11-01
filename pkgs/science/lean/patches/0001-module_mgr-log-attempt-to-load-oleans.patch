@@ -1,0 +1,40 @@
+From e03b7195a245e9d4f7d762e3e9436a01244ae3bb Mon Sep 17 00:00:00 2001
+From: Raito Bezarius <masterancpp@gmail.com>
+Date: Mon, 1 Nov 2021 14:38:14 +0100
+Subject: [PATCH] module_mgr: log attempt to load oleans
+
+---
+ src/library/module_mgr.cpp | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/src/library/module_mgr.cpp b/src/library/module_mgr.cpp
+index 0d7d17894..496360b74 100644
+--- a/src/library/module_mgr.cpp
++++ b/src/library/module_mgr.cpp
+@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
+ 
+ Author: Gabriel Ebner
+ */
++#include <iostream>
+ #include <utility>
+ #include <string>
+ #include <vector>
+@@ -516,6 +517,7 @@ std::shared_ptr<module_info> fs_module_vfs::load_module(module_id const & id, bo
+                 (!src_hash.has_value() || *src_hash == *olean_src_hash)) {
+                 return std::make_shared<module_info>(id, read_file(olean_fname, std::ios_base::binary), *olean_src_hash, *olean_src_hash, module_src::OLEAN);
+             } else {
++		    std::cout << "olean " << olean_fname << " was rejected (has hash: " << (olean_src_hash.has_value() ? std::to_string(*olean_src_hash) : "no") << ", src hash: " << (src_hash.has_value() ? std::to_string(*src_hash) : "no") << ")" << std::endl;
+ #ifdef LEAN_EMSCRIPTEN
+ 	emscripten_log(EM_LOG_NO_PATHS,
+ 			"{ \"info\": true, \"message\": \"during module loading of %s, either olean is not valid, either it do not match the .lean hash or Lean version.\" }",
+@@ -523,6 +525,7 @@ std::shared_ptr<module_info> fs_module_vfs::load_module(module_id const & id, bo
+ #endif
+ 	    }
+         } else {
++		    std::cout << "olean " << olean_fname << " was rejected (can use olean: " << (can_use_olean ? "yes" : "no") << ", does it exist: " << (file_exists(olean_fname) ? "yes" : "no") << ", is it a module to load from source: " << (m_modules_to_load_from_source.count(id) ? "yes" : "no") << ")." << std::endl;
+ #ifdef LEAN_EMSCRIPTEN
+ 	emscripten_log(EM_LOG_NO_PATHS,
+ 			"{ \"info\": true, \"message\": \"olean for %s do not exist or cannot be used (modules must be loaded from source or another constraint)\" }",
+-- 
+2.33.0
+

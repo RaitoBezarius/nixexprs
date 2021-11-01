@@ -19,7 +19,7 @@ let
   ];
   # Disable tests for important releases as they will not work out of the box.
   importantReleases = [];
-  minimalVersion = "v3.7.2";
+  minimalVersion = "v3.23.0";
   releaseIncludedIn = list: v: builtins.any (v2: v == v2) list;
   isBrokenRelease = releaseIncludedIn brokenReleases;
   isImportantRelease = releaseIncludedIn importantReleases;

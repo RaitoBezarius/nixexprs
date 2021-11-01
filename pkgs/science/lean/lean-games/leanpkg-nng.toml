@@ -1,8 +1,8 @@
 [package]
 name = "natural_number_game"
 version = "0.1"
-lean_version = "leanprover-community/lean:3.24.0" # override Lean version.
+lean_version = "leanprover-community/lean:3.35.0" # override Lean version.
 path = "src"
 
 [dependencies]
-mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "e5f9409cd645db4734e2fd09e6d1a120e8405dd0"} # Override mathlib.
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "886b15b5ea473ae51ed90de31b05f23de00be10d"}

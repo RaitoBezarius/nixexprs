@@ -1,5 +1,5 @@
-{ fetchFromGitHub, make-lean-game }:
-make-lean-game {
+{ fetchFromGitHub, makeLeanGame }:
+makeLeanGame {
   src = fetchFromGitHub {
     owner = "kbuzzard";
     repo = "lean-game-skeleton";

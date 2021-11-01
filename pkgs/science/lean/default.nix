@@ -16,8 +16,13 @@ let
     "v9.9.9"
     "we-love-bors"
   ];
+  importantReleases = [
+    "v3.5.0"
+  ];
   minimalVersion = "v3.24.0";
-  isBrokenRelease = v: builtins.any (broken: v == broken) brokenReleases;
+  releaseIncludedIn = list: v: builtins.any (v2: v == v2) list;
+  isBrokenRelease = releaseIncludedIn brokenReleases;
+  isImportantRelease = releaseIncludedIn importantReleases;
   isAcceptableVersion = v: lib.versionAtLeast v minimalVersion;
 in
-  mergeMap mkLeanRelease (lib.filterAttrs (name: _: !isBrokenRelease name && isAcceptableVersion name) leanReleases)
+  mergeMap mkLeanRelease (lib.filterAttrs (name: _: !isBrokenRelease name && (isAcceptableVersion name || isImportantRelease name)) leanReleases)

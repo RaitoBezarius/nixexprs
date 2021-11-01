@@ -41,6 +41,14 @@ parser.add_argument(
     ),
 )
 
+parser.add_argument(
+    "-t",
+    action="store_true",
+    help=(
+        "if this flag is present, use old oleans during build."
+    ),
+)
+
 args = parser.parse_args()
 combined_lib = args.i
 combined_lib_path = str(Path(combined_lib).resolve()) + "/src"
@@ -48,7 +56,7 @@ library_zip_fn = str(Path(args.o).resolve())
 
 if not args.c:
     os.chdir(combined_lib)
-    subprocess.call(["leanpkg", "build"])
+    subprocess.call(["lean"] + (["--old-oleans"] if args.t else []) + ["--json", "--make", "src"])
 
 lean_version = subprocess.run(
     ["lean", "-v"], capture_output=True, encoding="utf-8"

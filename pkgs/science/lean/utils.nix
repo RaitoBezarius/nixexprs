@@ -13,7 +13,8 @@ rec {
     in
     writers.writePython3Bin "lean-mklibrary" { flakeIgnore = [ "E501" ]; } customizedSrc;
 
-    mkLibrary = { lean ? null }: { bundlePath ? null, coreOnly ? bundlePath == null, bundleSha256 ? null }:
+
+    mkLibrary = { lean ? null }: { bundlePath ? null, coreOnly ? bundlePath == null, bundleSha256 ? null, useFOD ? true }:
     let
       name = "${lean.name}-library${if coreOnly then "-core-only" else ""}";
       phases = [ "buildPhase" ];
@@ -21,14 +22,22 @@ rec {
         mkdir -p $out/
         ${if bundlePath != null then ''
           mkdir -p $TMPDIR/bundle
-          cp -v ${bundlePath}/* $TMPDIR/bundle/
+          cp -rv ${bundlePath}/* $TMPDIR/bundle/
           chmod -R u+rw $TMPDIR/bundle
         '' else ""}
         cd $TMPDIR
-        ${mkLibraryScript { inherit lean; }}/bin/lean-mklibrary ${if bundlePath != null then "-i $TMPDIR/bundle " else ""}-o $out/library.zip${if coreOnly then " -c" else ""}
+        ${mkLibraryScript { inherit lean; }}/bin/lean-mklibrary -t ${if bundlePath != null then "-i $TMPDIR/bundle " else ""}-o $out/library.zip${if coreOnly then " -c" else ""}
       '';
     in
     if bundlePath != null then
-    assert bundleSha256 != null; stdenv.mkDerivation { inherit name phases buildPhase; outputHashMode = "recursive"; outputHashAlgo = "sha256"; outputHash = bundleSha256; buildInputs = [ git cacert ]; }
+      assert useFOD -> bundleSha256 != null;
+      stdenv.mkDerivation {
+        inherit name phases buildPhase;
+        buildInputs = [ git cacert ];
+      } // (if useFOD then {
+        outputHashMode = "recursive";
+        outputHashAlgo = "sha256";
+        outputHash = bundleSha256;
+      } else {})
     else stdenv.mkDerivation { inherit name phases buildPhase; };
 }

@@ -1,5 +1,5 @@
 {
-  "name": "lean-game-maker-client-interactive-interface",
+  "name": "lean-game-maker-web-client",
   "version": "1.0.0",
   "description": "Lean Game Maker",
   "main": "index.js",
@@ -11,7 +11,7 @@
   "author": "Mohammad Pedramfar",
   "license": "Apache-2.0",
   "dependencies": {
-    "@bryangingechen/lean-client-js-browser": "^1.4.0",
+    "@raitobezarius/lean-client-js-browser": "^2.0.3",
     "@types/node": "^12.12.36",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",

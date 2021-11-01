@@ -26,7 +26,7 @@ rec {
           chmod -R u+rw $TMPDIR/bundle
         '' else ""}
         cd $TMPDIR
-        ${mkLibraryScript { inherit lean; }}/bin/lean-mklibrary -t ${if bundlePath != null then "-i $TMPDIR/bundle " else ""}-o $out/library.zip${if coreOnly then " -c" else ""}
+        ${mkLibraryScript { inherit lean; }}/bin/lean-mklibrary ${if bundlePath != null then "-i $TMPDIR/bundle " else ""}-o $out/library.zip${if coreOnly then " -c" else ""}
       '';
     in
     if bundlePath != null then

@@ -1,5 +1,5 @@
-{ lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src
-, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix, disableTests ? false }:
+{ lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src, githash
+, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix, disableTests ? false, checkOleanVersion ? false }:
 let
   drv = stdenv.mkDerivation rec {
     pname = "lean";
@@ -13,6 +13,16 @@ let
     # library.
     doCheck = !disableTests;
 
+    cmakeFlags = [
+      (lib.optionalString (!checkOleanVersion) "-DCHECK_OLEAN_VERSION=OFF")
+    ];
+    preConfigure = assert builtins.stringLength githash == 40; ''
+     substituteInPlace src/githash.h.in \
+       --subst-var-by GIT_SHA1 "${githash}"
+     substituteInPlace library/init/version.lean.in \
+       --subst-var-by GIT_SHA1 "${githash}"
+    '';
+
     postPatch = "patchShebangs .";
 
     postInstall = lib.optionalString stdenv.isDarwin ''
@@ -25,7 +35,7 @@ let
         buildEmscriptenPackage =
           buildEmscriptenPackage.override { inherit emscripten; };
         leanSrc = src;
-        inherit version;
+        inherit version githash;
       };
       mkLibraryScript = leanUtils.mkLibraryScript { lean = drv; };
       withLibrary = leanUtils.mkLibrary { lean = drv; };

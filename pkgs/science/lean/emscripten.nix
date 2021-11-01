@@ -1,4 +1,4 @@
-{ buildEmscriptenPackage, cmake, m4, libtool, texinfo, leanSrc, version }:
+{ lib, buildEmscriptenPackage, cmake, m4, libtool, texinfo, leanSrc, version, githash, checkOleanVersion ? false }:
 let
   gmpSrc = fetchTarball {
     url = "https://gmplib.org/download/gmp/gmp-6.1.2.tar.bz2";
@@ -18,6 +18,13 @@ in
       ./0001-cmake-emscripten-update-build-flags-for-emscripten-2.patch
     ];
 
+    preConfigure = assert builtins.stringLength githash == 40; ''
+     substituteInPlace src/githash.h.in \
+       --subst-var-by GIT_SHA1 "${githash}"
+     substituteInPlace library/init/version.lean.in \
+       --subst-var-by GIT_SHA1 "${githash}"
+    '';
+
     configurePhase = ''
       export HOME=$TMPDIR
 
@@ -31,7 +38,7 @@ in
       sed -i "s|.*URL .*|            SOURCE_DIR \"$TMPDIR/gmp\"|" src/CMakeLists.txt
       sed -i "/URL_HASH/d" src/CMakeLists.txt
 
-      emcmake cmake -S src -B $TMPDIR/build
+      emcmake cmake -S src -B $TMPDIR/build ${lib.optionalString (!checkOleanVersion) "-DCHECK_OLEAN_VERSION=OFF"}
     '';
 
     buildPhase = ''

@@ -11,12 +11,10 @@ let
         inherit (releaseInfo) owner repo rev sha256;
       };
       disableTests = isImportantRelease version;
+      inherit (releaseInfo) githash;
     };
   };
-  brokenReleases = [
-    "v9.9.9"
-    "we-love-bors"
-  ];
+  brokenReleases = [];
   # Disable tests for important releases as they will not work out of the box.
   importantReleases = [];
   minimalVersion = "v3.23.0";

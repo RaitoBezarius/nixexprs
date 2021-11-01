@@ -8,9 +8,9 @@ let
     inherit writeTOML;
   };
 in
-  { src, gameConfig, leanpkgTOML, replaceLocalTOML ? false, ... }@args:
+  { src, gameConfig, leanpkgTOML ? "${src}/leanpkg.toml", replaceLocalTOML ? false, ... }@args:
   let
-    leanpkgConfig = builtins.fromTOML (builtins.readFile args.leanpkgTOML);
+    leanpkgConfig = builtins.fromTOML (builtins.readFile leanpkgTOML);
     gameName = gameConfig.name or leanpkgConfig.name;
     safeGameName = lib.strings.sanitizeDerivationName gameName;
     leanVersion = (builtins.replaceStrings [ "leanprover-community/lean:" "." ]  [ "" "_" ] leanpkgConfig.package.lean_version);
@@ -68,7 +68,7 @@ in
   symlinkJoin {
     name = "${safeGameName}-lean-game";
     paths = [
-      (mkGameData ({ inherit src gameName gameConfig leanpkgConfig; } // args))
+      (mkGameData ({ inherit src gameName gameConfig leanpkgConfig leanpkgTOML; } // args))
       lean-game-maker.web
       lean.${leanVersion}.emscripten
       # lean.${leanVersion}.coreLibrary

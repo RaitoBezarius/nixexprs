@@ -10,12 +10,14 @@ let
       src = fetchFromGitHub {
         inherit (releaseInfo) owner repo rev sha256;
       };
+      disableTests = isImportantRelease version;
     };
   };
   brokenReleases = [
     "v9.9.9"
     "we-love-bors"
   ];
+  # Disable tests for important releases as they will not work out of the box.
   importantReleases = [
     "v3.5.0"
   ];

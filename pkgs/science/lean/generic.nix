@@ -1,5 +1,5 @@
 { lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src
-, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix }:
+, buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix, disableTests ? false }:
 let
   drv = stdenv.mkDerivation rec {
     pname = "lean";
@@ -11,7 +11,7 @@ let
 
     # Running the tests is required to build the *.olean files for the core
     # library.
-    doCheck = true;
+    doCheck = !disableTests;
 
     postPatch = "patchShebangs .";
 

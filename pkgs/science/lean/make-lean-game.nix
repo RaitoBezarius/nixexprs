@@ -25,16 +25,13 @@ in
             ref = "master";
             inherit (dep) rev;
           };
-          src = if name == "mathlib" then symlinkJoin {
-            name = "mathlib-with-cached-olean";
-            paths = [
-              (runCommandLocal "mathlib-azure-olean-with-src" {} ''
-                mkdir -p $out/src
-                ${xlibs.lndir}/bin/lndir ${prefetchMathlibCache dep.rev} $out/src
+          src = if name == "mathlib"
+          then (runCommandLocal "mathlib-azure-olean-with-src" {} ''
+                cp -vr ${gitSrc} $out
+                chmod -R u+w $out
+                cp -vr ${prefetchMathlibCache dep.rev}/* $out/src/
               '')
-              gitSrc
-            ];
-          } else gitSrc;
+          else gitSrc;
         in
         "ln -s ${src} $out/_target/deps/${name}";
         leanpkgDependencies = leanpkgConfig.dependencies;

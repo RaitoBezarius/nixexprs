@@ -19,7 +19,7 @@ let
 
     # TODO: merge/renumber patches.
     patches = [
-      ./patches/0002-shell-progress-add-a-flag-to-force-progress.patch
+      # ./patches/0002-shell-progress-add-a-flag-to-force-progress.patch TODO: this wont apply well. what to do?
     ] ++ lib.optional enableAdvancedLogging [
       ./patches/0003-emscripten-add-some-logging.patch
       ./patches/0001-module_mgr-log-attempt-to-load-oleans.patch

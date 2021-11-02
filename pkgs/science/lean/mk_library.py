@@ -56,7 +56,7 @@ library_zip_fn = str(Path(args.o).resolve())
 
 if not args.c:
     os.chdir(combined_lib)
-    subprocess.call(["lean"] + (["--old-oleans"] if args.t else []) + ["--force-show-progress", "--make", "src"])
+    subprocess.call(["lean"] + (["--old-oleans"] if args.t else []) + ["--make", "src"])
 
 lean_version = subprocess.run(
     ["lean", "-v"], capture_output=True, encoding="utf-8"

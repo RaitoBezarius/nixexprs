@@ -13,6 +13,14 @@ self = rec {
 
     parentOverrides = self: super: python3PackagesPlus;
     mergeOverrides = lib.foldr lib.composeExtensions (self: super: { });
+    npmlock2nix = import (builtins.fetchGit {
+      url = "https://github.com/nix-community/npmlock2nix";
+      ref = "refs/heads/master";
+    }) { inherit pkgs; };
+    mach-nix = import (builtins.fetchGit {
+      url = "https://github.com/DavHau/mach-nix";
+      ref = "refs/tags/3.3.0";
+    }) {};
     python3 = pkgs.python3.override {
       packageOverrides = self: super: python3PackagesPlus;
     };
@@ -65,6 +73,8 @@ self = rec {
     infcloud = callPackage ./web-apps/infcloud { }; # CalDAV/CardDAV web client.
     oragono = callPackage ./servers/oragono.nix { };
     inspircd = callPackage ./servers/inspircd { };
+    sentry = callPackage ./servers/sentry { }; # Error / exception collecting server.
+    glitchtip = callPackage ./servers/glitchtip { }; # Error / exception collecting server, lightweight alternative to Sentry.
     python3PackagesPlus = callPackage ./python-packages {
       python = pkgs.python3;
       wafHook = callPackage ./development/wafHook {};

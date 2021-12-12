@@ -14,4 +14,5 @@
   invoiceplane = ./web-apps/invoiceplane.nix;
   errbot = ./servers/errbot.nix;
   django = ./web-apps/django;
+  nextjs = ./web-apps/nextjs;
 }

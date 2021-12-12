@@ -13,4 +13,5 @@
   netbox = ./web-apps/netbox;
   invoiceplane = ./web-apps/invoiceplane.nix;
   errbot = ./servers/errbot.nix;
+  django = ./web-apps/django;
 }

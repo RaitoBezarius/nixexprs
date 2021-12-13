@@ -5,8 +5,8 @@ self: super: {
     _: {
       src = pkgs.fetchgit {
         url = "https://github.com/NixOS/nixops.git";
-        rev = "35ac02085169bc2372834d6be6cf4c1bdf820d09";
-        sha256 = "1jh0jrxyywjqhac2dvpj7r7isjv68ynbg7g6f6rj55raxcqc7r3j";
+        rev = "0c989d79c9052ebf52f12964131f4fc31ac20a18";
+        sha256 = "07jz9grq3hjn1g9xybln5phbjhn2zsldcnan3lal6syzjggja6v1";
       };
     }
   );
@@ -15,8 +15,8 @@ self: super: {
     _: {
       src = pkgs.fetchgit {
         url = "https://github.com/NixOS/nixops-aws.git";
-        rev = "371aedeb7fd53b8978a60dd7c37d3a6c38101c48";
-        sha256 = "15jz9x3ra3hsh6xj4cbri1fvvjk2rplnnhnccz7qc6f176b5r01j";
+        rev = "83900880a413218020ddd91d6cd3f5b823acb3fb";
+        sha256 = "17gf4vfcl1vx81y9vk26zzcj6kac41kfhzwcx15cj91ivqrgn3b2";
       };
     }
   );
@@ -45,8 +45,8 @@ self: super: {
     _: {
       src = pkgs.fetchgit {
         url = "https://github.com/RaitoBezarius/nixops-proxmox.git";
-        rev = "de97d17322c379ff10749d50d2b26741c05105b7";
-        sha256 = "1iv47si00haavpnii8jhsjv21hrj6j2v8y2k4dazvw2pn7wrvmhb";
+        rev = "d69e7f1234fa98f8d1b3c0cc6100f26db380af6c";
+        sha256 = "15ksqdi12y0l02isqpdfr2iy9ixblvd4j7p47s301lirljrc8rbp";
       };
     }
   );

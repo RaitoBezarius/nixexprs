@@ -4,7 +4,7 @@ with lib;
   enable = mkEnableOption "Enable ${name} application with Next.js webserver";
 
   src = mkOption {
-    description = "Source of the application";
+    description = "Source of the frontend application";
   };
 
   nextDir = mkOption {
@@ -13,7 +13,7 @@ with lib;
   };
 
   nodeModules = mkOption {
-    description = "node_modules derivation of the project, containing at least the `next` binary in /.bin";
+    description = "node_modules derivation of the project, containing at least the `next` binary in node_modules/.bin";
     type = types.str;
   };
 

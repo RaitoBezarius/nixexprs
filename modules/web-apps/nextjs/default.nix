@@ -5,15 +5,21 @@ let
   enabledApplications = filterAttrs (n: v: v.enable) cfg;
   mkAppUnit = name: subcfg: nameValuePair "nextjs-${name}" {
     description = "Next.js runtime for ${name} application";
-    after = [ "network-online.target" ] ++ subcfg.after;
+    after = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
+
+    preStart = ''
+      cp -r ${subcfg.nextDir} .next
+      cp -r ${subcfg.src} app
+    '';
 
     serviceConfig = {
       DynamicUser = true;
-      ExecStart = "${subcfg.nodeModules}/.bin/next start -p ${toString subcfg.port}";
+      ExecStart = "${subcfg.nodeModules}/.bin/next start app -p ${toString subcfg.port}";
       Restart = "on-failure";
       RestartSec = "30s";
       PrivateTmp = true;
+      StateDirectory = "nextjs-${name}";
     };
 
     inherit (subcfg) environment;

@@ -6,17 +6,17 @@ with lib;
 
     src = mkOption {
       description = "Source of the frontend application";
-      type = types.package;
+      type = types.either types.package types.path;
     };
 
     nextDir = mkOption {
       description = "Next-built directory: result of `next build`";
-      type = types.package;
+      type = types.either types.package types.path;
     };
 
     nodeModules = mkOption {
       description = "node_modules derivation of the project, containing at least the `next` binary in node_modules/.bin";
-      type = types.package;
+      type = types.either types.package types.path;
     };
 
     port = mkOption {

@@ -9,13 +9,9 @@ let
     wantedBy = [ "multi-user.target" ];
 
     preStart = ''
-      # Clear the old data.
-      rm -rf /var/lib/nextjs/${name}
-
-      cp -r ${subcfg.src} /var/lib/nextjs/${name}/app
+      ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.src}/ /var/lib/nextjs/${name}/app
+      ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nextDir}/ /var/lib/nextjs/${name}/app/.next
       chmod -R u+rw /var/lib/nextjs/${name}/app
-      cp -r ${subcfg.nextDir} /var/lib/nextjs/${name}/app/.next
-      chmod -R u+rw /var/lib/nextjs/${name}/app/.next
     '';
 
     serviceConfig = {

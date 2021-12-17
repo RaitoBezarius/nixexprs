@@ -9,20 +9,25 @@ let
     wantedBy = [ "multi-user.target" ];
 
     preStart = ''
-      cp -r ${subcfg.nextDir} .next
-      cp -r ${subcfg.src} app
+      cp -r ${subcfg.src} /var/lib/nextjs/${name}/app
+      chmod -R u+rw /var/lib/nextjs/${name}/app
+      cp -r ${subcfg.nextDir} /var/lib/nextjs/${name}/app/.next
+      chmod -R u+rw /var/lib/nextjs/${name}/app/.next
     '';
 
     serviceConfig = {
       DynamicUser = true;
-      ExecStart = "${subcfg.nodeModules}/.bin/next start app -p ${toString subcfg.port}";
+      WorkingDirectory = "/var/lib/nextjs/${name}";
+      ExecStart = "${subcfg.nodeModules}/bin/next start app -p ${toString subcfg.port}";
       Restart = "on-failure";
       RestartSec = "30s";
       PrivateTmp = true;
-      StateDirectory = "nextjs-${name}";
+      StateDirectory = "nextjs/${name}";
     };
 
-    inherit (subcfg) environment;
+    environment = {
+      NODE_PATH = "${subcfg.nodeModules}/node_modules";
+    } // subcfg.environment;
   };
 in
 {

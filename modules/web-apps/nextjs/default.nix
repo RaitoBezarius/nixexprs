@@ -10,11 +10,12 @@ let
 
     preStart = ''
       ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.src}/ /var/lib/nextjs/${name}/app
+      ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nodeModules}/ /var/lib/nextjs/${name}/app/node_modules
           ${if subcfg.nextDir == null then ''
-            export NODE_PATH=${subcfg.nodeModules}/node_modules
+            export NODE_PATH=/var/lib/nextjs/${name}/app/node_modules:$NODE_PATH
             chmod -R u+rw /var/lib/nextjs/${name}/app
             cd /var/lib/nextjs/${name}/app
-            ${subcfg.nodeModules}/bin/next build
+            ./node_modules/bin/next build
         '' else ''
           ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nextDir}/ /var/lib/nextjs/${name}/app/.next
           chmod -R u+rw /var/lib/nextjs/${name}/app

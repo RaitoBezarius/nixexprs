@@ -31,6 +31,7 @@ let
       RestartSec = "30s";
       PrivateTmp = true;
       StateDirectory = "nextjs/${name}";
+      TimeoutStartSec = if subcfg.nextDir == null then "0" else "15s";
     };
 
     environment = {

@@ -11,7 +11,7 @@ let
     preStart = ''
       ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.src}/ /var/lib/nextjs/${name}/app
       chmod -R u+rw /var/lib/nextjs/${name}/app
-      ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nodeModules}/ /var/lib/nextjs/${name}/app/node_modules
+      ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nodeModules}/node_modules/ /var/lib/nextjs/${name}/app/node_modules
       chmod -R u+rw /var/lib/nextjs/${name}/app/node_modules
           ${if subcfg.nextDir == null then ''
             export NODE_PATH=/var/lib/nextjs/${name}/app/node_modules:$NODE_PATH
@@ -26,7 +26,7 @@ let
     serviceConfig = {
       DynamicUser = true;
       WorkingDirectory = "/var/lib/nextjs/${name}";
-      ExecStart = "./app/node_modules/.bin/next start app -p ${toString subcfg.port}";
+      ExecStart = "${subcfg.nodeModules}/bin/next start app -p ${toString subcfg.port}";
       Restart = "on-failure";
       RestartSec = "30s";
       PrivateTmp = true;

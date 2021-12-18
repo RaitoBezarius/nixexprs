@@ -13,7 +13,8 @@ let
           ${if subcfg.nextDir == null then ''
             export NODE_PATH=${subcfg.nodeModules}/node_modules
             chmod -R u+rw /var/lib/nextjs/${name}/app
-            ${subcfg.nodeModules}/bin/next build app
+            cd /var/lib/nextjs/${name}/app
+            ${subcfg.nodeModules}/bin/next build
         '' else ''
           ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nextDir}/ /var/lib/nextjs/${name}/app/.next
           chmod -R u+rw /var/lib/nextjs/${name}/app

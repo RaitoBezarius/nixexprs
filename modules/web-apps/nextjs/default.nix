@@ -10,8 +10,13 @@ let
 
     preStart = ''
       ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.src}/ /var/lib/nextjs/${name}/app
-      ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nextDir}/ /var/lib/nextjs/${name}/app/.next
-      chmod -R u+rw /var/lib/nextjs/${name}/app
+        ${if subcfg.nextDir == null then ''
+          chmod -R u+rw /var/lib/nextjs/${name}/app
+          ${subcfg.nodeModules}/bin/next build app
+        '' else ''
+          ${pkgs.rsync}/bin/rsync -aI --delete ${subcfg.nextDir}/ /var/lib/nextjs/${name}/app/.next
+          chmod -R u+rw /var/lib/nextjs/${name}/app
+      ''}
     '';
 
     serviceConfig = {

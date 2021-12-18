@@ -10,8 +10,13 @@ with lib;
     };
 
     nextDir = mkOption {
-      description = "Next-built directory: result of `next build`";
-      type = types.either types.package types.path;
+      description = ''
+        Next-built directory: result of `next build`
+        Optional, as next build might uses network to perform SSG-related operations, prefer filesystem if possible or return empty paths in getStaticPaths.
+        In that case, you will prefer to null this option and let it be done at pre-start.
+        Restarts will be slower.
+      '';
+      type = types.nullOr (types.either types.package types.path);
     };
 
     nodeModules = mkOption {

@@ -25,8 +25,8 @@ let
 
     serviceConfig = {
       DynamicUser = true;
-      WorkingDirectory = "/var/lib/nextjs/${name}";
-      ExecStart = "${subcfg.nodeModules}/bin/next start app -p ${toString subcfg.port}";
+      WorkingDirectory = "/var/lib/nextjs/${name}/app";
+      ExecStart = "/var/lib/nextjs/${name}/app/node_modules/.bin/next start -p ${toString subcfg.port}";
       Restart = "on-failure";
       RestartSec = "30s";
       PrivateTmp = true;

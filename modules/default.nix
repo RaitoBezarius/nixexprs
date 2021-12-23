@@ -15,4 +15,5 @@
   errbot = ./servers/errbot.nix;
   django = ./web-apps/django;
   nextjs = ./web-apps/nextjs;
+  writefreely = ./web-apps/writefreely.nix;
 }

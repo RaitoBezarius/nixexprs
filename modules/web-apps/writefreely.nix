@@ -27,7 +27,7 @@ in
     config = mkIf cfg.enable {
       environment.systemPackages = [
         (pkgs.writeScriptBin "manage-writefreely" ''
-          #!${pkgs.stdenv.runtimeShell}
+          #!${pkgs.runtimeShell}
           ${cfg.package}/bin/writefreely -c ${cfg.configFile} "$@"
         '')
       ];

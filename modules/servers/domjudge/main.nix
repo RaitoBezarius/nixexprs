@@ -2,6 +2,7 @@
 with lib;
 let
   cfg = config.services.domjudge;
+  dockercli = "${config.virtualisation.docker.package}/bin/docker";
   mkJudgeHost = k: {
     image = "domjudge/judgehost:latest";
     dependsOn = [ "domjudge-server" ];

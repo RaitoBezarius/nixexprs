@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.services.domjudge;
   dockercli = "${config.virtualisation.docker.package}/bin/docker";
@@ -87,5 +87,5 @@ let
       '';
 in
 {
-  environment.systemPackages = mkIf cfg.enable [ domserver-script ];
+  environment.systemPackages = lib.mkIf cfg.enable [ domserver-script ];
 }

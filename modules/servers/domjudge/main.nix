@@ -95,10 +95,12 @@ in {
 
     systemd.services = mkMerge [
       # Delegate cgroups.
-      (mapListToAttrs (name: {
-        inherit name;
-        value = { serviceConfig.Delegate = "yes"; };
-      }) (map (k: "judgehost-${toString k}") (range 1 cfg.judgeHostNumber)))
+      (lib.listToAttrs
+        (map (name: {
+          inherit name;
+          value = { serviceConfig.Delegate = "yes"; };
+        }) (map (k: "judgehost-${toString k}") (range 1 cfg.judgeHostNumber)))
+      )
       ({
         init-domjudge-network = {
           description =

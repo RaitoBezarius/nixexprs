@@ -13,8 +13,8 @@ let
     }
 
   '';
-  mkTableRule = rule: ''
-    ${rule.match} ${rule.dest}
+  mkTableRule = { match, dest, useProxyProtocol ? false }: ''
+    ${match} ${dest} ${optionalString useProxyProtocol "proxy_protocol"}
 
   '';
   mkTable = table: ''
@@ -99,6 +99,15 @@ let
         description = "Destination IP address/port";
         type = types.str;
         example = "[2001:DB8::1:10]";
+      };
+      useProxyProtocol = mkOption {
+        description = ''
+          Use the PROXY protocol to provide the Real IP to the destination
+          Warning: you should use an allowlist for the destination server so that untrusted upstream clients cannot spoof their IP!
+        '';
+        type = types.bool;
+        example = true;
+        default = false;
       };
     };
   };

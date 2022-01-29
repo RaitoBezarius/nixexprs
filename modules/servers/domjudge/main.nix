@@ -14,7 +14,7 @@ let
       JUDGEDAEMON_USERNAME = "judgehost";
       DOMJUDGE_CREATE_WRITABLE_TEMP_DIR = "1";
     };
-    volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" ];
+    volumes = [ "/sys/fs/cgroup:/sys/fs/cgroup:ro" "${cfg.stateDir}/etc:/opt/domjudge/domserver/etc" ];
     extraOptions =
       [ "--privileged" "--network=${cfg.networkBridge}" "--hostname=judge" ];
   };

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 let
   cfg = config.services.domjudge;
   dockercli = "${config.virtualisation.docker.package}/bin/docker";

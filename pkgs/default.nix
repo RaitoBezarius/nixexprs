@@ -86,6 +86,8 @@ self = rec {
     isso = callPackage ./servers/isso {};
     nodePackages = pkgs.nodePackages // (callPackage ./node-packages {});
 
+    trinitycore = callPackage ./servers/trinitycore.nix {};
+
     # My scripts
     kachpass = callPackage ./tools/kachpass {};
   };

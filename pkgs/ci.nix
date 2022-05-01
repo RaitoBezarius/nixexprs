@@ -7,7 +7,6 @@ in
     cachet
     wireguard-vanity-address
     workingEmscripten
-    zig
-    isso
     kachpass
+    trinitycore
   ]

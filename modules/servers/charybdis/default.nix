@@ -406,14 +406,15 @@ in {
         knock_delay_channel.raw = lib.mkDefault "1 minute";
       };
 
-      services.charybdis.settings.blacklist = {
-        hosts = lib.mkDefault [{
-          host = "rbl.efnetrbl.org";
-          type = "ipv4";
-          reject_reason =
-            "''\${nick}, your IP (''\${ip}) is listed in EFnet's RBL. For assistance, see http://efnetrbl.org/?i=''\${ip}";
-        }];
-      };
+      # TODO: special logic to handle co-occurrences.
+      #services.charybdis.settings.blacklist = {
+      #  hosts = lib.mkDefault [{
+      #    host = "rbl.efnetrbl.org";
+      #    type = "ipv4";
+      #    reject_reason =
+      #      "''\${nick}, your IP (''\${ip}) is listed in EFnet's RBL. For assistance, see http://efnetrbl.org/?i=''\${ip}";
+      #  }];
+      #};
 
       services.charybdis.settings.serverhide = {
         flatten_links = lib.mkDefault true;

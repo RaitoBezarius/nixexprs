@@ -51,7 +51,7 @@ let
   mkInternallyRepeatedBlock = title: values: ''
     ${title} {
       ${concatStringsSep "\n" (concatMap (attrs: mapAttrsToList mkKeyValue attrs) values)}
-    }
+    };
   '';
   areAllValuesAttrs = e:
     all (child: builtins.isAttrs child) (builtins.attrValues e);

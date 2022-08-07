@@ -1,9 +1,7 @@
 { config, lib, pkgs, ... }:
 
-# TODO: handle repeated arg.
-# TODO: cleanup unused stuff
+# TODO: not all of the syntax is supported, help to improve the module to support your syntax.
 # TODO: support for modules { module = ... } for rehash/reload.
-# TODO: improve hardening.
 # TODO: improve typing for freeform settings for complicated stuff.
 # TODO: provide basic assertions.
 # TODO: test solanum over this.
@@ -13,8 +11,8 @@
 
 let
   inherit (lib)
-    mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList
-    all trace toposort nameValuePair optionalString;
+    mkEnableOption mkIf mkOption types concatStringsSep mapAttrsToList
+    all trace toposort nameValuePair optionalString concatMapStringsSep;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
   stateDir =
@@ -50,6 +48,11 @@ let
       ${concatStringsSep "\n" (mapAttrsToList mkKeyValue value)}
     };
   '';
+  mkInternallyRepeatedBlock = title: values: ''
+    ${title} {
+      ${concatMapStringsSep "\n" (v: mapAttrsToList mkKeyValue v) values}
+    }
+  '';
   areAllValuesAttrs = e:
     all (child: builtins.isAttrs child) (builtins.attrValues e);
   subBlockTitle = title: subBlock: ''${title} "${subBlock}"'';
@@ -71,7 +74,7 @@ let
   # auth in a precedence order.
   # privset before operator.
   # privset extends has to be defined before being used.
-  specialAttrs = [ "class" "privset" "auth" ];
+  specialAttrs = [ "class" "privset" "auth" "blacklist" ];
   # b should be after a iff b extends clause is a's name
   # e.g.
   # privset "hello" { ... }
@@ -100,6 +103,7 @@ let
     (map (mkSimpleBlock "auth") (cfg.settings.auth or [ ]))}
     ${concatStringsSep "\n"
     (mapAttrsToList mkBlock (removeAttrs cfg.settings specialAttrs))}
+    ${mkInternallyRepeatedBlock "blacklist" (cfg.settings.blacklist or [])}
 
     ${optionalString ((builtins.length cfg.modulesDirectories) > 0) ''
       /* Modules path */
@@ -462,15 +466,12 @@ in {
         knock_delay_channel.raw = lib.mkDefault "1 minute";
       };
 
-      # TODO: special logic to handle co-occurrences.
-      #services.charybdis.settings.blacklist = {
-      #  hosts = lib.mkDefault [{
-      #    host = "rbl.efnetrbl.org";
-      #    type = "ipv4";
-      #    reject_reason =
-      #      "''\${nick}, your IP (''\${ip}) is listed in EFnet's RBL. For assistance, see http://efnetrbl.org/?i=''\${ip}";
-      #  }];
-      #};
+      services.charybdis.settings.blacklist = lib.mkDefault [{
+        host = "rbl.efnetrbl.org";
+        type = "ipv4";
+        reject_reason =
+          "\${nick}, your IP (\${ip}) is listed in EFnet's RBL. For assistance, see http://efnetrbl.org/?i=\${ip}";
+      }];
 
       services.charybdis.settings.serverhide = {
         flatten_links = lib.mkDefault true;

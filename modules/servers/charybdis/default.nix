@@ -12,7 +12,7 @@
 # TODO: fingerprint auto-update feature with systemd timer — generic hook
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all trace toposort;
+  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all trace toposort nameValuePair;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
 
@@ -58,7 +58,7 @@ let
     else if builtins.isAttrs value && areAllValuesAttrs value then
       mkMultipleBlocks key value
     else
-    mkSimpleBlock key value;
+      mkSimpleBlock key value;
   mkOrderedBlock = key: beforeFunction: value: null;
   # Those have to be ordered first.
   # class before auth and connect.

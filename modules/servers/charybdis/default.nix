@@ -9,6 +9,8 @@
 # TODO: improve typing for freeform settings for complicated stuff.
 # TODO: provide basic assertions.
 # TODO: test solanum over this.
+# TODO: use -conftest to prevent issues.
+# TODO: NixOS tests.
 
 # TODO: how to do secret injection at runtime securely?
 # simple way is to add send_password_file in configuration syntax in upstream or add a patch here.
@@ -134,10 +136,12 @@ in {
     services.charybdis = {
 
       enable = mkEnableOption "Charybdis IRC daemon";
+      enableSolanum = mkEnableOption "Use the Solanum daemon";
+
       package = mkOption {
         type = types.package;
-        default = pkgs.charybdis;
-        defaultText = "pkgs.charybdis";
+        default = if cfg.enableSolanum then pkgs.solanum else pkgs.charybdis;
+        defaultText = if cfg.enableSolanum then "pkgs.solanum" else "pkgs.charybdis";
       };
 
       modulesDirectories = mkOption {
@@ -265,6 +269,10 @@ in {
         reloadIfChanged = true;
         serviceConfig = {
           ExecStart =
+            if cfg.enableSolanum
+            then
+            "${cfg.package}/bin/solanum -foreground -logfile /dev/stdout -configfile /etc/charybdis/charybdis.conf"
+            else
             "${cfg.package}/bin/charybdis -foreground -logfile /dev/stdout -configfile /etc/charybdis/charybdis.conf";
           ExecReload = "${coreutils}/bin/kill -1 $MAINPID";
           StateDirectory = "charybdis";

@@ -12,7 +12,7 @@
 let
   inherit (lib)
     mkEnableOption mkIf mkOption types concatStringsSep mapAttrsToList
-    all trace toposort nameValuePair optionalString concatMapStringsSep;
+    all trace toposort nameValuePair optionalString concatMap;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
   stateDir =
@@ -50,7 +50,7 @@ let
   '';
   mkInternallyRepeatedBlock = title: values: ''
     ${title} {
-      ${concatMapStringsSep "\n" (v: mapAttrsToList mkKeyValue v) values}
+      ${concatStringsSep "\n" (concatMap (attrs: mapAttrsToList mkKeyValue attrs) values)}
     }
   '';
   areAllValuesAttrs = e:

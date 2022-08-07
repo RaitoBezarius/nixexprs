@@ -411,7 +411,7 @@ in {
           host = "rbl.efnetrbl.org";
           type = "ipv4";
           reject_reason =
-            "''${nick}, your IP (''${ip}) is listed in EFnet's RBL. For assistance, see http://efnetrbl.org/?i=''${ip}";
+            "''\${nick}, your IP (''\${ip}) is listed in EFnet's RBL. For assistance, see http://efnetrbl.org/?i=''\${ip}";
         }];
       };
 

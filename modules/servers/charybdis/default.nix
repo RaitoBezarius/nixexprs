@@ -88,7 +88,7 @@ let
 
     /* Blocks */
     ${mkBlock "class" cfg.settings.class}
-    ${concatStringsSep "\n" (map ({ key, value }: mkSimpleBlock (subBlockTitle "privset" key) value) orderedPrivsets)}
+    ${concatStringsSep "\n" (map ({ name, value }: mkSimpleBlock (subBlockTitle "privset" name) value) orderedPrivsets)}
     ${concatStringsSep "\n" (map (mkSimpleBlock "auth") cfg.settings.auth)}
     ${concatStringsSep "\n" (mapAttrsToList mkBlock (removeAttrs specialAttrs cfg.settings))}
 

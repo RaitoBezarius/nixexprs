@@ -54,7 +54,7 @@ let
   mkBlock = key: value:
     if builtins.isList value then
       mkRepeatedBlock key value
-    else if builtins.isAttrs v && not (v ? raw) then
+    else if builtins.isAttrs value && not (value ? raw) then
       mkMultipleBlocks key value
     else
       mkSimpleBlock key value;

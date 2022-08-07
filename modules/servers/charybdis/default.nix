@@ -20,7 +20,7 @@ let
   mkValue = v:
     if builtins.isString v then
       ''"${v}"''
-    else if builtins.isInteger v then
+    else if builtins.isInt v then
       "${toString v}"
     else if builtins.isBool v then
       (if v then "yes" else "no")

@@ -12,7 +12,7 @@
 # TODO: fingerprint auto-update feature with systemd timer — generic hook
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all trace toposort nameValuePair;
+  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all trace toposort nameValuePair optionalString;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
 
@@ -59,7 +59,6 @@ let
       mkMultipleBlocks key value
     else
       mkSimpleBlock key value;
-  mkOrderedBlock = key: beforeFunction: value: null;
   # Those have to be ordered first.
   # class before auth and connect.
   # auth in a precedence order.
@@ -91,7 +90,7 @@ let
     ${concatStringsSep "\n" (map (mkSimpleBlock "auth") cfg.settings.auth)}
     ${concatStringsSep "\n" (mapAttrsToList mkBlock (removeAttrs specialAttrs cfg.settings))}
 
-    ${optional ((builtins.length cfg.modulesDirectories) > 0) ''
+    ${optionalString ((builtins.length cfg.modulesDirectories) > 0) ''
     /* Modules path */
     modules {
       ${concatStringsSep "\n"

@@ -11,7 +11,7 @@
 # TODO: fingerprint auto-update feature with systemd timer — generic hook
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types;
+  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
 

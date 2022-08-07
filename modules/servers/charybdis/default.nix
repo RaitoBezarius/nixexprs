@@ -268,15 +268,20 @@ in {
           PrivateUsers = true;
           ProtectClock = true;
           ProtectControlGroups = true;
-          ProtectHome = "read-only";
+          ProtectHome = true;
           ProtectHostname = true;
           ProtectKernelLogs = true;
           ProtectKernelModules = true;
           ProtectKernelTunables = true;
-          ProtectProc = "noaccess";
+          ProtectProc = "invisible";
           ProtectSystem = "strict";
+          RestrictRealtime = true;
           RestrictNamespaces = true;
           RestrictSUIDSGID = true;
+          RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+          CapabilityBoundingSet = "";
+          MemoryDenyWriteExecute = true;
+          RemoveIPC = true;
         };
       };
 

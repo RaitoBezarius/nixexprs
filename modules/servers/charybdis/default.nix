@@ -5,9 +5,13 @@
 # TODO: improve typing for freeform settings for complicated stuff.
 # TODO: provide basic assertions.
 # TODO: test solanum over this.
-# TODO: how to do secret injection at runtime securely? sed?
+
+# TODO: how to do secret injection at runtime securely?
+# simple way is to add send_password_file in configuration syntax in upstream or add a patch here.
 # TODO: plug-in ACME for automatic TLS
-# TODO: fingerprint auto-update feature with systemd timer — generic hook
+
+# Compute SPKI hashes witha
+# echo | openssl s_client -connect $1:$2 |& openssl x509 -pubkey -noout | openssl pkey -pubin -outform der | openssl dgst -sha256 -hex | cut -d' ' -f2 | sed 's/://g' | tr '[:upper:]' '[:lower:]'
 
 let
   inherit (lib)
@@ -74,7 +78,7 @@ let
   # auth in a precedence order.
   # privset before operator.
   # privset extends has to be defined before being used.
-  specialAttrs = [ "class" "privset" "auth" "blacklist" ];
+  specialAttrs = [ "class" "privset" "auth" "blacklist" "listen" ];
   # b should be after a iff b extends clause is a's name
   # e.g.
   # privset "hello" { ... }
@@ -104,6 +108,7 @@ let
     ${concatStringsSep "\n"
     (mapAttrsToList mkBlock (removeAttrs cfg.settings specialAttrs))}
     ${mkInternallyRepeatedBlock "blacklist" (cfg.settings.blacklist or [])}
+    ${mkInternallyRepeatedBlock "listen" (cfg.settings.listen or [])}
 
     ${optionalString ((builtins.length cfg.modulesDirectories) > 0) ''
       /* Modules path */

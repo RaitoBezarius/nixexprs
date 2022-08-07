@@ -18,9 +18,9 @@ let
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
   stateDir =
-    "/var/lib/${cfg.systemd.services.charybdis.serviceConfig.StateDirectory}";
+    "/var/lib/${config.systemd.services.charybdis.serviceConfig.StateDirectory}";
   logDir =
-    "/var/log/${cfg.systemd.services.charybdis.serviceConfig.LogsDirectory}";
+    "/var/log/${config.systemd.services.charybdis.serviceConfig.LogsDirectory}";
 
   mkLoadExtension = ext: ''loadmodule "${ext}";'';
   mkRaw = v: { raw = v; };

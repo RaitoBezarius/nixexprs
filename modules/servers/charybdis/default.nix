@@ -280,7 +280,7 @@ in {
           RestrictSUIDSGID = true;
           RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
           SystemCallFilter = [ "@system-service" "~@privileged" "~@resources" ];
-          SystemCallArchitecture = "native";
+          SystemCallArchitectures = "native";
           CapabilityBoundingSet = "";
           MemoryDenyWriteExecute = true;
           RemoveIPC = true;

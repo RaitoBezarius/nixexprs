@@ -11,7 +11,7 @@
 # TODO: fingerprint auto-update feature with systemd timer — generic hook
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList;
+  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
 
@@ -42,9 +42,10 @@ let
   mkKeyValue = k: v: "${k} = ${mkValue v};";
   mkSimpleBlock = title: value: ''
     ${title} {
-      ${concatStringsSep "\n" (map mkKeyValue value)}
+      ${concatStringsSep "\n" (mapAttrsToList mkKeyValue value)}
     };
   '';
+  areAllValuesAttrs = e: all (child: builtins.isAttrs child) (builtins.attrValues e);
   mkMultipleBlocks = title: subBlocks:
     concatStringsSep "\n"
     (mapAttrsToList (subBlock: mkSimpleBlock ''${title} "${subBlock}"'')
@@ -54,7 +55,7 @@ let
   mkBlock = key: value:
     if builtins.isList value then
       mkRepeatedBlock key value
-    else if builtins.isAttrs value && !(value ? raw) then
+    else if builtins.isAttrs value && areAllValuesAttrs value then
       mkMultipleBlocks key value
     else
       mkSimpleBlock key value;

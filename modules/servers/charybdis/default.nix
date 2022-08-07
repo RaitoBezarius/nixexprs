@@ -70,7 +70,7 @@ let
     modules {
       ${concatStringsSep "\n"
       (map (p: ''path = "${p}"'') cfg.modulesDirectories)}
-    }
+    };
   '';
 
 in {
@@ -267,7 +267,7 @@ in {
         tkline_expire_notices = lib.mkDefault false;
         default_floodcount = lib.mkDefault 10;
         failed_oper_notice = lib.mkDefault true;
-        dots_in_indent = lib.mkDefault 2;
+        dots_in_ident = lib.mkDefault 2;
 
         min_nonwildcard = lib.mkDefault 4;
         min_nonwildcard_simple = lib.mkDefault 3;
@@ -313,7 +313,7 @@ in {
 
         map_oper_only = lib.mkDefault false;
         operspy_admin_only = lib.mkDefault false;
-        operspy_dont_care_use_info = lib.mkDefault false;
+        operspy_dont_care_user_info = lib.mkDefault false;
 
         caller_id_wait.raw = lib.mkDefault "1 minute";
 
@@ -362,7 +362,7 @@ in {
 
         away_interval = lib.mkDefault 30;
 
-        certfp_method = lib.mkDefault "sha256";
+        certfp_method.raw = lib.mkDefault "spki_sha256";
         hide_opers_in_whois = lib.mkDefault false;
       };
 
@@ -496,7 +496,7 @@ in {
         };
 
         server_bot = {
-          extends.raw = lib.mkDefault "local_op";
+          extends = lib.mkDefault "local_op";
           privs.raw = lib.mkDefault [
             "oper:kline"
             "oper:remoteban"
@@ -505,7 +505,7 @@ in {
         };
 
         global_op = {
-          extends.raw = lib.mkDefault "local_op";
+          extends = lib.mkDefault "local_op";
           privs.raw = lib.mkDefault [
             "oper:global_kill"
             "oper:routing"
@@ -520,7 +520,7 @@ in {
         };
 
         admin = {
-          extends.raw = lib.mkDefault "global_op";
+          extends = lib.mkDefault "global_op";
           privs.raw = lib.mkDefault [
             "oper:admin"
             "oper:die"

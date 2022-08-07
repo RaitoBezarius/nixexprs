@@ -67,8 +67,8 @@ let
     ${concatStringsSep "\n" (mapAttrsToList mkBlock cfg.settings)}
 
     /* Modules path */
-    ${mkSimpleBlock "modules" concatStringsSep "\n"
-    (map (p: ''path = "${p}"'') cfg.modulesDirectories)}
+    ${mkSimpleBlock "modules" (concatStringsSep "\n"
+    (map (p: ''path = "${p}"'') cfg.modulesDirectories))}
   '';
 
 in {

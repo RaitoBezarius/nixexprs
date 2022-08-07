@@ -36,9 +36,9 @@ let
           "${toString v.raw}")
       else
         (throw ''
-          Unsupported attribute, only raw node are supported of the form { raw = "some string"; }''))
+          Unsupported attribute set: ${toString v}, only raw node are supported of the form { raw = "some string"; }''))
     else
-      throw "Unsupported type of value: ${v}!";
+      throw "Unsupported type of value: ${toString v}!";
   mkKeyValue = k: v: "${k} = ${mkValue v};";
   mkSimpleBlock = title: value: ''
     ${title} {

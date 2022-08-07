@@ -279,6 +279,8 @@ in {
           RestrictNamespaces = true;
           RestrictSUIDSGID = true;
           RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+          SystemCallFilter = [ "@system-service" "~@privileged" "~@resources" ];
+          SystemCallArchitecture = "native";
           CapabilityBoundingSet = "";
           MemoryDenyWriteExecute = true;
           RemoveIPC = true;

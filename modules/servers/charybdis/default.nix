@@ -11,7 +11,7 @@
 # TODO: fingerprint auto-update feature with systemd timer — generic hook
 
 let
-  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all;
+  inherit (lib) mkEnableOption mkIf mkOption singleton types concatStringsSep mapAttrsToList all trace;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
 
@@ -30,15 +30,13 @@ let
       (if v ? raw then
         (if builtins.isList v.raw then
           (concatStringsSep ", " v.raw)
-        else if builtins.isAttrs v.raw then
-          (throw "Attribute set cannot be serialized as a raw node!")
         else
           "${toString v.raw}")
       else
-        (throw ''
-          Unsupported attribute set: ${toString v}, only raw node are supported of the form { raw = "some string"; }''))
+        (throw (trace v (''
+          Unsupported attribute set, only raw node are supported of the form { raw = "some string"; }''))))
     else
-      throw "Unsupported type of value: ${toString v}!";
+      throw (trace v "Unsupported type of value!");
   mkKeyValue = k: v: "${k} = ${mkValue v};";
   mkSimpleBlock = title: value: ''
     ${title} {

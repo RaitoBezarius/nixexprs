@@ -42,7 +42,7 @@ let
   mkKeyValue = k: v: "${k} = ${mkValue v};";
   mkSimpleBlock = title: value: ''
     ${title} {
-      ${concatStringsSep "\n" (map mkKeyValue lines)}
+      ${concatStringsSep "\n" (map mkKeyValue value)}
     };
   '';
   mkMultipleBlocks = title: subBlocks:

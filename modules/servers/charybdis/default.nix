@@ -1,6 +1,10 @@
 { config, lib, pkgs, ... }:
 
-# TODO: not all of the syntax is supported, help to improve the module to support your syntax.
+# TODO: not all of the syntax is supported, help to improve the module to support your syntax:
+# cluster support
+# exempt support
+# other "stackable" blocks.
+# opm block
 # TODO: support for modules { module = ... } for rehash/reload.
 # TODO: improve typing for freeform settings for complicated stuff.
 # TODO: provide basic assertions.

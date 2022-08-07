@@ -45,12 +45,12 @@ let
   mkKeyValue = k: v: "${k} = ${mkValue v};";
   mkSimpleBlock = title: value: ''
     ${title} {
-    ${concatStringsSep "\n  " (mapAttrsToList mkKeyValue value)}
+      ${concatStringsSep "\n  " (mapAttrsToList mkKeyValue value)}
     };
   '';
   mkInternallyRepeatedBlock = title: values: ''
     ${title} {
-    ${concatStringsSep "\n  " (concatMap (attrs: mapAttrsToList mkKeyValue attrs) values)}
+      ${concatStringsSep "\n  " (concatMap (attrs: mapAttrsToList mkKeyValue attrs) values)}
     };
   '';
   areAllValuesAttrs = e:
@@ -108,10 +108,10 @@ let
     ${optionalString ((builtins.length cfg.modulesDirectories) > 0) ''
       /* Modules path */
       modules {
-      ${
+        ${
           concatStringsSep "\n  "
           (map (p: ''path = "${p}"'') cfg.modulesDirectories)
-      }
+        }
       };
     ''}
   '';

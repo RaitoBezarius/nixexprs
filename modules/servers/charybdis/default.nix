@@ -25,6 +25,9 @@ let
     all trace toposort nameValuePair optionalString concatMap;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
+
+  blacklistSettingKey = if cfg.enableSolanum then "dnsbl" else "blacklist";
+
   stateDir =
     "/var/lib/${config.systemd.services.charybdis.serviceConfig.StateDirectory}";
   logDir =
@@ -379,7 +382,7 @@ in {
 
         stats_e_disabled = lib.mkDefault false;
         stats_c_oper_only = lib.mkDefault false;
-        stats_h_oper_only = lib.mkDefault false;
+        stats_h_oper_only = lib.mkIf (!cfg.enableSolanum) (lib.mkDefault false); # Deprecated in Solanum.
         stats_y_oper_only = lib.mkDefault false;
         stats_o_oper_only = lib.mkDefault false;
         stats_P_oper_only = lib.mkDefault false;
@@ -483,7 +486,7 @@ in {
         knock_delay_channel.raw = lib.mkDefault "1 minute";
       };
 
-      services.charybdis.settings.blacklist = lib.mkDefault [{
+      services.charybdis.settings."${blacklistSettingKey}" = lib.mkDefault [{
         host = "rbl.efnetrbl.org";
         type.raw = "ipv4";
         reject_reason =

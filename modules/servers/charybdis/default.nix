@@ -22,11 +22,18 @@
 let
   inherit (lib)
     mkEnableOption mkIf mkOption types concatStringsSep mapAttrsToList
-    all trace toposort nameValuePair optionalString concatMap;
+    all trace toposort nameValuePair optionalString concatMap optional;
   inherit (pkgs) coreutils;
   cfg = config.services.charybdis;
 
   blacklistSettingKey = if cfg.enableSolanum then "dnsbl" else "blacklist";
+  charybdisSpecificExtensions = [
+    "extensions/chm_operonly_compat"
+    "extensions/chm_quietunreg_compat"
+    "extensions/chm_sslonly_compat"
+    "extensions/sno_globalkline"
+    "extensions/sno_whois"
+  ];
 
   stateDir =
     "/var/lib/${config.systemd.services.charybdis.serviceConfig.StateDirectory}";
@@ -87,7 +94,7 @@ let
   # auth in a precedence order.
   # privset before operator.
   # privset extends has to be defined before being used.
-  specialAttrs = [ "class" "privset" "auth" "blacklist" "listen" ];
+  specialAttrs = [ "class" "privset" "auth" blacklistSettingKey "listen" ];
   # b should be after a iff b extends clause is a's name
   # e.g.
   # privset "hello" { ... }
@@ -116,7 +123,7 @@ let
     (map (mkSimpleBlock "auth") (cfg.settings.auth or [ ]))}
     ${concatStringsSep "\n"
     (mapAttrsToList mkBlock (removeAttrs cfg.settings specialAttrs))}
-    ${mkInternallyRepeatedBlock "blacklist" (cfg.settings.blacklist or [])}
+    ${mkInternallyRepeatedBlock blacklistSettingKey (cfg.settings.${blacklistSettingKey} or [])}
     ${mkInternallyRepeatedBlock "listen" (cfg.settings.listen or [])}
 
     ${optionalString ((builtins.length cfg.modulesDirectories) > 0) ''
@@ -171,9 +178,6 @@ in {
           "extensions/chm_nonotice"
           "extensions/chm_operonly"
           "extensions/chm_sslonly"
-          "extensions/chm_operonly_compat"
-          "extensions/chm_quietunreg_compat"
-          "extensions/chm_sslonly_compat"
           "extensions/chm_operpeace"
           "extensions/extb_account"
           "extensions/extb_canjoin"
@@ -194,13 +198,11 @@ in {
           "extensions/m_identify"
           "extensions/m_locops"
           "extensions/sno_farconnect"
-          "extensions/sno_globalkline"
           "extensions/sno_globalnickchange"
           "extensions/sno_globaloper"
-          "extensions/sno_whois"
           "extensions/override"
           "extensions/no_kill_services"
-        ];
+        ] ++ optional (!cfg.enableSolanum) charybdisSpecificExtensions;
       };
 
       settings = mkOption {

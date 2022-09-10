@@ -63,6 +63,7 @@ self = rec {
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.
     cachet = callPackage ./web-apps/cachet { }; # Status page system.
     infcloud = callPackage ./web-apps/infcloud { }; # CalDAV/CardDAV web client.
+    mandos = callPackage ./servers/mandos { }; # Automatic headless and remote full-disk encryption using OpenPGP.
     oragono = callPackage ./servers/oragono.nix { };
     inspircd = callPackage ./servers/inspircd { };
     python3PackagesPlus = callPackage ./python-packages {

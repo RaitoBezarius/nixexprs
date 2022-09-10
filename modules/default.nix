@@ -3,6 +3,7 @@
   charybdis = ./servers/charybdis;
   sourcehut = ./sourcehut;
   etebase = ./servers/etebase-server.nix;
+  mandos = ./security/mandos.nix;
   oragono = ./servers/oragono.nix;
   inspircd = ./servers/inspircd;
   domjudge = ./servers/domjudge;

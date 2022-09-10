@@ -82,6 +82,7 @@ let
 
       fallback = mkOption {
         description = "Fallback to use for direct access";
+        default = null;
         type = types.nullOr types.str;
         example = "192.168.0.5:8000";
       };

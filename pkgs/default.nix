@@ -61,7 +61,6 @@ self = rec {
     myNixops = callPackage ./nixops {}; # My NixOps
     mySourcehut = callPackage ./sourcehut {}; # Sourcehut
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.
-    cachet = callPackage ./web-apps/cachet { }; # Status page system.
     infcloud = callPackage ./web-apps/infcloud { }; # CalDAV/CardDAV web client.
     oragono = callPackage ./servers/oragono.nix { };
     inspircd = callPackage ./servers/inspircd { };

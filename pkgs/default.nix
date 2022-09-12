@@ -61,7 +61,6 @@ self = rec {
     mySourcehut = callPackage ./sourcehut {}; # Sourcehut
     beauties = callPackage ./web-apps/beauties { }; # Personal essential Internet web services.
     infcloud = callPackage ./web-apps/infcloud { }; # CalDAV/CardDAV web client.
-    oragono = callPackage ./servers/oragono.nix { };
     python3PackagesPlus = callPackage ./python-packages {
       python = pkgs.python3;
       wafHook = callPackage ./development/wafHook {};

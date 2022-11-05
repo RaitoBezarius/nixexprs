@@ -10,6 +10,8 @@ mkYarnPackage rec {
   pname = "lean-game-maker-web-client";
   inherit version;
 
+  NODE_OPTIONS = "--openssl-legacy-provider";
+
   buildPhase = ''
     ls deps/
     substituteInPlace deps/${pname}/src/interactive_interface/webpack.config.js \

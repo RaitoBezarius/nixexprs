@@ -1,7 +1,7 @@
 { lib, stdenv, fetchFromGitHub, cmake, gmp, coreutils, callPackage, version, src, githash
 , buildEmscriptenPackage, emscripten, leanUtils, npmlock2nix, disableTests ? false }:
 let
-  drv = { checkOleanVersion ? true, enableAdvancedLogging ? false }: stdenv.mkDerivation rec {
+  drv = { checkOleanVersion ? true, enableAdvancedLogging ? false }: stdenv.mkDerivation (finalAttrs: {
     pname = "lean${lib.optionalString (!checkOleanVersion) "no-olean-version-check"}${lib.optionalString enableAdvancedLogging "-extra-olean-verbosity"}";
     inherit version src;
     nativeBuildInputs = [ cmake ];
@@ -40,19 +40,22 @@ let
         --replace "greadlink" "${coreutils}/bin/readlink"
     '';
 
-    passthru = {
+    passthru = let
+      myself = drv { inherit checkOleanVersion enableAdvancedLogging; };
+    in
+    {
       emscripten = callPackage ./emscripten.nix {
         buildEmscriptenPackage =
           buildEmscriptenPackage.override { inherit emscripten; };
         leanSrc = src;
         inherit version githash enableAdvancedLogging checkOleanVersion;
       };
-      mkLibraryScript = leanUtils.mkLibraryScript { lean = drv; };
-      withLibrary = leanUtils.mkLibrary { lean = drv; };
-      coreLibrary = leanUtils.mkLibrary { lean = drv; } {};
+      mkLibraryScript = leanUtils.mkLibraryScript { lean = myself; };
+      withLibrary = leanUtils.mkLibrary { lean = myself; };
+      coreLibrary = leanUtils.mkLibrary { lean = myself; } {};
       webEditor = callPackage ./web-editor.nix {
         inherit npmlock2nix;
-        lean = drv;
+        lean = myself;
       };
       debugOleans = drv { enableAdvancedLogging = true; inherit checkOleanVersion; };
       noOleanVersionCheck = drv { checkOleanVersion = false; inherit enableAdvancedLogging; };
@@ -65,7 +68,7 @@ let
         "https://github.com/leanprover-community/lean/blob/v${version}/doc/changes.md";
       license = licenses.asl20;
       platforms = platforms.unix;
-      maintainers = with maintainers; [ thoughtpolice gebner ];
+      maintainers = with maintainers; [ raitobezarius ];
     };
-  };
+  });
 in drv {}

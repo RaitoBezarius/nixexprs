@@ -383,5 +383,131 @@
     "sha256": "sha256-kZx1kHc8ToXw7+k+ygzILyONFR3KHm0VpSjHPYIoQrc=",
     "rev": "v3.0.0",
     "githash": "dae1c9dac28d1db1865ae2b1b3a39408b8ee5504"
+  },
+  "v3.48.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-0Ogv/24KNp1ZBDqiYTsGv5vDKD4fJBtoX7LWLu4QZe0=",
+    "rev": "v3.48.0",
+    "githash": "283f6ed8083ab4dd7c36300f31816c5cb793f2f7"
+  },
+  "v3.47.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-e/MnyYtkBLVU2MHGHhyAnYRFpVDhrykbKDphhGz48OE=",
+    "rev": "v3.47.0",
+    "githash": "4f9b974353ea684c98ec938f91f3a526218503ed"
+  },
+  "v3.46.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-/4R9i9906e5WQnaKNqUqUyDDIbSW9DNKdGg4rlrvC6c=",
+    "rev": "v3.46.0",
+    "githash": "741670c439f1ca266bc7fe61ef7212cc9afd9dd8"
+  },
+  "v3.45.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-Hc1F6qgitbp0DHFuSgghfs5SlvpvCKbOImYCVBO9P8Q=",
+    "rev": "v3.45.0",
+    "githash": "22b09be35ef66aece11e6e8f5d114f42b064259b"
+  },
+  "v3.44.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-y1kwIchENuoRyP1AZpdEAsjDySdn3/wPkzAxNbRCs3g=",
+    "rev": "v3.44.1",
+    "githash": "9d5adc6ab80d02bb2a0fd39a786aaeb1efd6fb01"
+  },
+  "v3.44.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-fzWjt6zN5YwyGORVB4bBeNGEfDXATtHh/hxmoEObHgI=",
+    "rev": "v3.44.0",
+    "githash": "c9e1da24cae848e06f44bc501e4c7cf18f652552"
+  },
+  "v3.43.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-SOvDBIA9pn2PXJJ9NNGRY96oApnrKdF42PnNPwBYFYA=",
+    "rev": "v3.43.0",
+    "githash": "bfce34363b0efe86e93e3fe75de76ab3740c772d"
+  },
+  "v3.42.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-gVgFT0MQXM4o6H1WbQhtpctWSI4xO5KgfBvcYVwteIY=",
+    "rev": "v3.42.1",
+    "githash": "68455b087d87e9dc3f736da0de95807e05260460"
+  },
+  "v3.42.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-d2WJZXPhYnPwHwpP4wuFkyuuN6vi0swY4tJbaviLNws=",
+    "rev": "v3.42.0",
+    "githash": "b35d4695da88139a9168f2ad7acf0782e66dc4f0"
+  },
+  "v3.41.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-wcGwSi/pHDLkDaVNDykGTytytnwfmz3iDh0YgqWj/VY=",
+    "rev": "v3.41.0",
+    "githash": "154ac72f4ff674bc4486ac611f926a3d6b999f9f"
+  },
+  "v3.40.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-Bgkt21g+Ho3tJznZ94vs2Nhjpceke1LsIA/9mIkIszE=",
+    "rev": "v3.40.0",
+    "githash": "82216a493580a309a04b02c2b6eb5f82f0aef192"
+  },
+  "v3.39.2": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-ZIyt5ucvbl+JhdS58SRVvW+BUJCXrp4Cv7rHA/JUrUk=",
+    "rev": "v3.39.2",
+    "githash": "402f41cdedbd46a368fb7807bebe83550d887631"
+  },
+  "v3.39.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-vYf65XpajLCEC3H4iu9TJO8IzKGH2oOcZQQH5aRbt3U=",
+    "rev": "v3.39.1",
+    "githash": "1781ded0d0062f40a7eaf3ead8dcbef4429c6321"
+  },
+  "v3.39.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-9suF4Hi3FBeHhcQMg8RNMGVy+7lZhad3BRyK+u7GOe0=",
+    "rev": "v3.39.0",
+    "githash": "85c581588857624e9cd562aaa0301a951c497833"
+  },
+  "v3.38.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-XceiSezbY2vxgEKDDt8KI4qbbpGClRifM0ZYe0OqqpE=",
+    "rev": "v3.38.0",
+    "githash": "a8cf8a0c9ea19a633baeb3aa7e8d706b86c2c0f9"
+  },
+  "v3.37.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-Fz6huH+9/4Hfr/+ny3+L1hJrJMKDbnomliDRltd/Uac=",
+    "rev": "v3.37.0",
+    "githash": "e69ab934262eb6f141344fdaec98ede68a9102b6"
+  },
+  "v3.36.0": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-6xC8bj3fFtTAbuIJ9ND21O/m0HRxGGmYr0M6moSLktE=",
+    "rev": "v3.36.0",
+    "githash": "e948149d3d1bbdb8eac9cd103d58626a59fae3b9"
+  },
+  "v3.35.1": {
+    "owner": "leanprover-community",
+    "repo": "lean",
+    "sha256": "sha256-P+z/BDoO/QLiyqUiqgGv0c2CWL5VJk4D/rYBhKv2sXY=",
+    "rev": "v3.35.1",
+    "githash": "4887d8a30621941c883f208e151e61ab268c006d"
   }
 }
